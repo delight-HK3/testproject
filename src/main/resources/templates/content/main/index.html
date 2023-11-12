@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>spring Boot !!!</h1>
-</body>
+    <th:block layout:fragment="head">
+        <title>Document</title>
+
+        <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/> 
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script th:src="@{/js/bootstrap.js}"></script>
+
+    </th:block>
+    <body>
+        <!-- main container -->
+        <div class="container">
+            <h1>navermap testroom</h1>
+
+        </div>
+        <!-- //main container -->
+    </body>
 </html>

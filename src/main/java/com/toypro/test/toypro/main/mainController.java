@@ -9,12 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class mainController {
     
     @RequestMapping(value="/",  method = RequestMethod.GET)
-    public ModelAndView index () throws Exception{
-        ModelAndView mav = new ModelAndView();
+    public ModelAndView index (ModelAndView mav) throws Exception{
         
-        System.out.println("==========main==========");
-        mav.setViewName("content/main/index");
 
+        mav.setViewName("content/main/index");
+        
         return mav;
     }
 }
