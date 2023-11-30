@@ -8,7 +8,7 @@
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>GPS</title>
 
         <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
         <script th:src="@{/js/googleMap.js}"></script>
@@ -16,6 +16,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
         <script th:src="@{/js/bootstrap.js}"></script>
+
     </head>
     <body>
         <!-- main container -->
@@ -27,15 +28,15 @@
 
             <br>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="carway" value="option1">
+                <input class="form-check-input" type="radio" id="carway" name="list" value="carway" checked>
                 <label class="form-check-label" for="carway">진입로</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="weigth" value="option2">
+                <input class="form-check-input" type="radio" id="weigth" name="list" value="weigth">
                 <label class="form-check-label" for="weigth">계근대</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="cctv" value="option3">
+                <input class="form-check-input" type="radio" id="cctv" name="list" value="cctv">
                 <label class="form-check-label" for="cctv">보관시설</label>
             </div>
             <button type="button" id="clip" class="btn btn-success" onclick="copyToClipBoard()">클립보드</button>
@@ -43,7 +44,7 @@
             <br><br>
 
             <div class="row">
-                <label for="carway_x" class="col-sm-2 col-form-label">진입로</label>
+                <label for="carway_x" class="col-sm-1 col-form-label">진입로</label>
                 <div class="col-auto">
                     <input type="text" class="form-control" id="carway_x" name="carway_x" value="0">
                 </div>
@@ -53,7 +54,7 @@
             </div>
             <br>
             <div class="row">
-                <label for="weigth_x" class="col-sm-2 col-form-label">계근대</label>
+                <label for="weigth_x" class="col-sm-1 col-form-label">계근대</label>
                 <div class="col-auto">
                     <input type="text" class="form-control" id="weigth_x" name="weigth_x" value="0">
                 </div>
@@ -63,7 +64,7 @@
             </div>
             <br>
             <div class="row">
-                <label for="cctv_x" class="col-sm-2 col-form-label">보관시설</label>
+                <label for="cctv_x" class="col-sm-1 col-form-label">보관시설</label>
                 <div class="col-auto">
                     <input type="text" class="form-control" id="cctv_x" name="cctv_x" value="0">
                 </div>
@@ -105,15 +106,14 @@
                     document.getElementById("cctv_y").value = 0;
 
                     document.getElementById("latlng").value = "";
-                    $("#carway").prop("checked", false);
-                    $("#weigth").prop("checked", false);
-                    $("#cctv").prop("checked", false);
+
                     console.log("Text copied to clipboard...")
                 })
-                    .catch(err => {
+                .catch(err => {
                     console.log('Something went wrong', err);
                 })
             }
+
         </script>
         
     </body>

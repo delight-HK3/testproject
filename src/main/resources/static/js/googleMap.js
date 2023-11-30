@@ -15,13 +15,13 @@ function initMap() {
     inputText.type = "text";
     inputText.id = "latlng";
     //inputText.onkeyup = "enterkey()";
-    inputText.style.cssText = "width : 30%; margin-top : 10px";
+    inputText.style.cssText = "width : 20%; margin-top : 10px";
     inputText.classList.add("form-control");
 
     submitButton.type = "input";
     submitButton.value = "검색";
     submitButton.id = "submit";
-    submitButton.style.cssText = "width : 10%; margin-top : 10px";
+    submitButton.style.cssText = "width : 5%; margin-top : 10px; margin-left : 10px";
     submitButton.classList.add("btn", "btn-primary");
 
     response.id = "response";
@@ -48,17 +48,7 @@ function initMap() {
     
     // 클릭한 곳 좌표 변환
     map.addListener("click", function(e) {
-        const check_carway = document.querySelector("#carway");
-        var carway_x = document.getElementById("carway_x").value;
-        const carway = check_carway.checked;
-
-        const check_weigth = document.querySelector("#weigth");
-        var weigth_x = document.getElementById("weigth_x").value;
-        const weigth = check_weigth.checked;
-
-        const check_cctv = document.querySelector("#cctv");
-        var cctv_x = document.getElementById("cctv_x").value;
-        const cctv = check_cctv.checked;
+        var listcheck =  document.querySelector('input[name="list"]:checked').value;
 
         var latlng = {
             x: e.latLng.lat(),
@@ -67,19 +57,19 @@ function initMap() {
 
         var x = latlng.x.toString();
         var y = latlng.y.toString();
-        
+
         //console.log(x.substring(0, 12));
         //console.log(y.substring(0, 12));
 
-        if(carway == true && carway_x == "0") {
+        if(listcheck == "carway") {
             document.getElementById("carway_x").value = x.substring(0, 9);
             document.getElementById("carway_y").value = y.substring(0, 9);
         } 
-        if (weigth == true && weigth_x == "0") {
+        if (listcheck == "weigth") {
             document.getElementById("weigth_x").value = x.substring(0, 9);
             document.getElementById("weigth_y").value = y.substring(0, 9);
         }
-        if(cctv == true && cctv_x == "0") {
+        if(listcheck == "cctv") {
             document.getElementById("cctv_x").value = x.substring(0, 9);
             document.getElementById("cctv_y").value = y.substring(0, 9);
         }
@@ -89,7 +79,6 @@ function initMap() {
     submitButton.addEventListener("click", () =>
         geocodeLatLng(geocoder, map, infowindow)
     );
-
 
 }
 
