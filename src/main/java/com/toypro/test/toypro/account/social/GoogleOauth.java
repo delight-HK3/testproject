@@ -1,5 +1,12 @@
 package com.toypro.test.toypro.account.social;
 
+/**
+ * version 0.0.1
+ * 최초 생성 : 2023/12/18
+ * 설명 : url을 구성해 service로 넘겨주면 service->controller를 
+ * 거쳐 해당 url을 통해서 소셜 로그인 페이지로 리다이렉트 시켜주는 클래스
+ */
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
@@ -7,14 +14,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toypro.test.toypro.model.GoogleAuthToken;
+import com.toypro.test.toypro.model.GoogleUser;
 
 @Component
 @RequiredArgsConstructor
 public class GoogleOauth implements SocialOauth{
-    // 소셜 로그인 타입별 클래스
 
     // application.properties 파일에서 가져온다.
     @Value("${spring.OAuth2.google.url}")
@@ -59,4 +75,55 @@ public class GoogleOauth implements SocialOauth{
         * */
     }
     
+
+    public ResponseEntity<String> requestAccessToken(String code) {
+        String GOOGLE_TOKEN_REQUEST_URL="https://oauth2.googleapis.com/token";
+
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String, Object> params = new HashMap<>();
+        params.put("code", code);
+        params.put("client_id", GOOGLE_SNS_CLIENT_ID);
+        params.put("client_secret", GOOGLE_SNS_CLIENT_SECRET);
+        params.put("redirect_uri", GOOGLE_SNS_CALLBACK_URL);
+        params.put("grant_type", "authorization_code");
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_TOKEN_REQUEST_URL,
+                params,String.class);
+
+        if(responseEntity.getStatusCode()== HttpStatus.OK){
+            return responseEntity;
+        }
+
+        return null;
+    }
+
+    // 구글로 액세스 토큰을 보내 구글 사용자 정보를 받아온다.
+    /*
+    public ResponseEntity<String> requestUserInfo(GoogleAuthToken oAuthToken) {
+        String GOOGLE_USERINFO_REQUEST_URL="https://www.googleapis.com/oauth2/v1/userinfo";
+
+        //header에 accessToken을 담는다.
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization","Bearer "+oAuthToken.getAccess_token());
+
+        //HttpEntity를 하나 생성해 헤더를 담아서 restTemplate으로 구글과 통신하게 된다.
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity(headers);
+        ResponseEntity<String> response = restTemplate.exchange(GOOGLE_USERINFO_REQUEST_URL, HttpMethod.GET,request,String.class);
+
+        System.out.println("response.getBody() = " + response.getBody());
+        return response;
+    }
+    */
+
+    // JSON String을 역직렬화해 자바 객체에 담는다.
+    public GoogleAuthToken getAccessToken(ResponseEntity<String> response) throws JsonProcessingException {
+        System.out.println("response.getBody() = " + response.getBody());
+        GoogleAuthToken googleAuthToken = objectMapper.readValue(response.getBody(), GoogleAuthToken.class);
+        return googleAuthToken;
+    }
+
+    public GoogleUser getUserInfo(ResponseEntity<String> userInfoRes) throws JsonProcessingException{
+        GoogleUser googleUser=objectMapper.readValue(userInfoRes.getBody(),GoogleUser.class);
+        return googleUser;
+    }
 }
