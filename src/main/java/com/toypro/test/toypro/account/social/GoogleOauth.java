@@ -58,11 +58,13 @@ public class GoogleOauth implements SocialOauth{
         params.put("response_type","code");
         params.put("client_id",GOOGLE_SNS_CLIENT_ID);
         params.put("redirect_uri",GOOGLE_SNS_CALLBACK_URL);
-        
+        params.put("access_type", "offline");
+
         //parameter를 형식에 맞춰 구성해주는 함수
         String parameterString = params.entrySet().stream()
                 .map(x->x.getKey()+"="+x.getValue())
                 .collect(Collectors.joining("&"));
+                
         String redirectURL=GOOGLE_SNS_LOGIN_URL+"?"+parameterString;
         System.out.println("redirectURL = " + redirectURL);
 
@@ -75,8 +77,7 @@ public class GoogleOauth implements SocialOauth{
         * */
     }
     
-
-    public ResponseEntity<String> requestAccessToken(String code) {
+    public String requestAccessToken(String code) {
         String GOOGLE_TOKEN_REQUEST_URL="https://oauth2.googleapis.com/token";
 
         RestTemplate restTemplate = new RestTemplate();
@@ -91,12 +92,12 @@ public class GoogleOauth implements SocialOauth{
                 params,String.class);
 
         if(responseEntity.getStatusCode()== HttpStatus.OK){
-            return responseEntity;
+            return "";
         }
 
-        return null;
+        return "";
     }
-
+    
     // 구글로 액세스 토큰을 보내 구글 사용자 정보를 받아온다.
     /*
     public ResponseEntity<String> requestUserInfo(GoogleAuthToken oAuthToken) {
@@ -115,6 +116,7 @@ public class GoogleOauth implements SocialOauth{
     }
     */
 
+    /*
     // JSON String을 역직렬화해 자바 객체에 담는다.
     public GoogleAuthToken getAccessToken(ResponseEntity<String> response) throws JsonProcessingException {
         System.out.println("response.getBody() = " + response.getBody());
@@ -126,4 +128,5 @@ public class GoogleOauth implements SocialOauth{
         GoogleUser googleUser=objectMapper.readValue(userInfoRes.getBody(),GoogleUser.class);
         return googleUser;
     }
+     */
 }

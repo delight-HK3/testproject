@@ -9,6 +9,7 @@ package com.toypro.test.toypro.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.toypro.test.toypro.config.Constant.SocialLoginType;
 import com.toypro.test.toypro.model.GetSocialOAuthRes;
 import com.toypro.test.toypro.service.OAuthService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("/app/accounts")
+@CrossOrigin
+@RequiredArgsConstructor
+@RequestMapping(value = "/app/accounts")
+@Slf4j
 public class AccountController {
     
     @Autowired
@@ -35,9 +43,9 @@ public class AccountController {
      * @return void
      */
     @GetMapping(value = "auth/{socialLoginType}")
-    public void socialLoginRedirect(@PathVariable(name="socialLoginType") String SocialLoginPath) throws IOException {
+    public void socialLoginRedirect(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType) throws IOException {
 
-        SocialLoginType socialLoginType = SocialLoginType.valueOf(SocialLoginPath.toUpperCase());
+        log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", socialLoginType);
         oAuthService.request(socialLoginType);
     }
 
@@ -51,16 +59,14 @@ public class AccountController {
      * @throws BaseException
      */
 
-     /* 
+     
     @GetMapping(value = "/auth/{socialLoginType}/callback")
-    public BaseResponse<GetSocialOAuthRes> callback (
-            @PathVariable(name = "socialLoginType") String socialLoginPath,
-            @RequestParam(name = "code") String code) throws IOException, BaseException{
-        System.out.println(">> 소셜 로그인 API 서버로부터 받은 code :"+ code);     
-        SocialLoginType socialLoginType = SocialLoginType.valueOf(socialLoginPath.toUpperCase());
-        GetSocialOAuthRes getSocialOAuthRes = oAuthService.oAuthLogin(socialLoginType, code);
+    public String callback (
+            @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType,
+            @RequestParam(name = "code") String code) {
 
-        return new BaseResponse<>(getSocialOAuthRes);
+        log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
+        return "";
     }
-    */
+    
 }
