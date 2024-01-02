@@ -1,4 +1,4 @@
-package com.toypro.test.toypro.account.social;
+package com.toypro.test.toypro.service.social;
 
 /**
  * version 0.0.1
@@ -14,19 +14,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toypro.test.toypro.model.GoogleAuthToken;
-import com.toypro.test.toypro.model.GoogleUser;
 
 @Component
 @RequiredArgsConstructor
@@ -48,12 +39,18 @@ public class GoogleOauth implements SocialOauth{
     @Value("${spring.OAuth2.google.scope}")
     private String GOOGLE_DATA_ACCESS_SCOPE;
 
-    private final ObjectMapper objectMapper;
+    @Value("${spring.OAuth2.google.token.url}")
+    private String GOOGLE_TOKEN_REQUEST_URL;
 
+    /**
+     * https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code
+     * &client_id="할당받은 id"&redirect_uri="access token 처리")
+     * 로 Redirect URL을 생성하는 로직을 구성
+     */
     @Override
     public String getOauthRedirectURL() {
 
-        Map<String,Object> params=new HashMap<>();
+        Map<String,Object> params = new HashMap<>();
         params.put("scope",GOOGLE_DATA_ACCESS_SCOPE);
         params.put("response_type","code");
         params.put("client_id",GOOGLE_SNS_CLIENT_ID);
@@ -69,19 +66,13 @@ public class GoogleOauth implements SocialOauth{
         System.out.println("redirectURL = " + redirectURL);
 
         return redirectURL;
-
-     /* *
-        * https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code
-        * &client_id="할당받은 id"&redirect_uri="access token 처리")
-        * 로 Redirect URL을 생성하는 로직을 구성
-        * */
     }
     
+    @Override
     public String requestAccessToken(String code) {
-        String GOOGLE_TOKEN_REQUEST_URL="https://oauth2.googleapis.com/token";
-
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> params = new HashMap<>();
+
         params.put("code", code);
         params.put("client_id", GOOGLE_SNS_CLIENT_ID);
         params.put("client_secret", GOOGLE_SNS_CLIENT_SECRET);
@@ -92,41 +83,11 @@ public class GoogleOauth implements SocialOauth{
                 params,String.class);
 
         if(responseEntity.getStatusCode()== HttpStatus.OK){
-            return "";
+            return responseEntity.getBody();
         }
 
-        return "";
+        return "구글 로그인 요청 처리 실패";
     }
     
-    // 구글로 액세스 토큰을 보내 구글 사용자 정보를 받아온다.
-    /*
-    public ResponseEntity<String> requestUserInfo(GoogleAuthToken oAuthToken) {
-        String GOOGLE_USERINFO_REQUEST_URL="https://www.googleapis.com/oauth2/v1/userinfo";
 
-        //header에 accessToken을 담는다.
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization","Bearer "+oAuthToken.getAccess_token());
-
-        //HttpEntity를 하나 생성해 헤더를 담아서 restTemplate으로 구글과 통신하게 된다.
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity(headers);
-        ResponseEntity<String> response = restTemplate.exchange(GOOGLE_USERINFO_REQUEST_URL, HttpMethod.GET,request,String.class);
-
-        System.out.println("response.getBody() = " + response.getBody());
-        return response;
-    }
-    */
-
-    /*
-    // JSON String을 역직렬화해 자바 객체에 담는다.
-    public GoogleAuthToken getAccessToken(ResponseEntity<String> response) throws JsonProcessingException {
-        System.out.println("response.getBody() = " + response.getBody());
-        GoogleAuthToken googleAuthToken = objectMapper.readValue(response.getBody(), GoogleAuthToken.class);
-        return googleAuthToken;
-    }
-
-    public GoogleUser getUserInfo(ResponseEntity<String> userInfoRes) throws JsonProcessingException{
-        GoogleUser googleUser=objectMapper.readValue(userInfoRes.getBody(),GoogleUser.class);
-        return googleUser;
-    }
-     */
 }

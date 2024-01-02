@@ -1,4 +1,4 @@
-package com.toypro.test.toypro.account.social;
+package com.toypro.test.toypro.service.social;
 
 import com.toypro.test.toypro.config.Constant.SocialLoginType;
 
@@ -22,7 +22,7 @@ public interface SocialOauth {
     String requestAccessToken(String code);
 
     default SocialLoginType type(){
-        if(this instanceof GoogleOauth){
+        if(this instanceof GoogleOauth){ // 
             return SocialLoginType.GOOGLE;
         } 
         else {
