@@ -7,16 +7,18 @@ package com.toypro.test.toypro.service;
  */
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.toypro.test.toypro.account.social.GoogleOauth;
 import com.toypro.test.toypro.config.Constant;
 import com.toypro.test.toypro.config.Constant.SocialLoginType;
 import com.toypro.test.toypro.model.GetSocialOAuthRes;
 import com.toypro.test.toypro.model.GoogleAuthToken;
 import com.toypro.test.toypro.model.GoogleUser;
+import com.toypro.test.toypro.service.social.GoogleOauth;
+import com.toypro.test.toypro.service.social.SocialOauth;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +27,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OAuthService {
     
-    private final GoogleOauth googleOauth;
-    private final HttpServletResponse httpServletResponse;
+    private final List<SocialOauth> SocialOauthList;
+    private final HttpServletResponse response;
     
     /**
      * 인증 호출 코드
@@ -35,34 +37,39 @@ public class OAuthService {
      * @throws IOException
      */
     public void request(SocialLoginType socialLoginType) throws IOException {
-        String redirectURL;
-        switch(socialLoginType){
-            case GOOGLE:{
-                redirectURL = googleOauth.getOauthRedirectURL();
-            } break;
-            default:{
-                throw new IllegalStateException("알 수 없는 로그인 방식 입니다.");
-            }
-        }
+        SocialOauth socialOauth = this.findSocialOauthByType(socialLoginType);
+        String redirectURL = socialOauth.getOauthRedirectURL();
         try{
-            httpServletResponse.sendRedirect(redirectURL);
+            response.sendRedirect(redirectURL);
         } catch (IOException e) {
             e.printStackTrace();
         }
         
     }
     
+    /**
+     * 소셜 로그인 API 서버로부터 받은 호출 코드
+     * 
+     * @param socialLoginType
+     * @param code
+     * @return
+     * @throws IOException
+     */
     public String requestAccessToken(SocialLoginType socialLoginType, String code) throws IOException{
-        
-        switch (socialLoginType) {
-            case GOOGLE:{
-                return googleOauth.requestAccessToken(code);
-            }
-            default: {
-                throw new IllegalArgumentException("알 수 없는 소셜 로그인 형식입니다.");
-            }
-                
-        }
+        SocialOauth socialOauth = this.findSocialOauthByType(socialLoginType);
+        return socialOauth.requestAccessToken(code);
     }
     
+    /**
+     * SocialLoginType에 맞는 SocialOauth 객체를 반환
+     * 
+     * @param socialLoginType
+     * @return
+     */
+    private SocialOauth findSocialOauthByType(SocialLoginType socialLoginType){
+        return SocialOauthList.stream()
+                .filter(x -> x.type() == socialLoginType)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("알 수 없는 SocialLoginType 입니다."));
+    }
 }
