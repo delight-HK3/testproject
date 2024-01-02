@@ -64,7 +64,10 @@ public class AccountController {
             @RequestParam(name = "code") String code) {
 
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
-        return "";
+
+        System.out.println(oAuthService.requestAccessToken(socialLoginType, code));
+        
+        return oAuthService.requestAccessToken(socialLoginType, code);
     }
     
 }
