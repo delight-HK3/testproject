@@ -9,15 +9,9 @@ package com.toypro.test.toypro.service;
 import java.io.IOException;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.toypro.test.toypro.config.Constant;
 import com.toypro.test.toypro.config.Constant.SocialLoginType;
-import com.toypro.test.toypro.model.GetSocialOAuthRes;
-import com.toypro.test.toypro.model.GoogleAuthToken;
-import com.toypro.test.toypro.model.GoogleUser;
-import com.toypro.test.toypro.service.social.GoogleOauth;
 import com.toypro.test.toypro.service.social.SocialOauth;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,7 +30,7 @@ public class OAuthService {
      * @param socialLoginType
      * @throws IOException
      */
-    public void request(SocialLoginType socialLoginType) throws IOException {
+    public void request(SocialLoginType socialLoginType) {
         SocialOauth socialOauth = this.findSocialOauthByType(socialLoginType);
         String redirectURL = socialOauth.getOauthRedirectURL();
         try{
@@ -55,7 +49,7 @@ public class OAuthService {
      * @return
      * @throws IOException
      */
-    public String requestAccessToken(SocialLoginType socialLoginType, String code) throws IOException{
+    public String requestAccessToken(SocialLoginType socialLoginType, String code) {
         SocialOauth socialOauth = this.findSocialOauthByType(socialLoginType);
         return socialOauth.requestAccessToken(code);
     }
