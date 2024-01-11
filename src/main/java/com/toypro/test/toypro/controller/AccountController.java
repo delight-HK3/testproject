@@ -57,7 +57,6 @@ public class AccountController {
      * @throws BaseException
      */
 
-     
     @GetMapping(value = "/auth/{socialLoginType}/callback")
     public String callback (
             @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType,
@@ -66,8 +65,13 @@ public class AccountController {
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
 
         System.out.println(oAuthService.requestAccessToken(socialLoginType, code));
+
+
+        String access_token = oAuthService.requestAccessToken(socialLoginType, code);
         
-        return oAuthService.requestAccessToken(socialLoginType, code);
+        
+
+        return "";
     }
     
 }

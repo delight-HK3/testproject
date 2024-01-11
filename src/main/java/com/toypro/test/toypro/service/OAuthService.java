@@ -66,4 +66,5 @@ public class OAuthService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("알 수 없는 SocialLoginType 입니다."));
     }
+
 }
