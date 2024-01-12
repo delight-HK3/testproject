@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 @RequiredArgsConstructor
 @FeignClient
@@ -45,7 +44,8 @@ public class GoogleOauth implements SocialOauth{
     @Value("${spring.OAuth2.google.token.url}")
     private String GOOGLE_TOKEN_REQUEST_URL;
 
-    private final ObjectMapper objectMapper;
+     @Value("${spring.OAuth2.google.token.user}")
+    private String GOOGLE_ACCESS_TOKEN_URL;
 
     /**
      * https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code
@@ -92,6 +92,23 @@ public class GoogleOauth implements SocialOauth{
         }
 
         return "구글 로그인 요청 처리 실패";
+    }
+
+    @Override
+    public String requestUserInfo(String access_token) {
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String, Object> params = new HashMap<>();
+
+        params.put("authorization", "Bearer " + access_token);
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_ACCESS_TOKEN_URL, 
+                params, String.class);
+
+        if(responseEntity.getStatusCode()== HttpStatus.OK){
+            return responseEntity.getBody();
+        }
+
+        return "구글 개인정보 요청 처리 실패";
     }
     
 }

@@ -11,8 +11,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.toypro.test.toypro.config.Constant.SocialLoginType;
 import com.toypro.test.toypro.service.social.SocialOauth;
+import com.toypro.test.toypro.type.UserType;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,11 @@ public class OAuthService {
     /**
      * 인증 호출 코드
      * 
-     * @param socialLoginType
+     * @param userType
      * @throws IOException
      */
-    public void request(SocialLoginType socialLoginType) {
-        SocialOauth socialOauth = this.findSocialOauthByType(socialLoginType);
+    public void request(UserType userType) {
+        SocialOauth socialOauth = this.findSocialOauthByType(userType);
         String redirectURL = socialOauth.getOauthRedirectURL();
         try{
             response.sendRedirect(redirectURL);
@@ -44,25 +44,36 @@ public class OAuthService {
     /**
      * 소셜 로그인 API 서버로부터 받은 호출 코드
      * 
-     * @param socialLoginType
+     * @param userType
      * @param code
      * @return
-     * @throws IOException
      */
-    public String requestAccessToken(SocialLoginType socialLoginType, String code) {
-        SocialOauth socialOauth = this.findSocialOauthByType(socialLoginType);
+    public String requestAccessToken(UserType userType, String code) {
+        SocialOauth socialOauth = this.findSocialOauthByType(userType);
         return socialOauth.requestAccessToken(code);
     }
     
     /**
-     * SocialLoginType에 맞는 SocialOauth 객체를 반환
+     * 소셜 로그인 토큰으로 서버로부터 유저정보 얻어내는 코드
      * 
-     * @param socialLoginType
+     * @param userType
+     * @param access_token
      * @return
      */
-    private SocialOauth findSocialOauthByType(SocialLoginType socialLoginType){
+    public String requestUserInfo(UserType userType, String access_token) {
+        SocialOauth socialOauth = this.findSocialOauthByType(userType);
+        return socialOauth.requestUserInfo(access_token);
+    }
+
+    /**
+     * SocialLoginType에 맞는 SocialOauth 객체를 반환
+     * 
+     * @param userType
+     * @return
+     */
+    private SocialOauth findSocialOauthByType(UserType userType){
         return SocialOauthList.stream()
-                .filter(x -> x.type() == socialLoginType)
+                .filter(x -> x.type() == userType)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("알 수 없는 SocialLoginType 입니다."));
     }

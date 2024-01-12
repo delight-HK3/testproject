@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.toypro.test.toypro.config.Constant.SocialLoginType;
 import com.toypro.test.toypro.service.OAuthService;
+import com.toypro.test.toypro.type.UserType;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,10 +41,10 @@ public class AccountController {
      * @return void
      */
     @GetMapping(value = "auth/{socialLoginType}")
-    public void socialLoginRedirect(@PathVariable(name="socialLoginType") SocialLoginType socialLoginType) throws IOException {
+    public void socialLoginRedirect(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
 
-        log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", socialLoginType);
-        oAuthService.request(socialLoginType);
+        log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", userType);
+        oAuthService.request(userType);
     }
 
     /**
@@ -59,16 +59,16 @@ public class AccountController {
 
     @GetMapping(value = "/auth/{socialLoginType}/callback")
     public String callback (
-            @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType,
+            @PathVariable(name = "socialLoginType") UserType userType,
             @RequestParam(name = "code") String code) {
 
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
 
-        System.out.println(oAuthService.requestAccessToken(socialLoginType, code));
+        System.out.println(oAuthService.requestAccessToken(userType, code));
 
-
-        String access_token = oAuthService.requestAccessToken(socialLoginType, code);
+        String access_token = oAuthService.requestAccessToken(userType, code);
         
+        System.out.println(oAuthService.requestUserInfo(userType, access_token));
         
 
         return "";

@@ -1,6 +1,6 @@
 package com.toypro.test.toypro.service.social;
 
-import com.toypro.test.toypro.config.Constant.SocialLoginType;
+import com.toypro.test.toypro.type.UserType;
 
 /**
  * version 0.0.1
@@ -21,9 +21,16 @@ public interface SocialOauth {
      */
     String requestAccessToken(String code);
 
-    default SocialLoginType type(){
+    /**
+     * requestAccessToken메서드에서 발급받은 access_token 활용하여 사용자 정보 요청
+     * @param access_token requestAccessToken메서드에서 발급받은 access_token
+     * @return API 서버로 부터 응답받은 Json 형태의 결과를 string으로 반환
+     */
+    String requestUserInfo(String access_token);
+
+    default UserType type(){
         if(this instanceof GoogleOauth){ // 
-            return SocialLoginType.GOOGLE;
+            return UserType.GOOGLE;
         } 
         else {
             return null;
