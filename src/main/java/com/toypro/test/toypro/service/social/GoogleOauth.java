@@ -100,7 +100,7 @@ public class GoogleOauth implements SocialOauth{
         Map<String, Object> params = new HashMap<>();
 
         params.put("authorization", "Bearer " + access_token);
-
+        
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(GOOGLE_ACCESS_TOKEN_URL, 
                 params, String.class);
 

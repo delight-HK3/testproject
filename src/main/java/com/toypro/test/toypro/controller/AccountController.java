@@ -64,10 +64,11 @@ public class AccountController {
 
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
 
-        System.out.println(oAuthService.requestAccessToken(userType, code));
+        //System.out.println(oAuthService.requestAccessToken(userType, code));
 
         String access_token = oAuthService.requestAccessToken(userType, code);
         
+        System.out.println("connect test\n");
         System.out.println(oAuthService.requestUserInfo(userType, access_token));
         
 
