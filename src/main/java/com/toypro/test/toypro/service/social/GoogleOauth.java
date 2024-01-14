@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @RequiredArgsConstructor
-@FeignClient
 public class GoogleOauth implements SocialOauth{
 
     // application.properties 파일에서 가져온다.
@@ -44,7 +42,7 @@ public class GoogleOauth implements SocialOauth{
     @Value("${spring.OAuth2.google.token.url}")
     private String GOOGLE_TOKEN_REQUEST_URL;
 
-     @Value("${spring.OAuth2.google.token.user}")
+    @Value("${spring.OAuth2.google.token.user}")
     private String GOOGLE_ACCESS_TOKEN_URL;
 
     /**
@@ -94,6 +92,7 @@ public class GoogleOauth implements SocialOauth{
         return "구글 로그인 요청 처리 실패";
     }
 
+    /*
     @Override
     public String requestUserInfo(String access_token) {
         RestTemplate restTemplate = new RestTemplate();
@@ -109,6 +108,6 @@ public class GoogleOauth implements SocialOauth{
         }
 
         return "구글 개인정보 요청 처리 실패";
-    }
+    }*/
     
 }

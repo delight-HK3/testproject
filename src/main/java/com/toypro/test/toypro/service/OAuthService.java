@@ -60,10 +60,13 @@ public class OAuthService {
      * @param access_token
      * @return
      */
-    public String requestUserInfo(UserType userType, String access_token) {
+
+    /* 
+     public String requestUserInfo(UserType userType, String access_token) {
         SocialOauth socialOauth = this.findSocialOauthByType(userType);
         return socialOauth.requestUserInfo(access_token);
     }
+    */
 
     /**
      * SocialLoginType에 맞는 SocialOauth 객체를 반환

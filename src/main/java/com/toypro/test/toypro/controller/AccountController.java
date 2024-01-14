@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class AccountController {
     
-    @Autowired
-    OAuthService oAuthService;
+    
+    private final OAuthService oAuthService;
     
     /**
      * 유저 소셜 로그인으로 리다이렉트 해주는 url
@@ -41,7 +41,7 @@ public class AccountController {
      * @return void
      */
     @GetMapping(value = "auth/{socialLoginType}")
-    public void socialLoginRedirect(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
+    public void socialLoginType(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
 
         log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", userType);
         oAuthService.request(userType);
@@ -64,12 +64,11 @@ public class AccountController {
 
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
 
-        //System.out.println(oAuthService.requestAccessToken(userType, code));
+        System.out.println(oAuthService.requestAccessToken(userType, code));
 
-        String access_token = oAuthService.requestAccessToken(userType, code);
+        //String access_token = oAuthService.requestAccessToken(userType, code);
         
         System.out.println("connect test\n");
-        System.out.println(oAuthService.requestUserInfo(userType, access_token));
         
 
         return "";

@@ -26,7 +26,7 @@ public interface SocialOauth {
      * @param access_token requestAccessToken메서드에서 발급받은 access_token
      * @return API 서버로 부터 응답받은 Json 형태의 결과를 string으로 반환
      */
-    String requestUserInfo(String access_token);
+    //String requestUserInfo(String access_token);
 
     default UserType type(){
         if(this instanceof GoogleOauth){ // 
