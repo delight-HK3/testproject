@@ -6,6 +6,6 @@ package com.toypro.test.toypro.type;
  */
 
 public enum UserType {
-    GOOGLE, KAKAO, NAVER
+    NORMAL, GOOGLE, KAKAO, NAVER
 }
 
