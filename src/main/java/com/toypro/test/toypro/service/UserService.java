@@ -32,7 +32,7 @@ public class UserService {
 
         SocialUserResponse socialUserResponse = loginService.getUserInfo(socialAuthResponse.getAccess_token());
         log.info("socialUserResponse {} ", socialUserResponse.toString());
-
+        
         return SocialUserResponse.builder().build();
     }
 
