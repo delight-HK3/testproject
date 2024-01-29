@@ -27,10 +27,9 @@ public class LoginServiceImpl implements SocialLoginService {
     public SocialUserResponse getUserInfo(String accessToken) {
         return null;
     }
-
+    
     @Override
     public String getOauthRedirectURL() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOauthRedirectURL'");
     }
 }

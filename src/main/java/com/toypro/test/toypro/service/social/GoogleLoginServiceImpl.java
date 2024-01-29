@@ -32,10 +32,10 @@ import com.toypro.test.toypro.fegin.google.GoogleUserApi;
 import com.toypro.test.toypro.type.UserType;
 import com.toypro.test.toypro.utils.GsonLocalDateTimeAdapter;
 
-@Slf4j
-@Component
+@Slf4j // 로깅에 대한 추상 레이어를 제공하는 인터페이스의 모음
+@Component 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor // 자동 의존성 주입
 @Qualifier("googleLogin")
 public class GoogleLoginServiceImpl implements SocialLoginService{
 
@@ -131,7 +131,7 @@ public class GoogleLoginServiceImpl implements SocialLoginService{
                 
         String redirectURL=GOOGLE_SNS_LOGIN_URL+"?"+parameterString;
         System.out.println("redirectURL = " + redirectURL);
-
+        
         return redirectURL;
     }
 
