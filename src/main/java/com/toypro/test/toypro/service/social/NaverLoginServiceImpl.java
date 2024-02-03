@@ -1,6 +1,7 @@
 package com.toypro.test.toypro.service.social;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,20 @@ public class NaverLoginServiceImpl implements SocialLoginService{
 
     private final NaverAuthApi naverAuthApi;
     private final NaverUserApi naverUserApi;
+
+    // application.properties 파일에서 가져온다.
+    @Value("${spring.OAuth2.Naver.url}")
+    private String NAVER_SNS_LOGIN_URL;
+
+    @Value("${spring.OAuth2.Naver.client-id}")
+    private String NAVER_SNS_CLIENT_ID;
+
+    @Value("${spring.OAuth2.Naver.callback-url}")
+    private String NAVER_SNS_CALLBACK_URL;
+
+    @Value("${spring.OAuth2.Naver.client-secret}")
+    private String NAVER_SNS_CLIENT_SECRET;
+
 
     @Override
     public UserType getServiceName() {
