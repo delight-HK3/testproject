@@ -38,8 +38,7 @@ public class NaverLoginServiceImpl implements SocialLoginService{
 
     @Override
     public UserType getServiceName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getServiceName'");
+        return UserType.NAVER;
     }
 
     @Override
