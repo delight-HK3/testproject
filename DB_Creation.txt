@@ -1,0 +1,15 @@
+/* DB 생성 */
+CREATE DATABASE `toypro` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+
+/* t_toy_user 테이블 생성 */
+CREATE TABLE `t_toy_user` (
+  `NO` int(11) NOT NULL AUTO_INCREMENT COMMENT '회원번호',
+  `USER_ID` varchar(100) NOT NULL COMMENT '아이디',
+  `USER_PWD` varchar(100) NOT NULL COMMENT '비밀번호',
+  `USER_NAME` varchar(100) NOT NULL COMMENT '이름',
+  `USER_EMAIL` varchar(100) NOT NULL COMMENT '이메일',
+  `PHONE_NO` varchar(11) DEFAULT NULL COMMENT '전화번호',
+  `REG_DATE` date NOT NULL COMMENT '최초생성일',
+  `UPDT_DATE` date NOT NULL COMMENT '수정일',
+  PRIMARY KEY (`NO`,`USER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
