@@ -31,9 +31,19 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <a href="/app/accounts/auth/google">
+                    <div class="login-box">
+                        <a onclick="window.open('app/accounts/auth/google','Login','width=600,height=800')" 
+                            class="social-button" id="google-connect"> <span>Connect with Google</span></a>
+                    </div>
+                        
+
+                   <!-- <button class="googlebtn" onclick="window.open('app/accounts/auth/google','Login','width=600,height=800')" >
+                        <img style="width: 40px; height: 40px;" th:src="@{/img/web_neutral_rd_na@1x.png}"> Google 로그인
+                    </button> -->
+                    <!-- <img style="width: 18px; height: 18px;" th:src="@{/img/web_light_rd_na@1x.png}"> -->
+                    <!-- <button onclick="window.open('app/accounts/auth/naver','팝업이름','width=600,height=800')">
                         <img th:src="@{/img/web_light_sq_SI@1x.png}">
-                    </a>
+                    </button> -->
                 </div>
               </div>
             </div>

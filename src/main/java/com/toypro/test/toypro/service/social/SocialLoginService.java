@@ -14,9 +14,12 @@ public interface SocialLoginService {
     String getOauthRedirectURL();
 
     default UserType type(){
-        if(this instanceof GoogleLoginServiceImpl){ // 
+        if(this instanceof GoogleLoginServiceImpl){ // 구글 로그인
             return UserType.GOOGLE;
         } 
+        else if(this instanceof NaverLoginServiceImpl){ // 네이버 로그인
+            return UserType.NAVER;
+        }
         else {
             return null;
         }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.UserService;
@@ -20,7 +21,6 @@ import com.toypro.test.toypro.type.UserType;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @RestController
@@ -31,7 +31,7 @@ public class AccountController {
     private final UserService userService;
     
 
-    @GetMapping(value = "auth/{socialLoginType}")
+    @GetMapping(value = "/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
 
         log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", userType);
@@ -46,17 +46,20 @@ public class AccountController {
      * @return void
      */
     @GetMapping(value = "/auth/{socialLoginType}/callback")
-    public String socialLogin(
+    public ModelAndView socialLogin(
             @PathVariable(name = "socialLoginType") UserType userType,
             @RequestParam(name = "code") String code) {
 
-       //return ResponseEntity.created(URI.create("/auth"))
-         //       .body(userService.doSocialLogin(userType, code));
+                ModelAndView mav = new ModelAndView();
+        //return ResponseEntity.created(URI.create("/auth"))
+        //       .body(userService.doSocialLogin(userType, code));
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
 
         //System.out.println(socialUserResponse);
+        
+        mav.setViewName("content/sns/doneSnsLogin");
 
-        return "";            
+        return mav;        
     }
     
 }
