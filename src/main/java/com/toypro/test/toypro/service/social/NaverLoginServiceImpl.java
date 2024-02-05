@@ -22,10 +22,6 @@ public class NaverLoginServiceImpl implements SocialLoginService{
     private final NaverAuthApi naverAuthApi;
     private final NaverUserApi naverUserApi;
 
-    // application.properties 파일에서 가져온다.
-    @Value("${spring.OAuth2.Naver.url}")
-    private String NAVER_SNS_LOGIN_URL;
-
     @Value("${spring.OAuth2.Naver.client-id}")
     private String NAVER_SNS_CLIENT_ID;
 
