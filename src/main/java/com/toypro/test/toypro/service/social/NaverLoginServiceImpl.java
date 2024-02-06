@@ -1,5 +1,9 @@
 package com.toypro.test.toypro.service.social;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,6 +25,9 @@ public class NaverLoginServiceImpl implements SocialLoginService{
 
     private final NaverAuthApi naverAuthApi;
     private final NaverUserApi naverUserApi;
+
+    @Value("${spring.Oauth2.Naver.url}")
+    private String NAVER_SNS_LOGIN_URL;
 
     @Value("${spring.OAuth2.Naver.client-id}")
     private String NAVER_SNS_CLIENT_ID;
@@ -51,8 +58,21 @@ public class NaverLoginServiceImpl implements SocialLoginService{
 
     @Override
     public String getOauthRedirectURL() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOauthRedirectURL'");
+        Map<String,Object> params = new HashMap<>();
+
+        params.put("response_type","code");
+        params.put("client_id",NAVER_SNS_CLIENT_ID);
+        params.put("redirect_uri",NAVER_SNS_CALLBACK_URL);
+        params.put("state","test");
+
+        String parameterString = params.entrySet().stream()
+                .map(x->x.getKey()+"="+x.getValue())
+                .collect(Collectors.joining("&"));
+
+        String redirectURL = NAVER_SNS_LOGIN_URL+"?"+parameterString;
+        System.out.println(redirectURL);
+
+        return redirectURL;
     }
     
 }
