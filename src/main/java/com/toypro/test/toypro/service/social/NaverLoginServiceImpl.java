@@ -6,9 +6,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.toypro.test.toypro.dto.social.SocialAuthResponse;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.fegin.naver.NaverAuthApi;
@@ -16,7 +19,9 @@ import com.toypro.test.toypro.fegin.naver.NaverUserApi;
 import com.toypro.test.toypro.type.UserType;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component 
 @Service
 @RequiredArgsConstructor // 자동 의존성 주입
@@ -46,8 +51,21 @@ public class NaverLoginServiceImpl implements SocialLoginService{
 
     @Override
     public SocialAuthResponse getAccessToken(String authorizationCode) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAccessToken'");
+        ResponseEntity<?> response = naverAuthApi.getAccessToken(
+        "authorization_code",
+            NAVER_SNS_CLIENT_ID,
+            NAVER_SNS_CLIENT_SECRET,
+            authorizationCode,
+            "state"
+        );
+
+        log.info("naver auth response {}", response.toString());
+
+        return new Gson()
+            .fromJson(
+                String.valueOf(response.getBody())
+                , SocialAuthResponse.class
+            );
     }
 
     @Override
