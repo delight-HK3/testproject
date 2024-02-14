@@ -59,7 +59,8 @@ public class NaverLoginServiceImpl implements SocialLoginService{
             "state"
         );
 
-        log.info("naver auth response {}", response.toString());
+        log.info("naver auth response {}");
+        log.info(response.toString());
 
         return new Gson()
             .fromJson(
