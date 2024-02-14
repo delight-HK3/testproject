@@ -86,7 +86,6 @@ public class GoogleLoginServiceImpl implements SocialLoginService{
 
         return new Gson()
             .fromJson(
-                //response.getBody().toString(),
                 String.valueOf(response.getBody())
                 ,SocialAuthResponse.class
             );
