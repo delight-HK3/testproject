@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import com.toypro.test.toypro.dto.login.LoginResponse;
 import com.toypro.test.toypro.dto.social.SocialAuthResponse;
-import com.toypro.test.toypro.dto.social.SocialLoginRequest;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.login.LoginServiceImpl;
 import com.toypro.test.toypro.service.social.SocialLoginService;

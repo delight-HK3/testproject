@@ -22,14 +22,15 @@ public class NaverLoginResponse {
     @AllArgsConstructor
     public static class Response {
         private String id;
-        private String nickName;
-        private String profile_image;
+        private String email;
+        private String nickname;
+        private String name;
         private String age;
         private String gender;
-        private String email;
-        private String mobile;
-        private String name;
         private String birthyear;
         private String birthday;
+        private String profile_image;
+        private String mobile;
+        private String mobile_e164;
     }
 }

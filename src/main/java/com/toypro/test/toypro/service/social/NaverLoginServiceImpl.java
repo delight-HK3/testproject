@@ -1,5 +1,6 @@
 package com.toypro.test.toypro.service.social;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.toypro.test.toypro.dto.naver.NaverLoginResponse;
 import com.toypro.test.toypro.dto.social.SocialAuthResponse;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.fegin.naver.NaverAuthApi;
 import com.toypro.test.toypro.fegin.naver.NaverUserApi;
 import com.toypro.test.toypro.type.UserType;
+import com.toypro.test.toypro.utils.GsonLocalDateTimeAdapter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -71,8 +74,36 @@ public class NaverLoginServiceImpl implements SocialLoginService{
 
     @Override
     public SocialUserResponse getUserInfo(String accessToken) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserInfo'");
+        Map<String ,String> headerMap = new HashMap<>();
+        headerMap.put("authorization", "Bearer " + accessToken);
+
+        ResponseEntity<?> response = naverUserApi.getUserInfo(headerMap);
+
+        log.info("naver user response");
+        log.info(response.toString());
+
+        String jsonString = String.valueOf(response.getBody());
+
+        Gson gson = new GsonBuilder()
+        .setPrettyPrinting()
+        .registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTimeAdapter())
+        .create();
+
+        NaverLoginResponse naverLoginResponse = gson.fromJson(jsonString, NaverLoginResponse.class);
+        NaverLoginResponse.Response naverUserInfo = naverLoginResponse.getResponse();
+
+        return SocialUserResponse.builder()
+            .id(naverUserInfo.getId())
+            .nickname(naverUserInfo.getNickname())
+            .birthday(naverUserInfo.getBirthday())
+            .birthyear(naverUserInfo.getBirthyear())
+            .age(naverUserInfo.getAge())
+            .mobile(naverUserInfo.getMobile())
+            .mobile_e164(naverUserInfo.getMobile_e164())
+            .gender(naverUserInfo.getGender())
+            .name(naverUserInfo.getName())
+            .email(naverUserInfo.getEmail())
+            .build();
     }
 
     @Override
