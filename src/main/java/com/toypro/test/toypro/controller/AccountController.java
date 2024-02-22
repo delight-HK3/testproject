@@ -55,7 +55,7 @@ public class AccountController {
         //       .body(userService.doSocialLogin(userType, code));
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
 
-        //System.out.println(socialUserResponse);
+        //System.out.println("socialUserResponse : "+socialUserResponse);
         
         mav.setViewName("content/sns/doneSnsLogin");
 
