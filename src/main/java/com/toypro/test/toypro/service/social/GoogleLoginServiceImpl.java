@@ -110,6 +110,7 @@ public class GoogleLoginServiceImpl implements SocialLoginService{
         return SocialUserResponse.builder()
             .id(googleLoginResponse.getId())
             .email(googleLoginResponse.getEmail())
+            .name(googleLoginResponse.getName())
             .build();
     }
 
