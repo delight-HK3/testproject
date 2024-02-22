@@ -6,7 +6,7 @@
 Framework : Spring boot 3.1.5
 Language : Java 17
 Database : MariaDB 10.9.2
-Server : Localhost
+Server : http://localhost:8099/
 Tool : Visual Studio Code
 ```
 
