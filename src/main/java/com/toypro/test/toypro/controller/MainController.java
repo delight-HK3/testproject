@@ -12,7 +12,7 @@ public class MainController {
     public ModelAndView index (ModelAndView mav) throws Exception{
         
         // System.out.println("clientID : "+clientID);
-
+        
         mav.setViewName("content/main/index");
         
         return mav;

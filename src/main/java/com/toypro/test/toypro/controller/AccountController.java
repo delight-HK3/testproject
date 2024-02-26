@@ -50,13 +50,14 @@ public class AccountController {
             @PathVariable(name = "socialLoginType") UserType userType,
             @RequestParam(name = "code") String code) {
 
-                ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView();
         //return ResponseEntity.created(URI.create("/auth"))
         //       .body(userService.doSocialLogin(userType, code));
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
 
         //System.out.println("socialUserResponse : "+socialUserResponse);
         
+
         mav.setViewName("content/sns/doneSnsLogin");
 
         return mav;        
