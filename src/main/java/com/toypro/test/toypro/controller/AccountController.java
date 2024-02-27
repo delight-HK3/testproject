@@ -19,6 +19,9 @@ import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.type.UserType;
 
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,15 +51,19 @@ public class AccountController {
     @GetMapping(value = "/auth/{socialLoginType}/callback")
     public ModelAndView socialLogin(
             @PathVariable(name = "socialLoginType") UserType userType,
-            @RequestParam(name = "code") String code) {
-
-                ModelAndView mav = new ModelAndView();
-        //return ResponseEntity.created(URI.create("/auth"))
-        //       .body(userService.doSocialLogin(userType, code));
-        SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
-
-        //System.out.println("socialUserResponse : "+socialUserResponse);
+            @RequestParam(name = "code") String code,
+            HttpServletRequest request) {
         
+        HttpSession session = request.getSession(false); 
+        ModelAndView mav = new ModelAndView();
+     
+        SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
+        
+        if(String.valueOf(socialUserResponse.getId()) != null){
+            session.setAttribute("id", socialUserResponse.getId());
+            session.setAttribute("name", socialUserResponse.getName());
+        }
+
         mav.setViewName("content/sns/doneSnsLogin");
 
         return mav;        
