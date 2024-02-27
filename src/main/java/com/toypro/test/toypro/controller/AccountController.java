@@ -54,15 +54,15 @@ public class AccountController {
             @RequestParam(name = "code") String code,
             HttpServletRequest request) {
         
-        HttpSession session = request.getSession(false); 
+        // HttpSession session = request.getSession(false); 
         ModelAndView mav = new ModelAndView();
      
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
         
-        if(String.valueOf(socialUserResponse.getId()) != null){
+      /*   if(String.valueOf(socialUserResponse.getId()) != null){
             session.setAttribute("id", socialUserResponse.getId());
             session.setAttribute("name", socialUserResponse.getName());
-        }
+        } */
 
         mav.setViewName("content/sns/doneSnsLogin");
 
