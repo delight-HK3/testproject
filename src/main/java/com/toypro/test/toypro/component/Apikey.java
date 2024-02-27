@@ -22,4 +22,9 @@ public class Apikey {
     public String googleMap(){
         return "https://maps.googleapis.com/maps/api/js?key="+googleKey+"&callback=initMap";
     }
+
+    // 네이버 지도 출력 링크
+    public String naverMap(){
+        return "https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId="+naverClientId;
+    }
 }
