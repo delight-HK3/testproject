@@ -25,7 +25,7 @@ public class Apikey {
 
     // 구글 지도 출력 링크
     public String googleMap(){
-        return "https://maps.googleapis.com/maps/api/js?key="+googleKey+"&callback=initMap";
+        return "https://maps.googleapis.com/maps/api/js?key="+googleKey+"&callback=initMap&v=weekly";
     }
 
     // 네이버 지도 출력 링크
