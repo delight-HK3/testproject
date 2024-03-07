@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+    <head>
+        <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
+
+        <!-- kakao Map Script -->
+        <script type="text/javascript" th:src="@{${kakaoMap}}"></script>
+        <script type="text/javascript" th:src="@{/js/kakaoClustering.js}"></script>
+        <!-- kakao Map Script -->
+
+        <!-- naver Map Script -->
+        <script type="text/javascript" th:src="@{${naverMap}}"></script>
+        <script type="text/javascript" th:src="@{/js/accidentdeath.js}"></script> <!-- 네이버지도 클러스터 출력 데이터 js 파일 -->
+        <script type="text/javascript" th:src="@{/js/naverClustering.js}"></script>
+        <script type="text/javascript" th:src="@{/js/MarkerClustering.js}"></script> <!-- 네이버지도 클러스터 설정 js 파일 -->
+        <!-- naver Map Script -->
+
+        <!-- google Map Script -->
+
+        <!-- google Map Script -->
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                kakaoMap();
+                naverMap();
+            });    
+        </script>
+        
+    </head>
+    <body>
+        <div class="container">
+            <th:block th:replace="content/common/header :: headerFragment"></th:block>
+            
+            <div class="row">
+                <div class="col">
+                     <!-- kakao Map -->
+                    <h5>kakao 클러스터 Map</h5>
+                    <div id="kakaoMap" style="width:100%;height:800px;"></div>
+                    <!-- // kakao Map -->
+                </div>
+
+                <div class="col">
+                    <!-- naver Map -->
+                    <h5>naver 클러스터 Map</h5>
+                    <div id="naverMap" style="width:100%;height:800px;"></div>
+                    <!-- // naver Map -->
+               </div>
+            </div>
+
+            <th:block th:replace="content/common/footer :: footerFragment"></th:block>
+        </div>
+    </body>
+</html>
