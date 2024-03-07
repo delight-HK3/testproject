@@ -15,6 +15,7 @@ Tool : Visual Studio Code
 2. 구글 로그인 기능
 3. 네이버 로그인 기능
 4. 카카오 로그인 기능
+5. 네이버 및 카카오지도를 활용한 데이터 클러스터링 기능
 
 ### 참고자료
 * 로그인 화면 구현 : <https://antdev.tistory.com/70?category=919963>
