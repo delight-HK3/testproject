@@ -22,6 +22,9 @@ public class Apikey {
     @Value("${kakao.api.clientID}")
     private String kakaoKey;
 
+    // 공공데이터 인증키
+    @Value("${data.api.key}")
+    private String datakey;
 
     // 구글 지도 출력 링크
     public String googleMap(){
@@ -36,5 +39,10 @@ public class Apikey {
     // 카카오 지도 출력 링크
     public String kakaoMap(){
         return "//dapi.kakao.com/v2/maps/sdk.js?appkey="+kakaoKey+"&libraries=clusterer";
+    }
+
+    // 
+    public String dataKey(){
+        return this.datakey;
     }
 }

@@ -1,14 +1,25 @@
 package com.toypro.test.toypro.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.json.JSONObject;
+import org.json.XML;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.component.Apikey;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -42,12 +53,33 @@ public class GisController {
         return mav;
     }
     
+    // 공공데이터를 활용한 전국 초,중,고 정보 가져오기
     @CrossOrigin("*")
-    @ResponseBody
     @RequestMapping(value="/clusteringGps", method=RequestMethod.POST)
-    public String requestMethodName(@RequestParam String param) {
-        return new String();
-    }
+    public String requestMethodName() throws MalformedURLException, IOException{
+
+        HttpURLConnection conn = (HttpURLConnection) new URL("http://api.data.go.kr/openapi/tn_pubr_public_elesch_mskul_lc_api?"
+            + "ServiceKey="+apikey.dataKey()).openConnection();
+
+        conn.connect();
+        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+        BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+        StringBuffer st = new StringBuffer();
+        
+        String line;
+        while ((line = reader.readLine()) != null) {
+            st.append(line);
+        }
+        
+        JSONObject xmlJSONObj = XML.toJSONObject(st.toString());
+
+        System.out.println(xmlJSONObj);
+
+        String jsonPrettyPrintString = xmlJSONObj.toString();
+        //System.out.println(jsonPrettyPrintString);
+
+        return "";
     
+    }
 
 }
