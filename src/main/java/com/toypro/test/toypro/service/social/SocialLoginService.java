@@ -17,8 +17,11 @@ public interface SocialLoginService {
         if(this instanceof GoogleLoginServiceImpl){ // 구글 로그인
             return UserType.GOOGLE;
         } 
-        else if(this instanceof NaverLoginServiceImpl){
+        else if(this instanceof NaverLoginServiceImpl){ // 네이버 로그인
             return UserType.NAVER;
+        }
+        else if(this instanceof KakaoLoginServiceImpl){ // 카카오 로그인
+            return UserType.KAKAO;
         }
         else {
             return null;
