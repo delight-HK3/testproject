@@ -7,7 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 @Configuration
 public class SocialLoginTypeConverter implements Converter<String, UserType> {
     @Override
-    public UserType convert(String s) {
+    public UserType convert(@SuppressWarnings("null") String s) {
         return UserType.valueOf(s.toUpperCase());
     }
 }

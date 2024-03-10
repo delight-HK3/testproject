@@ -7,10 +7,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Override
-    public void addCorsMappings(CorsRegistry corsRegistry) {
+    public void addCorsMappings(@SuppressWarnings("null") CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE")
                 .maxAge(3600);
     }
+
+    // 필터 생성하기
 }
