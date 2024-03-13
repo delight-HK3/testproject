@@ -29,10 +29,15 @@
 
                 $.ajax({
                     url: "./clusteringGps"
-                    , type: 'POST'
+                    , type: 'GET'
+                    , dataType: 'json'
                     , contentType : 'application/json'
                     , success: function (data) {
-                        console.log(data);
+                        var myItem = data.response.body.items.item;
+                        //console.log(myItem);
+
+                        kakaoMap(myItem);
+                        naverMap(myItem);
                     }
                 });
             });    
@@ -43,18 +48,22 @@
         <div class="container">
             <th:block th:replace="content/common/header :: headerFragment"></th:block>
             
+            <form id="searchForm">
+                
+            </form>
+
             <div class="row">
                 <div class="col">
                      <!-- kakao Map -->
                     <h5>kakao 클러스터 Map</h5>
-                    <!-- <div id="kakaoMap" style="width:100%;height:800px;"></div> -->
+                    <div id="kakaoMap" style="width:100%;height:800px;"></div>
                     <!-- // kakao Map -->
                 </div>
 
                 <div class="col">
                     <!-- naver Map -->
                     <h5>naver 클러스터 Map</h5>
-                    <!-- <div id="naverMap" style="width:100%;height:800px;"></div> -->
+                    <div id="naverMap" style="width:100%;height:800px;"></div>
                     <!-- // naver Map -->
                </div>
             </div>
