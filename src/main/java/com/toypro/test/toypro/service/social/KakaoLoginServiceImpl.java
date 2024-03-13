@@ -22,9 +22,7 @@ import com.toypro.test.toypro.type.UserType;
 import com.toypro.test.toypro.utils.GsonLocalDateTimeAdapter;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Qualifier("kakaoLogin")
