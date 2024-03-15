@@ -13,6 +13,8 @@ import org.json.XML;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +24,7 @@ import com.toypro.test.toypro.component.Apikey;
 import com.toypro.test.toypro.dto.api.SchoolRequestDto;
 
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @RestController
@@ -56,12 +59,17 @@ public class GisController {
     
     // 공공데이터를 활용한 전국 초,중,고 정보 가져오기
     @CrossOrigin("*")
+    @ResponseBody
     @RequestMapping(value="/clusteringGps", method=RequestMethod.GET)
-    public String requestMethodName(SchoolRequestDto searchDto) throws MalformedURLException, IOException{
+    public String requestMethodName(@ModelAttribute SchoolRequestDto searchDto) throws MalformedURLException, IOException, Exception {
 
         String addr = "http://api.data.go.kr/openapi/tn_pubr_public_elesch_mskul_lc_api?ServiceKey=";
         String serviceKey = apikey.dataKey();
         String parameter = "";
+
+        parameter = parameter + "&schoolSe=" + searchDto.getSearchSchoolSe();
+        parameter = parameter + "&numOfRows=" + searchDto.getSearchNumOfRows();
+        parameter = parameter + "&bnhhSe=" + searchDto.getSearchBnhhSe();
 
         addr = addr + serviceKey + parameter;
 
@@ -79,7 +87,7 @@ public class GisController {
         
         JSONObject xmlJSONObj = XML.toJSONObject(st.toString());
         String jsonPrettyPrintString = xmlJSONObj.toString();
-        
+
         return jsonPrettyPrintString;
     }
 
