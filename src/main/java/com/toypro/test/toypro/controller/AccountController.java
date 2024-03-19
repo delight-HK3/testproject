@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.ModelAndView; 
 
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.UserService;
@@ -54,15 +54,15 @@ public class AccountController {
             @RequestParam(name = "code") String code,
             HttpServletRequest request) {
         
-        HttpSession session = request.getSession(false); 
+        // HttpSession session = request.getSession(false); 
         ModelAndView mav = new ModelAndView();
      
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
         
-        if(String.valueOf(socialUserResponse.getId()) != null){
+      /*   if(String.valueOf(socialUserResponse.getId()) != null){
             session.setAttribute("id", socialUserResponse.getId());
             session.setAttribute("name", socialUserResponse.getName());
-        }
+        } */
 
         mav.setViewName("content/sns/doneSnsLogin");
 

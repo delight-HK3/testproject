@@ -13,4 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE")
                 .maxAge(3600);
     }
+
+    // 필터 생성하기
 }
