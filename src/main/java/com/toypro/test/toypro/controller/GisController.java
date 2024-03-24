@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.json.XML;
@@ -22,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.component.Apikey;
 import com.toypro.test.toypro.dto.api.SchoolRequestDto;
+import com.toypro.test.toypro.entity.gis.SchooleCodeEntity;
+import com.toypro.test.toypro.service.gis.GisService;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,6 +36,9 @@ public class GisController {
 
     @Autowired
     Apikey apikey;
+
+    @Autowired
+    private GisService gisService;
 
     // gis 테스트
     @RequestMapping(value="/coordinate",  method = RequestMethod.GET)
@@ -46,6 +53,10 @@ public class GisController {
     // 클러스터 테스트
     @RequestMapping(value="/clustering", method=RequestMethod.GET)
     public ModelAndView clusterer (ModelAndView mav) throws Exception{
+
+        List<SchooleCodeEntity> codeList = gisService.getCodeList();
+
+        System.out.println(codeList);
 
         mav.addObject("kakaoMap", apikey.kakaoMap());   // 카카오 맵
         //mav.addObject("googleMap", apikey.googleMap()); // 구글 맵
@@ -66,9 +77,9 @@ public class GisController {
         String serviceKey = apikey.dataKey();
         String parameter = "";
 
-        parameter = parameter + "&schoolSe=" + searchDto.getSearchSchoolSe();
+        parameter = parameter + "&schoolSe=" + URLEncoder.encode(searchDto.getSearchSchoolSe(), "UTF-8");
         parameter = parameter + "&numOfRows=" + searchDto.getSearchNumOfRows();
-        parameter = parameter + "&bnhhSe=" + searchDto.getSearchBnhhSe();
+        parameter = parameter + "&bnhhSe=" + URLEncoder.encode(searchDto.getSearchBnhhSe(), "UTF-8");
 
         addr = addr + serviceKey + parameter;
 

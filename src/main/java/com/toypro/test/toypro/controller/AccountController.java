@@ -19,9 +19,7 @@ import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.type.UserType;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
