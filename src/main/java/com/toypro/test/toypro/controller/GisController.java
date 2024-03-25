@@ -90,7 +90,7 @@ public class GisController {
 
         conn.connect();
         BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-        BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(bis, "UTF-8"));
         StringBuffer st = new StringBuffer();
         
         String line;
