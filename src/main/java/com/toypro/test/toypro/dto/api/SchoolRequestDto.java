@@ -16,7 +16,7 @@ public class SchoolRequestDto {
     private String searchSchoolSe;    // 학교구분
     private String searchSchoolNm;    // 학교명
     private String searchBnhhSe;      // 본교분교 구분
-    private String searchCddcNm;      // 시도교육청명
+    private String searchCddcCd;      // 시도교육청코드
     private String searchOperSttus;   // 운영상태
     private String searchEdcSport;    // 교육지원청코드
 
