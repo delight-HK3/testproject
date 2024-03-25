@@ -23,19 +23,30 @@
         <!-- google Map Script -->
 
         <script type="text/javascript">
-            $(document).ready(function() {
-                //kakaoMap();
-               // naverMap();
+            function check(){
+
+                var data = {
+                    searchSchoolSe: $("#searchSchoolSe").val()
+                    , searchNumOfRows: $("#searchNumOfRows").val()
+                    , searchBnhhSe: $("#searchBnhhSe").val()
+                }
 
                 $.ajax({
                     url: "./clusteringGps"
-                    , type: 'POST'
-                    , contentType : 'application/json'
+                    , type: 'GET'
+                    , data: data
+                    , dataType: 'json'
+                    , contentType : 'application/charset=utf-8'
                     , success: function (data) {
-                        console.log(data);
+
+                        var myItem = data.response.body.items.item;
+
+                        kakaoMap(myItem);
+                        naverMap(myItem);
                     }
                 });
-            });    
+            }
+            
         </script>
         
     </head>
@@ -43,18 +54,62 @@
         <div class="container">
             <th:block th:replace="content/common/header :: headerFragment"></th:block>
             
+            <!-- 검색 form -->
+            <div class="row">
+
+                <!-- 학교구분 조건 -->
+                <div class="col">
+                    <label for="searchSchoolSe" class="form-label">학교구분</label>
+                    <select class="form-select" id="searchSchoolSe">
+                        <option value="초등학교" selected>초등학교</option>
+                        <option value="중학교">중학교</option>
+                        <option value="고등학교">고등학교</option>
+                    </select>
+                </div>
+                <!-- 학교구분 조건 -->
+                
+                <!-- 한 페이지 결과 수 조건 -->
+                <div class="col">
+                    <label for="searchNumOfRows" class="form-label">출력데이터양</label>
+                    <input type="text" class="form-control" id="searchNumOfRows" value="100"/>
+                </div>
+                <!-- 한 페이지 결과 수 조건 -->
+
+                <!-- 본교분교 구분 조건 -->
+                <div class="col">
+                    <label for="searchBnhhSe" class="form-label">본교분교 구분</label>
+                    <select class="form-select" id="searchBnhhSe">
+                        <option value="본교" selected>본교</option>
+                        <option value="분교">분교</option>
+                    </select>
+                </div>
+                <!-- 본교분교 구분 조건 -->
+
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col">
+                    <input type="button" class="btn btn-primary" onclick="check()" value="조회" />
+                </div>
+            </div>
+            <!-- 검색 form -->
+
+            <br>
+
             <div class="row">
                 <div class="col">
                      <!-- kakao Map -->
                     <h5>kakao 클러스터 Map</h5>
-                    <!-- <div id="kakaoMap" style="width:100%;height:800px;"></div> -->
+                    <div id="kakaoMap" style="width:100%;height:800px;"></div>
                     <!-- // kakao Map -->
                 </div>
 
                 <div class="col">
                     <!-- naver Map -->
                     <h5>naver 클러스터 Map</h5>
-                    <!-- <div id="naverMap" style="width:100%;height:800px;"></div> -->
+                    <div id="naverMap" style="width:100%;height:800px;"></div>
                     <!-- // naver Map -->
                </div>
             </div>

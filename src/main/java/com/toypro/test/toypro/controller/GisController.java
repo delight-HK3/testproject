@@ -7,20 +7,27 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.List;
 
 import org.json.JSONObject;
 import org.json.XML;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.component.Apikey;
+import com.toypro.test.toypro.dto.api.SchoolRequestDto;
+import com.toypro.test.toypro.entity.gis.SchooleCodeEntity;
+import com.toypro.test.toypro.service.gis.GisService;
 
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @RestController
@@ -29,6 +36,9 @@ public class GisController {
 
     @Autowired
     Apikey apikey;
+
+    @Autowired
+    private GisService gisService;
 
     // gis 테스트
     @RequestMapping(value="/coordinate",  method = RequestMethod.GET)
@@ -44,6 +54,10 @@ public class GisController {
     @RequestMapping(value="/clustering", method=RequestMethod.GET)
     public ModelAndView clusterer (ModelAndView mav) throws Exception{
 
+        List<SchooleCodeEntity> codeList = gisService.getCodeList();
+
+        System.out.println(codeList);
+
         mav.addObject("kakaoMap", apikey.kakaoMap());   // 카카오 맵
         //mav.addObject("googleMap", apikey.googleMap()); // 구글 맵
         mav.addObject("naverMap", apikey.naverMap());   // 네이버 맵 
@@ -55,11 +69,21 @@ public class GisController {
     
     // 공공데이터를 활용한 전국 초,중,고 정보 가져오기
     @CrossOrigin("*")
-    @RequestMapping(value="/clusteringGps", method=RequestMethod.POST)
-    public String requestMethodName() throws MalformedURLException, IOException{
+    @ResponseBody
+    @RequestMapping(value="/clusteringGps", method=RequestMethod.GET)
+    public String requestMethodName(@ModelAttribute SchoolRequestDto searchDto) throws MalformedURLException, IOException, Exception {
 
-        HttpURLConnection conn = (HttpURLConnection) new URL("http://api.data.go.kr/openapi/tn_pubr_public_elesch_mskul_lc_api?"
-            + "ServiceKey="+apikey.dataKey()).openConnection();
+        String addr = "http://api.data.go.kr/openapi/tn_pubr_public_elesch_mskul_lc_api?ServiceKey=";
+        String serviceKey = apikey.dataKey();
+        String parameter = "";
+
+        parameter = parameter + "&schoolSe=" + URLEncoder.encode(searchDto.getSearchSchoolSe(), "UTF-8");
+        parameter = parameter + "&numOfRows=" + searchDto.getSearchNumOfRows();
+        parameter = parameter + "&bnhhSe=" + URLEncoder.encode(searchDto.getSearchBnhhSe(), "UTF-8");
+
+        addr = addr + serviceKey + parameter;
+
+        HttpURLConnection conn = (HttpURLConnection) new URL(addr).openConnection();
 
         conn.connect();
         BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
@@ -72,14 +96,9 @@ public class GisController {
         }
         
         JSONObject xmlJSONObj = XML.toJSONObject(st.toString());
-
-        System.out.println(xmlJSONObj);
-
         String jsonPrettyPrintString = xmlJSONObj.toString();
-        //System.out.println(jsonPrettyPrintString);
 
-        return "";
-    
+        return jsonPrettyPrintString;
     }
 
 }

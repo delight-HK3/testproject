@@ -1,6 +1,6 @@
 // ==================================== 네이버 클러스터 Map ==================================== //
 
-function naverMap(){
+function naverMap(myItem){
 
     var naverMap = new naver.maps.Map("naverMap", {
         zoom: 7,
@@ -14,11 +14,11 @@ function naverMap(){
 
     var markers = [];
 
-    $.get("/json/jijung.json", function(data) {
-        for (var i = 0, ii = data.positions.length; i < ii; i++) {
+    //$.get("/json/jijung.json", function(data) {
+        for (var i = 0, ii = myItem.length; i < ii; i++) {
             //var spot = data.positions[i];
-            var spot = data.positions[i],
-                latlng = new naver.maps.LatLng(spot.lat, spot.lng),
+            var spot = myItem[i],
+                latlng = new naver.maps.LatLng(spot.latitude, spot.longitude),
                 marker = new naver.maps.Marker({
                     position: latlng,
                     draggable: true
@@ -66,7 +66,7 @@ function naverMap(){
                 $(clusterMarker.getElement()).find('div:first-child').text(count);
             }
         });
-    });    
+    //});    
 }
 
 // ==================================== 네이버 클러스터 Map ==================================== //
