@@ -56,10 +56,8 @@ public class GisController {
 
         List<SchooleCodeEntity> codeList = gisService.getCodeList();
 
-        System.out.println(codeList);
-
+        mav.addObject("codeList", codeList);
         mav.addObject("kakaoMap", apikey.kakaoMap());   // 카카오 맵
-        //mav.addObject("googleMap", apikey.googleMap()); // 구글 맵
         mav.addObject("naverMap", apikey.naverMap());   // 네이버 맵 
 
         mav.setViewName("content/gis/clustering");
@@ -73,15 +71,20 @@ public class GisController {
     @RequestMapping(value="/clusteringGps", method=RequestMethod.GET)
     public String requestMethodName(@ModelAttribute SchoolRequestDto searchDto) throws MalformedURLException, IOException, Exception {
 
-        String addr = "http://api.data.go.kr/openapi/tn_pubr_public_elesch_mskul_lc_api?ServiceKey=";
-        String serviceKey = apikey.dataKey();
+        String addr = "http://api.data.go.kr/openapi/tn_pubr_public_elesch_mskul_lc_api?ServiceKey="; // 공공데이터 url
+        String serviceKey = apikey.dataKey(); // 공공데이터 api 키값
         String parameter = "";
 
-        parameter = parameter + "&schoolSe=" + URLEncoder.encode(searchDto.getSearchSchoolSe(), "UTF-8");
+        // 초중고 학교 구분
+        parameter = ("".equals(searchDto.getSearchSchoolSe())) ? parameter + "" : parameter + "&schoolSe=" + URLEncoder.encode(searchDto.getSearchSchoolSe(), "UTF-8");
+        // 본교 / 분교 구분
+        parameter = ("".equals(searchDto.getSearchBnhhSe())) ? parameter + "" : parameter + "&bnhhSe=" + URLEncoder.encode(searchDto.getSearchBnhhSe(), "UTF-8");
+        // 출력할 학교의 수 
         parameter = parameter + "&numOfRows=" + searchDto.getSearchNumOfRows();
-        parameter = parameter + "&bnhhSe=" + URLEncoder.encode(searchDto.getSearchBnhhSe(), "UTF-8");
-
-        addr = addr + serviceKey + parameter;
+        // 교육청 구분
+        parameter = ("0000000".equals(searchDto.getSearchCddcCd())) ? parameter + "" : parameter + "&cddcCode=" + searchDto.getSearchCddcCd();
+        
+        addr = addr + serviceKey + parameter; // api호출주소 + KEY + 작성한 파라미터
 
         HttpURLConnection conn = (HttpURLConnection) new URL(addr).openConnection();
 
