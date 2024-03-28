@@ -17,7 +17,6 @@ public class SchoolRequestDto {
     private String searchFondType;    // 공립/사립 구분
     private String searchBnhhSe;      // 본교/분교 구분
     private String searchCddcCd;      // 시도교육청코드
-    private String searchOperSttus;   // 운영상태
     private String searchEdcSport;    // 교육지원청코드
 
 }
