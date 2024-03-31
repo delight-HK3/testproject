@@ -20,6 +20,7 @@ import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.type.UserType;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,15 +53,17 @@ public class AccountController {
             @RequestParam(name = "code") String code,
             HttpServletRequest request) {
         
-        // HttpSession session = request.getSession(false); 
+        HttpSession session = request.getSession(true); 
         ModelAndView mav = new ModelAndView();
-     
+        
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
         
-      /*   if(String.valueOf(socialUserResponse.getId()) != null){
+        if(String.valueOf(socialUserResponse.getId()) != null){
+            session.setAttribute("snsType", socialUserResponse.getSnsType());
+            session.setAttribute("accessToken", socialUserResponse.getAccessToken());
             session.setAttribute("id", socialUserResponse.getId());
             session.setAttribute("name", socialUserResponse.getName());
-        } */
+        }
 
         mav.setViewName("content/sns/doneSnsLogin");
 
