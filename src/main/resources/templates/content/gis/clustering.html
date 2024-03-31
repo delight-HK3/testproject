@@ -30,6 +30,7 @@
                     , searchNumOfRows: $("#searchNumOfRows").val()
                     , searchBnhhSe: $("#searchBnhhSe").val()
                     , searchCddcCd: $("#searchCddcCd").val()
+                    , searchFondType: $("#searchFondType").val()
                 }
 
                 $.ajax({
@@ -87,7 +88,7 @@
 
                 <!-- 본교분교 구분 조건 -->
                 <div class="col-4">
-                    <label for="searchBnhhSe" class="form-label">본교분교 구분</label>
+                    <label for="searchBnhhSe" class="form-label">본교/분교 구분</label>
                     <select class="form-select" id="searchBnhhSe">
                         <option value="" selected>전체</option>
                         <option value="본교">본교</option>
@@ -113,7 +114,13 @@
                 <!-- //교육청 구분 조건 -->
 
                 <div class="col-4" style="margin-top: 10px">
-                
+                    <label for="searchFondType" class="form-label">공립/사립 구분</label>
+                    <select class="form-select" id="searchFondType">
+                        <option value="" selected>전체</option>
+                        <option value="공립">공립</option>
+                        <option value="사립">사립</option>
+                    </select>
+
                 </div>
 
                 <div class="col-4" style="margin-top: 10px">

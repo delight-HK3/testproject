@@ -77,20 +77,23 @@ public class GisController {
 
         // 초중고 학교 구분
         parameter = ("".equals(searchDto.getSearchSchoolSe())) ? parameter + "" : parameter + "&schoolSe=" + URLEncoder.encode(searchDto.getSearchSchoolSe(), "UTF-8");
-        // 본교 / 분교 구분
+        // 본교/분교 구분
         parameter = ("".equals(searchDto.getSearchBnhhSe())) ? parameter + "" : parameter + "&bnhhSe=" + URLEncoder.encode(searchDto.getSearchBnhhSe(), "UTF-8");
-        // 출력할 학교의 수 
-        parameter = parameter + "&numOfRows=" + searchDto.getSearchNumOfRows();
         // 교육청 구분
         parameter = ("0000000".equals(searchDto.getSearchCddcCd())) ? parameter + "" : parameter + "&cddcCode=" + searchDto.getSearchCddcCd();
-        
+        // 공립/사립 구분
+        parameter = ("".equals(searchDto.getSearchFondType())) ? parameter + "" : parameter + "&fondType=" + URLEncoder.encode(searchDto.getSearchFondType(), "UTF-8");
+
+        // 출력할 학교의 수 
+        parameter = parameter + "&numOfRows=" + searchDto.getSearchNumOfRows();
+
         addr = addr + serviceKey + parameter; // api호출주소 + KEY + 작성한 파라미터
 
         HttpURLConnection conn = (HttpURLConnection) new URL(addr).openConnection();
 
         conn.connect();
         BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-        BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(bis, "UTF-8"));
         StringBuffer st = new StringBuffer();
         
         String line;
