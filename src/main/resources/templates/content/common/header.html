@@ -17,7 +17,14 @@
         
         <!-- header btn -->
         <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+            <th:block th:if="${session.snsType == null}">
+                <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
+            </th:block>
+            
+            <th:block th:if="${session.snsType != null}">
+                <button type="button" class="btn btn-outline-primary me-2" >로그아웃</button>
+            </th:block>
+            
             <button type="button" class="btn btn-primary">Sign-up</button>
         </div>
         <!-- // header btn -->

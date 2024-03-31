@@ -108,6 +108,8 @@ public class GoogleLoginServiceImpl implements SocialLoginService{
         GoogleLoginResponse googleLoginResponse = gson.fromJson(jsonString, GoogleLoginResponse.class);
 
         return SocialUserResponse.builder()
+            .snsType("google")
+            .accessToken(accessToken)
             .id(googleLoginResponse.getId())
             .email(googleLoginResponse.getEmail())
             .name(googleLoginResponse.getName())

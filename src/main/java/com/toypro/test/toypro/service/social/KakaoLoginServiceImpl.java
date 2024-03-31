@@ -90,6 +90,8 @@ public class KakaoLoginServiceImpl implements SocialLoginService {
                 .getNickname();
         
         return SocialUserResponse.builder()
+                .snsType("kakao")
+                .accessToken(accessToken)
                 .id(kaKaoLoginResponse.getId())
                 .gender(kakaoLoginData.getGender())
                 .name(name)

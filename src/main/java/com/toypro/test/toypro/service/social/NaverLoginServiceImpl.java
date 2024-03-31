@@ -93,6 +93,8 @@ public class NaverLoginServiceImpl implements SocialLoginService{
         NaverLoginResponse.Response naverUserInfo = naverLoginResponse.getResponse();
 
         return SocialUserResponse.builder()
+            .snsType("naver")
+            .accessToken(accessToken)
             .id(naverUserInfo.getId())
             .nickname(naverUserInfo.getNickname())
             .birthday(naverUserInfo.getBirthday())
