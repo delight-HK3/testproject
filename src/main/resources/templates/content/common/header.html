@@ -38,20 +38,41 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   <button class="btn btn-google" onclick="window.open('../app/accounts/auth/google','Login','width=600,height=800')" 
-                        style="width: 100%; margin-bottom: 10px">
-                        구글로 로그인
-                    </button>
+                    <label for="inputId" class="form-label">아이디</label>
+                    <input type="text" class="form-control" id="inputId" name="inputId">
+                    <label for="inputPass" class="form-label">비밀번호</label>
+                    <input type="password" class="form-control" id="inputPass" name="inputPass">
                     <br>
-                    <button class="btn btn-naver" onclick="window.open('../app/accounts/auth/naver','Login','width=600,height=800')" 
-                        style="width: 100%; margin-bottom: 10px">
-                        네이버로 로그인
-                    </button>
-                    <br>
-                    <button class="btn btn-kakao" onclick="window.open('../app/accounts/auth/kakao','Login','width=600,height=800')" 
-                        style="width: 100%; margin-bottom: 10px">
-                        카카오로 로그인
-                    </button>
+                    <button style="width: 100%;" type="button" class="btn btn-primary">일반로그인</button>
+
+                    <br><br>
+
+                    <!-- ===================================== sns Login Btn ===================================== -->
+                    <div class="row">
+                        <p style="font-size: 13px; text-align: center;">SNS 로그인</p><br>
+                        <!-- 구글로그인 버튼 -->
+                        <div class="col-4" style="text-align: center;">
+                            <img src="../img/googleBtn.png" 
+                                onclick="window.open('../app/accounts/auth/google','Login','width=600,height=800')">
+                        </div>
+                        <!-- // 구글로그인 버튼 -->
+
+                        <!-- 네이버로그인 버튼 -->
+                        <div class="col-4" style="text-align: center;">
+                            <img src="../img/naverBtn.png" 
+                                onclick="window.open('../app/accounts/auth/naver','Login','width=600,height=800')">
+                        </div>
+                        <!-- // 네이버로그인 버튼 -->
+
+                        <!-- 카카오로그인 버튼 -->
+                        <div class="col-4" style="text-align: center;">
+                            <img src="../img/kakaoBtn.png" 
+                                onclick="window.open('../app/accounts/auth/kakao','Login','width=600,height=800')">
+                        </div>
+                        <!-- //카카오로그인 버튼 -->
+                        <br><br><br>
+                    </div>
+                    <!-- ===================================== sns Login Btn ===================================== -->
                 </div>
               </div>
             </div>

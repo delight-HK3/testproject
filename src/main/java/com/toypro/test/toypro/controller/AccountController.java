@@ -66,7 +66,7 @@ public class AccountController {
         }
 
         mav.setViewName("content/sns/doneSnsLogin");
-
+        
         return mav;        
     }
     
