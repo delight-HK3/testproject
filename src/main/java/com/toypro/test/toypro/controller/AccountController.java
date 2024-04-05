@@ -7,6 +7,7 @@ package com.toypro.test.toypro.controller;
  */
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.type.UserType;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +35,6 @@ public class AccountController {
     
     private final UserService userService;
     
-
     @GetMapping(value = "/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
 
@@ -70,4 +72,30 @@ public class AccountController {
         return mav;        
     }
     
+    /**
+     * 로그아웃버튼 기능
+     * 
+     * @param mav
+     * @return
+     */
+    @GetMapping(value = "/logout")
+    public void getMethodName(HttpServletRequest request, ServletResponse response) throws IOException, ServletException {
+        
+        HttpSession session = request.getSession(true); 
+
+        String snsType = (String) session.getAttribute("snsType");
+
+        if(!"null".equals(snsType)){
+            session.invalidate();
+        }
+
+        response.setContentType("text/html; charset=utf-8");
+                    PrintWriter w = response.getWriter();
+                    w.write("<script>location.href='/';</script>");
+                    w.flush();
+                    w.close();
+
+    }
+    
+
 }
