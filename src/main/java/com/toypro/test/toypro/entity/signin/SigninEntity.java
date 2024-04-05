@@ -1,4 +1,4 @@
-package com.toypro.test.toypro.entity.gis;
+package com.toypro.test.toypro.entity.signin;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,23 +17,27 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @Getter
-@Entity(name="t_cddc_nm")
-public class SchooleCodeEntity {
+@Entity(name="t_toy_user")
+public class SigninEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SEQ")
-    private int seq;
-    
-    @Column(name = "CDDC_CD")
-    private String cddcCd;
+    @Column(name = "NO")
+    private int no;
 
-    @Column(name = "CDDC_NM")
-    private String cddcNm;
+    @Column(name = "USER_ID")
+    private String userId;
 
-    public void codeList(int seq, String cddcCd, String cddcNm){
-        this.seq = seq;
-        this.cddcCd = cddcCd;
-        this.cddcNm = cddcNm;
-    }
-}   
+    @Column(name = "USER_PWD")
+    private String userPwd;
+
+    @Column(name = "USER_NAME")
+    private String userName;
+
+    @Column(name = "USER_EMAIL")
+    private String userEmail;
+
+    @Column(name = "PHONE_NO")
+    private String phoneNo;
+
+}
