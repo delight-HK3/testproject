@@ -25,20 +25,22 @@ import org.springframework.web.servlet.ModelAndView;
 import com.toypro.test.toypro.component.Apikey;
 import com.toypro.test.toypro.dto.api.SchoolRequestDto;
 import com.toypro.test.toypro.entity.gis.SchooleCodeEntity;
-import com.toypro.test.toypro.service.gis.GisService;
+import com.toypro.test.toypro.repository.gis.SchooleCodeRepository;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @RestController
+@RequiredArgsConstructor // 생성자 주입
 @RequestMapping(value = "/gis")
 public class GisController {
 
     @Autowired
     Apikey apikey;
 
-    @Autowired
-    private GisService gisService;
+    private final SchooleCodeRepository schooleCodeRepository; 
 
     // gis 테스트
     @RequestMapping(value="/coordinate",  method = RequestMethod.GET)
@@ -54,7 +56,7 @@ public class GisController {
     @RequestMapping(value="/clustering", method=RequestMethod.GET)
     public ModelAndView clusterer (ModelAndView mav) throws Exception{
 
-        List<SchooleCodeEntity> codeList = gisService.getCodeList();
+        List<SchooleCodeEntity> codeList = schooleCodeRepository.findAll();
 
         mav.addObject("codeList", codeList);
         mav.addObject("kakaoMap", apikey.kakaoMap());   // 카카오 맵

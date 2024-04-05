@@ -9,14 +9,21 @@ package com.toypro.test.toypro.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView; 
+import org.springframework.web.servlet.ModelAndView;
 
+import com.toypro.test.toypro.dto.signin.SigninRequestDto;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
+import com.toypro.test.toypro.entity.signin.SigninEntity;
+import com.toypro.test.toypro.repository.signin.SignupRepository;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.type.UserType;
 
@@ -34,7 +41,14 @@ import lombok.extern.slf4j.Slf4j;
 public class AccountController {
     
     private final UserService userService;
-    
+    private final SignupRepository signupRepository;
+
+    /**
+     * 유저 소셜 로그인 페이지 출력 
+     * 
+     * @param userType
+     * @throws IOException
+     */
     @GetMapping(value = "/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
 
@@ -79,7 +93,7 @@ public class AccountController {
      * @return
      */
     @GetMapping(value = "/logout")
-    public void getMethodName(HttpServletRequest request, ServletResponse response) throws IOException, ServletException {
+    public void logout(HttpServletRequest request, ServletResponse response) throws IOException, ServletException {
         
         HttpSession session = request.getSession(true); 
 
@@ -97,5 +111,46 @@ public class AccountController {
 
     }
     
+    /**
+     * 중복 아이디 체크
+     * 
+     * @param signinRequestDto
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    @ResponseBody
+    @RequestMapping(value = "/idCheck", method=RequestMethod.GET)
+    public String idCheck(@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
 
+        // 중복 아이디가 없으면 F, 있으면 T
+        String check = signupRepository.searchUser(signinRequestDto.getUserId());
+
+        if("T".equals(check)){
+            return "AREADY_USER";
+        } else {
+            return "SUCCESS";
+        }
+
+    }
+    
+    /**
+     * 회원가입 기능
+     * 
+     * @param signinRequestDto
+     * @throws IOException
+     * @throws ServletException
+     */
+    @ResponseBody
+    @RequestMapping(value = "/signin", method=RequestMethod.GET)
+    public void signin (@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
+        SigninEntity signinEntity = SigninEntity.builder()
+                                        .userId(signinRequestDto.getUserId())
+                                        .userEmail(signinRequestDto.getUserEmail())
+                                        .userName(signinRequestDto.getUserName())
+                                        .userPwd(signinRequestDto.getUserPwd())
+                                        .phoneNo(signinRequestDto.getUserPhone()).build();
+
+        signupRepository.save(signinEntity);
+    }
 }
