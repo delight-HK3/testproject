@@ -1,6 +1,6 @@
 <th:block th:fragment="headerFragment">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <a href="/" class="d-flex align-items-center col-md-4 mb-2 mb-md-0 text-dark text-decoration-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bootstrap-fill" viewBox="0 0 16 16">
                 <path d="M6.375 7.125V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23zm0 3.762h1.898c1.184 0 1.81-.48 1.81-1.377 0-.885-.65-1.348-1.886-1.348H6.375v2.725z"/>
                 <path d="M4.002 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4h-8zm1.06 12V3.545h3.399c1.587 0 2.543.809 2.543 2.11 0 .884-.65 1.675-1.483 1.816v.1c1.143.117 1.904.931 1.904 2.033 0 1.488-1.084 2.396-2.888 2.396z"/>
@@ -16,17 +16,28 @@
         </ul>
         
         <!-- header btn -->
-        <div class="col-md-3 text-end">
-            <th:block th:if="${session.snsType == null}">
+        <th:block th:if="${session.snsType != null}">
+            <div class="col-md-4 text-end">
+                <div class="row">
+                    <div class="col-md-8" style="margin-top: 8px">
+                        <span><a href="#" style="text-decoration: none;" class="px-2 me-2" th:text="${session.name}"></a>
+                            님 환영합니다.</span>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/app/accounts/logout" class="btn btn-outline-primary me-2">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+
+        <th:block th:if="${session.snsType == null}">
+            <div class="col-md-4 text-end">
                 <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
-            </th:block>
-            
-            <th:block th:if="${session.snsType != null}">
-                <button type="button" class="btn btn-outline-primary me-2" onclick="signOut()">로그아웃</button>
-            </th:block>
-            
-            <button type="button" class="btn btn-primary">Sign-up</button>
-        </div>
+                <button type="button" class="btn btn-primary">SignUp</button>
+            </div>
+        </th:block>
+
+
         <!-- // header btn -->
 
         <!-- login modal btn -->
@@ -40,6 +51,7 @@
                 <div class="modal-body">
                     <label for="inputId" class="form-label">아이디</label>
                     <input type="text" class="form-control" id="inputId" name="inputId">
+
                     <label for="inputPass" class="form-label">비밀번호</label>
                     <input type="password" class="form-control" id="inputPass" name="inputPass">
                     <br>
@@ -78,5 +90,24 @@
             </div>
           </div>
         <!-- // login modal btn -->
+
+        <!-- sign-Up modal btn -->
+        <div class="modal fade" id="signUpModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">회원가입</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success">회원가입</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- // sign-Up modal btn -->
     </header>
 </th:block>
