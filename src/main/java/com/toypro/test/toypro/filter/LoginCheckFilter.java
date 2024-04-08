@@ -1,5 +1,11 @@
 package com.toypro.test.toypro.filter;
 
+/**
+ * version 0.0.1
+ * 최초 생성 : 2024/04/04
+ * 설명 : 세션 필터 생성
+ */
+
 import java.io.IOException;
 import java.io.PrintWriter;
 

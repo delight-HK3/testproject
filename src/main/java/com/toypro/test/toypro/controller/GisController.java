@@ -1,5 +1,11 @@
 package com.toypro.test.toypro.controller;
 
+/**
+ * version 0.0.1
+ * 최초 생성 : 2024/03/28
+ * 설명 : 지도 관련 컨트롤러 
+ */
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +19,6 @@ import java.util.List;
 import org.json.JSONObject;
 import org.json.XML;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -37,9 +42,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/gis")
 public class GisController {
 
-    @Autowired
-    Apikey apikey;
-
+    private final Apikey apikey;
     private final SchooleCodeRepository schooleCodeRepository; 
 
     // gis 테스트

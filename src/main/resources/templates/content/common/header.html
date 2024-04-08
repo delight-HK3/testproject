@@ -97,32 +97,34 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel">회원가입</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clear()"></button>
+                        <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clear_1()">
                     </div>
                     <div class="modal-body">
-                        <label for="userName" class="form-label"><span style="color: red;">*</span>이름</label>
-                        <input type="text" style="margin-bottom: 10px" class="form-control" id="userName" name="userName">
+                        <form id="signUp">
+                            <label for="userName" class="form-label"><span style="color: red;">*</span>이름</label>
+                            <input type="text" style="margin-bottom: 10px" class="form-control" id="userName" name="userName">
 
-                        <div class="row">
-                            <label for="userId" class="form-label"><span style="color: red;">*</span>아이디 &nbsp;<span class="check" id="check"></span></label>
-                            <div class="col-7" style="padding-right: 0px">             
-                                <input type="text" style="margin-bottom: 10px" class="form-control" id="userId" name="userId">
-                            </div> 
-                            <div class="col-5" style="padding-left: 0px">
-                                <input type="button" class="btn btn-primary" style="width: 100%;" onclick="idCheck()" value="중복체크">
-                                <input type="hidden" id="checkYn" name="checkYn">
+                            <div class="row">
+                                <label for="userId" class="form-label"><span style="color: red;">*</span>아이디 &nbsp;<span class="check" id="check"></span></label>
+                                <div class="col-7" style="padding-right: 0px">             
+                                    <input type="text" style="margin-bottom: 10px" class="form-control" id="userId" name="userId">
+                                </div> 
+                                <div class="col-5" style="padding-left: 0px">
+                                    <input type="button" class="btn btn-primary" style="width: 100%;" onclick="idCheck()" value="중복체크">
+                                    <input type="hidden" id="checkYn" name="checkYn">
+                                </div>
                             </div>
-                        </div>
 
-                        <label for="userPwd" class="form-label"><span style="color: red;">*</span>비밀번호</label>
-                        <input type="password" style="margin-bottom: 10px" class="form-control" id="userPwd" name="userPwd">
+                            <label for="userPwd" class="form-label"><span style="color: red;">*</span>비밀번호</label>
+                            <input type="password" style="margin-bottom: 10px" class="form-control" id="userPwd" name="userPwd">
 
-                        <label for="userEmail" class="form-label">이메일</label>
-                        <input type="email" style="margin-bottom: 10px" class="form-control" id="userEmail" name="userEmail">
+                            <label for="userPhone" class="form-label"><span style="color: red;">*</span>전화번호</label>
+                            <input type="text" style="margin-bottom: 10px" class="form-control" id="userPhone" name="userPhone" maxlength="11">
+                        </form>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" style="width: 100%;" data-bs-toggle="modal" 
-                            data-bs-target="#phoneModal" data-bs-dismiss="modal">전화번호 인증</button>
+                        <button type="button" class="btn btn-success" style="width: 100%;" onclick="inputcheck_1()">이메일 인증</button>
                     </div>
                 </div>
             </div>
@@ -130,27 +132,31 @@
         <!-- // sign-Up modal btn -->
 
         <!-- sign-Up phone check modal btn -->
-        <div class="modal fade" id="phoneModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+        <div class="modal fade" id="emailModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel">회원가입</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clear_2()">
                     </div>
                     <div class="modal-body">
-                        
-                        <label for="userPhone" class="form-label"><span style="color: red;">*</span>전화번호</label>
-                        <div class="row">
-                            <div class="col-7" style="padding-right: 0px">
-                                <input type="text" style="margin-bottom: 10px" class="form-control" id="userPhone" name="userPhone" maxlength="11">
-                            </div> 
-                            <div class="col-5" style="padding-left: 0px">
-                                <button type="submit" class="btn btn-primary" style="width: 100%;">인증번호</button>
-                            </div>
-                        </div>
+                        <form id="email">
+                            <label for="userEmail" class="form-label"><span style="color: red;">*</span>이메일</label>
 
-                        <label for="userChecknum" class="form-label"><span style="color: red;">*</span>인증번호 입력</label>
-                        <input type="text" style="margin-bottom: 10px" class="form-control" id="userChecknum" name="userChecknum" required>
+                            <div class="row">
+                                <div class="col-7" style="padding-right: 0px">
+                                    <input type="email" style="margin-bottom: 10px" class="form-control" id="userEmail" name="userEmail">
+                                </div> 
+                                <div class="col-5" style="padding-left: 0px">
+                                    <input type="button" class="btn btn-primary" style="width: 100%;" onclick="emailCheck()" value="인증번호">
+                                </div>
+                            </div>
+
+                            <label for="userChecknum" class="form-label"><span style="color: red;">*</span>인증번호 입력</label>
+                            <input type="text" style="margin-bottom: 10px" class="form-control" id="userChecknum" name="userChecknum">
+
+                        </form>
+
                         <br>
                     </div>
                     <div class="modal-footer">
