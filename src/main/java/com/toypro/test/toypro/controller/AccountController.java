@@ -8,16 +8,22 @@ package com.toypro.test.toypro.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.dto.signin.SigninRequestDto;
@@ -42,6 +48,10 @@ public class AccountController {
     
     private final UserService userService;
     private final SignupRepository signupRepository;
+    private final JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username}")
+    private String senderEmail;
 
     /**
      * 유저 소셜 로그인 페이지 출력 
@@ -135,7 +145,39 @@ public class AccountController {
     }
     
     /**
-     * 회원가입 기능
+     * 이메일 보내기
+     * 
+     * @param email
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/CheckMail")
+    public String mailConfirm(String email) {
+        
+        Random random=new Random();  //난수 생성을 위한 랜덤 클래스
+		String key="";  //인증번호 
+
+		SimpleMailMessage message = new SimpleMailMessage();
+		//입력 키를 위한 코드
+		for(int i =0; i<3;i++) {
+			int index=random.nextInt(25)+65; //A~Z까지 랜덤 알파벳 생성
+			key+=(char)index;
+		}
+		int numIndex=random.nextInt(9999)+1000; //4자리 랜덤 정수를 생성
+		key+=numIndex;
+
+        message.setTo(email); //스크립트에서 보낸 메일을 받을 사용자 이메일 주소 
+        message.setFrom("dabin49140@gmail.com");
+		message.setSubject("인증번호 입력을 위한 메일 전송");
+		message.setText("인증 번호 : "+key);
+
+		javaMailSender.send(message);
+
+        return key;
+    }
+
+    /**
+     * 입력한 신규 회원 정보 입력 
      * 
      * @param signinRequestDto
      * @throws IOException
@@ -144,6 +186,7 @@ public class AccountController {
     @ResponseBody
     @RequestMapping(value = "/signin", method=RequestMethod.GET)
     public void signin (@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
+
         SigninEntity signinEntity = SigninEntity.builder()
                                         .userId(signinRequestDto.getUserId())
                                         .userEmail(signinRequestDto.getUserEmail())

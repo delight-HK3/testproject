@@ -9,8 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
-
-
     
     @RequestMapping(value="/",  method = RequestMethod.GET)
     public ModelAndView index (ModelAndView mav, HttpServletRequest request) throws Exception{
