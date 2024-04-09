@@ -33,7 +33,8 @@ function idCheck() {
 
 // 이메일 체크
 function emailCheck(){
-    var mail = $("userEmail").val();
+    var mail = $("#userEmail").val();
+
     if (mail == "") {
         alert("메일 주소가 입력되지 않았습니다.");
     } else {
@@ -41,7 +42,7 @@ function emailCheck(){
             type : 'post',
             url : '/app/accounts/CheckMail',
             data : {
-                email:mail
+                email : mail
             },
             dataType :'json',
 
@@ -105,11 +106,12 @@ function signin() {
 
 // modal창 닫을시 입력한 값 초기화
 function clear_1(){
+    $('#check').text("");
     $('#signUp')[0].reset();
 }
 
 // modal창 닫을시 입력한 값 초기화
 function clear_2(){
     $('#signUp')[0].reset();
-    $('#phone')[0].reset();
+    $('#email')[0].reset();
 }

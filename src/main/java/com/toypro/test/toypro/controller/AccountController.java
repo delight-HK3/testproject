@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,16 +23,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.dto.signin.SigninRequestDto;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.entity.signin.SigninEntity;
+
 import com.toypro.test.toypro.repository.signin.SignupRepository;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.type.UserType;
 
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,10 +50,9 @@ public class AccountController {
     
     private final UserService userService;
     private final SignupRepository signupRepository;
-    private final JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.username}")
-    private String senderEmail;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     /**
      * 유저 소셜 로그인 페이지 출력 
@@ -152,12 +153,12 @@ public class AccountController {
      */
     @ResponseBody
     @PostMapping("/CheckMail")
-    public String mailConfirm(String email) {
+    public String mailConfirm(@RequestParam("email") String email) throws Exception {
         
+        //=========================== key 발급 =========================//
         Random random=new Random();  //난수 생성을 위한 랜덤 클래스
 		String key="";  //인증번호 
 
-		SimpleMailMessage message = new SimpleMailMessage();
 		//입력 키를 위한 코드
 		for(int i =0; i<3;i++) {
 			int index=random.nextInt(25)+65; //A~Z까지 랜덤 알파벳 생성
@@ -165,13 +166,29 @@ public class AccountController {
 		}
 		int numIndex=random.nextInt(9999)+1000; //4자리 랜덤 정수를 생성
 		key+=numIndex;
+        //=========================== key 발급 =========================//
 
-        message.setTo(email); //스크립트에서 보낸 메일을 받을 사용자 이메일 주소 
-        message.setFrom("dabin49140@gmail.com");
-		message.setSubject("인증번호 입력을 위한 메일 전송");
-		message.setText("인증 번호 : "+key);
+        try {   
+            
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper messagehelper = new MimeMessageHelper(message, true);
 
-		javaMailSender.send(message);
+            messagehelper.setTo(email);
+            messagehelper.setFrom("dabin49140@gmail.com", "MyTest");
+            messagehelper.setSubject("[myTest 인증메일 입니다]");
+            messagehelper.setText(
+                    "<h1>myTest 메일인증</h1>" +
+                    "<br>myTest에 오신 것을 환영합니다." +
+                    "<br>아래 입력값을 인증번호 입력폼에 입력하시기 바랍니다." +
+                    "<br><br>" + key
+            ,true);
+
+            // 회원가입 이메일 발송
+            javaMailSender.send(message);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
         return key;
     }
