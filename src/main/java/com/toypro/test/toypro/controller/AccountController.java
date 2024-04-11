@@ -8,15 +8,10 @@ package com.toypro.test.toypro.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,13 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.dto.signin.SigninRequestDto;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
-import com.toypro.test.toypro.entity.signin.SigninEntity;
 
 import com.toypro.test.toypro.repository.signin.SignupRepository;
 import com.toypro.test.toypro.service.UserService;
+import com.toypro.test.toypro.service.account.AccountService;
 import com.toypro.test.toypro.type.UserType;
 
-import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,10 +43,10 @@ import lombok.extern.slf4j.Slf4j;
 public class AccountController {
     
     private final UserService userService;
+    private final AccountService accountService;
     private final SignupRepository signupRepository;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private String checkKey = ""; // 인증키 비교
 
     /**
      * 유저 소셜 로그인 페이지 출력 
@@ -152,45 +146,23 @@ public class AccountController {
      * @return
      */
     @ResponseBody
-    @PostMapping("/CheckMail")
-    public String mailConfirm(@RequestParam("email") String email) throws Exception {
+    @RequestMapping(value = "/CheckMail", method=RequestMethod.POST)
+    public void mailConfirm(@RequestParam("email") String email) throws Exception {
         
-        //=========================== key 발급 =========================//
-        Random random=new Random();  //난수 생성을 위한 랜덤 클래스
-		String key="";  //인증번호 
+        // 메일 전송 및 인증키 저장
+        checkKey = accountService.mailConfirm(email);
 
-		//입력 키를 위한 코드
-		for(int i =0; i<3;i++) {
-			int index=random.nextInt(25)+65; //A~Z까지 랜덤 알파벳 생성
-			key+=(char)index;
-		}
-		int numIndex=random.nextInt(9999)+1000; //4자리 랜덤 정수를 생성
-		key+=numIndex;
-        //=========================== key 발급 =========================//
+    }
 
-        try {   
-            
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper messagehelper = new MimeMessageHelper(message, true);
-
-            messagehelper.setTo(email);
-            messagehelper.setFrom("dabin49140@gmail.com", "MyTest");
-            messagehelper.setSubject("[myTest 인증메일 입니다]");
-            messagehelper.setText(
-                    "<h1>myTest 메일인증</h1>" +
-                    "<br>myTest에 오신 것을 환영합니다." +
-                    "<br>아래 입력값을 인증번호 입력폼에 입력하시기 바랍니다." +
-                    "<br><br>" + key
-            ,true);
-
-            // 회원가입 이메일 발송
-            javaMailSender.send(message);
-
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        return key;
+    /**
+     * 타이머가 0가 된경우 인증번호 초기화
+     * 
+     * @throws Exception
+     */
+    @ResponseBody
+    @RequestMapping(value = "/resetCheckNum", method=RequestMethod.GET)
+    public void resetCheckNum() throws Exception {
+        checkKey = "";
     }
 
     /**
@@ -202,15 +174,10 @@ public class AccountController {
      */
     @ResponseBody
     @RequestMapping(value = "/signin", method=RequestMethod.GET)
-    public void signin (@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
+    public String signin (@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
+        
+        String check = accountService.signin(signinRequestDto, checkKey);
 
-        SigninEntity signinEntity = SigninEntity.builder()
-                                        .userId(signinRequestDto.getUserId())
-                                        .userEmail(signinRequestDto.getUserEmail())
-                                        .userName(signinRequestDto.getUserName())
-                                        .userPwd(signinRequestDto.getUserPwd())
-                                        .phoneNo(signinRequestDto.getUserPhone()).build();
-
-        signupRepository.save(signinEntity);
+        return check;
     }
 }
