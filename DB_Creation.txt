@@ -25,6 +25,40 @@ CREATE TABLE `t_cddc_nm` (
   PRIMARY KEY (`SEQ`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+/* t_bd_catg 테이블 생성 */
+CREATE TABLE `t_bd_catg` (
+  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
+  `CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
+  `CATG_NM` varchar(50) DEFAULT NULL COMMENT '카테고리 이름',
+  `ORDER_NUM` varchar(10) DEFAULT NULL COMMENT '정렬순서',
+  `REG_DATE` date DEFAULT NULL COMMENT '등록일',
+  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
+  PRIMARY KEY (`SEQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/* t_bd_table 테이블 생성 */
+CREATE TABLE `t_bd_table` (
+  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
+  `BOARD_CD` varchar(10) DEFAULT NULL COMMENT '게시판글 코드',
+  `BOARD_TITLE` varchar(50) DEFAULT NULL COMMENT '게시판글 제목',
+  `BOARD_CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
+  `BOARD_SUBJECT` varchar(1000) DEFAULT NULL COMMENT '게시판글 내용',
+  `BOARD_CNT` int(11) DEFAULT NULL COMMENT '게시판 조회수',
+  `REG_DATE` date DEFAULT NULL COMMENT '등록일',
+  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
+  PRIMARY KEY (`SEQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/* t_bd_comm 테이블 생성 */
+CREATE TABLE `t_bd_comm` (
+  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
+  `BOARD_CD` varchar(10) DEFAULT NULL COMMENT '게시판 글코드',
+  `COMM_SUBJECT` varchar(500) DEFAULT NULL COMMENT '댓글 내용',
+  `REG_DATE` date DEFAULT NULL COMMENT '등록일',
+  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
+  PRIMARY KEY (`SEQ`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 INSERT INTO toypro.t_cddc_nm
 (SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
 VALUES(1, '7010000', '서울특별시교육청', 1, '2024-03-21', NULL);
