@@ -1,5 +1,7 @@
 package com.toypro.test.toypro.entity.signin;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,4 +42,9 @@ public class SigninEntity {
     @Column(name = "PHONE_NO")
     private String phoneNo;
 
+    @Column(name = "USER_TYPE")
+    private String usertype;
+
+    @Column(name = "REG_DATE")
+    private Date regdate;
 }
