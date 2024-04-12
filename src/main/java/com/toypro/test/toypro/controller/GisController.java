@@ -60,7 +60,7 @@ public class GisController {
     public ModelAndView clusterer (ModelAndView mav) throws Exception{
 
         List<SchooleCodeEntity> codeList = schooleCodeRepository.findAll();
-
+        
         mav.addObject("codeList", codeList);
         mav.addObject("kakaoMap", apikey.kakaoMap());   // 카카오 맵
         mav.addObject("naverMap", apikey.naverMap());   // 네이버 맵 

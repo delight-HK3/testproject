@@ -1,4 +1,4 @@
-package com.toypro.test.toypro.entity.gis;
+package com.toypro.test.toypro.entity.dashboard;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,19 +17,27 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @Getter
-@Entity(name="t_cddc_nm")
-public class SchooleCodeEntity {
+@Entity(name="t_bd_table")
+public class DashboardEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SEQ")
     private int seq;
-    
-    @Column(name = "CDDC_CD")
-    private String cddcCd;
 
-    @Column(name = "CDDC_NM")
-    private String cddcNm;
+    @Column(name = "BOARD_CD")
+    private String boardCd;
 
-    
-}   
+    @Column(name = "BOARD_TITLE")
+    private String boardTitle;
+
+    @Column(name = "CATG_NM")
+    private String catgNm;
+
+    @Column(name = "BOARD_CNT")
+    private int boardCnt;
+
+    @Column(name = "REG_DATE")
+    private String regDate;
+
+}
