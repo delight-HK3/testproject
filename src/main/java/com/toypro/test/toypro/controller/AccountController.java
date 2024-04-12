@@ -48,7 +48,7 @@ public class AccountController {
     private String checkKey = ""; // 인증키 비교
 
     /**
-     * 유저 소셜 로그인 페이지 출력 
+     * SNS 로그인 - 유저 소셜 로그인 페이지 출력 
      * 
      * @param userType
      * @throws IOException
@@ -61,7 +61,7 @@ public class AccountController {
     }
 
     /**
-     * 유저 소셜 로그인으로 리다이렉트 해주는 url
+     * SNS 로그인 - 유저 소셜 로그인으로 리다이렉트 해주는 url
      * 
      * @param SocialLoginPath
      * @throws IOException
@@ -91,7 +91,7 @@ public class AccountController {
     }
     
     /**
-     * 로그아웃버튼 기능
+     * 회원가입 - 로그아웃버튼 기능
      * 
      * @param mav
      * @return
@@ -116,7 +116,7 @@ public class AccountController {
     }
     
     /**
-     * 중복 아이디 체크
+     * 회원가입 - 중복 아이디 체크
      * 
      * @param signinRequestDto
      * @param response
@@ -139,7 +139,7 @@ public class AccountController {
     }
     
     /**
-     * 이메일 보내기
+     * 이메일 인증 - 이메일 보내기
      * 
      * @param email
      * @return
@@ -154,7 +154,7 @@ public class AccountController {
     }
 
     /**
-     * 타이머가 0가 된경우 인증번호 초기화
+     * 이메일 인증 - 타이머가 0가 된경우 인증번호 초기화
      * 
      * @throws Exception
      */
@@ -165,7 +165,7 @@ public class AccountController {
     }
 
     /**
-     * 입력한 신규 회원 정보 입력 
+     * 회원가입 - 입력한 신규 회원 정보 입력 
      * 
      * @param signinRequestDto
      * @throws IOException

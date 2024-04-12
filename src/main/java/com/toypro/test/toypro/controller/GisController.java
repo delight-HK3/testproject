@@ -45,7 +45,13 @@ public class GisController {
     private final Apikey apikey;
     private final SchooleCodeRepository schooleCodeRepository; 
 
-    // gis 테스트
+    /**
+     * 구글지도를 활용한 좌표 획득
+     * 
+     * @param mav
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/coordinate",  method = RequestMethod.GET)
     public ModelAndView coordinate (ModelAndView mav) throws Exception{
 
@@ -55,7 +61,13 @@ public class GisController {
         return mav;
     }
 
-    // 클러스터 테스트
+    /**
+     * 데이터 클러스터링 - 지도표출
+     * 
+     * @param mav
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/clustering", method=RequestMethod.GET)
     public ModelAndView clusterer (ModelAndView mav) throws Exception{
 
@@ -70,7 +82,15 @@ public class GisController {
         return mav;
     }
     
-    // 공공데이터를 활용한 전국 초,중,고 정보 가져오기
+    /**
+     * 데이터 클러스터링 - 공공데이터를 활용한 전국 초,중,고 정보 가져오기
+     * 
+     * @param searchDto
+     * @return
+     * @throws MalformedURLException
+     * @throws IOException
+     * @throws Exception
+     */
     @CrossOrigin("*")
     @ResponseBody
     @RequestMapping(value="/clusteringGps", method=RequestMethod.GET)

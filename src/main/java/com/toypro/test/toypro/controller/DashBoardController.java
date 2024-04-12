@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +20,13 @@ public class DashBoardController {
 
     private final DashboardService dashboardService;
 
+    /**
+     * 게시판 - 게시글 목록
+     * 
+     * @param mav
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/List",  method=RequestMethod.GET)
     public ModelAndView List (ModelAndView mav) throws Exception {
         
@@ -26,6 +34,24 @@ public class DashBoardController {
         
         mav.addObject("boardList", boardList);
         mav.setViewName("content/dashboard/dashboardList");
+
+        return mav;
+    }
+
+    /**
+     * 게시판 - 게시글 상세보기
+     * 
+     * @param mav
+     * @param boardCd
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/details",  method=RequestMethod.GET)
+    public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd) throws Exception {
+
+        
+
+        mav.setViewName("content/dashboard/dashboardDetail");
 
         return mav;
     }
