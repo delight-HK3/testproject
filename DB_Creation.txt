@@ -30,16 +30,27 @@ CREATE TABLE `t_bd_catg` (
   `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
   `CATG_NM` varchar(50) DEFAULT NULL COMMENT '카테고리 이름',
-  `ORDER_NUM` varchar(10) DEFAULT NULL COMMENT '정렬순서',
   `REG_DATE` date DEFAULT NULL COMMENT '등록일',
   `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
   PRIMARY KEY (`SEQ`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO toypro.t_bd_catg
+(SEQ, CATG_CD, CATG_NM, REG_DATE, UPDT_DATE)
+VALUES(1, '0100', '공지', '2024-04-12', NULL);
+
+INSERT INTO toypro.t_bd_catg
+(SEQ, CATG_CD, CATG_NM, REG_DATE, UPDT_DATE)
+VALUES(2, '0200', 'Q&A', '2024-04-12', NULL);
+
+INSERT INTO toypro.t_bd_catg
+(SEQ, CATG_CD, CATG_NM, REG_DATE, UPDT_DATE)
+VALUES(3, '0300', '자유', '2024-04-12', NULL);
 
 /* t_bd_table 테이블 생성 */
 CREATE TABLE `t_bd_table` (
   `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
-  `BOARD_CD` varchar(10) DEFAULT NULL COMMENT '게시판글 코드',
+  `BOARD_CD` varchar(20) DEFAULT NULL COMMENT '게시판글 코드',
   `BOARD_TITLE` varchar(50) DEFAULT NULL COMMENT '게시판글 제목',
   `BOARD_CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
   `BOARD_SUBJECT` varchar(1000) DEFAULT NULL COMMENT '게시판글 내용',
@@ -48,6 +59,10 @@ CREATE TABLE `t_bd_table` (
   `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
   PRIMARY KEY (`SEQ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO toypro.t_bd_table
+(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
+VALUES(1, '20240412FKQD1', '최초 공지', '0100', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
 
 /* t_bd_comm 테이블 생성 */
 CREATE TABLE `t_bd_comm` (
