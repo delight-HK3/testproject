@@ -11,4 +11,5 @@ public interface DashboardService {
 
     List<DashboardEntity> searchList(); // 게시판 리스트 출력
 
+    List<DashboardEntity> searchDetail(String boardCd); // 게시판 상세정보 출력
 }

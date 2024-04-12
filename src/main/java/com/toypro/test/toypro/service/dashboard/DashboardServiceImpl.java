@@ -15,6 +15,7 @@ public class DashboardServiceImpl implements DashboardService{
 
     private final DashboardRepository dashboardRepository;
 
+    // 게시판 리스트 출력
     @Override
     public List<DashboardEntity> searchList() {
         
@@ -22,6 +23,13 @@ public class DashboardServiceImpl implements DashboardService{
 
         return boardlist;
     
+    }
+
+    // 게시판 상세정보 출력
+    @Override
+    public List<DashboardEntity> searchDetail(String boardCd) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'searchDetail'");
     }
     
 }

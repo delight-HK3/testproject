@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+    <head>
+        <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
+    </head>
+    <body>
+        <div class="container">
+            <th:block th:replace="content/common/header :: headerFragment"></th:block>
+
+            <!-- ================================ 게시판 상세페이지 영역 ================================ -->
+
+            <br><br><br>
+            <h2 class="fw-bold">게시판 기능</h2>
+            <br>
+
+            
+
+
+            <!-- ================================ 게시판 상세페이지 영역 ================================ -->
+
+            <th:block th:replace="content/common/footer :: footerFragment"></th:block>
+        </div>
+    </body>
+</html>
