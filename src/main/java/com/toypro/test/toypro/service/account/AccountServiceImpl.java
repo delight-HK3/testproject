@@ -1,6 +1,5 @@
 package com.toypro.test.toypro.service.account;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
