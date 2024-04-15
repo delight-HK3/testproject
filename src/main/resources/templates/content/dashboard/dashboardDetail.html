@@ -12,12 +12,24 @@
             <th:block th:replace="content/common/header :: headerFragment"></th:block>
 
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->
-
-            <br><br><br>
-            <h2 class="fw-bold">게시판 기능</h2>
-            <br>
-
+            <div class="container">
+                <br><br><br>
+                <h2 class="fw-bold">[[${detail.boardTitle}]]</h2>
+                <br><br>
+                <div class="row">
+                    <div class="col-6">
+                        <p style="margin-bottom: 3px;">작성일 : [[${detail.regDate}]] &nbsp; 작성자 : [[${detail.boardSubjectNm}]]</p>
+                    </div>
+                    <div class="col-6" style="text-align: right;">
+                        <p style="margin-bottom: 3px;">조회수 : [[${detail.boardCnt}]]</p>
+                    </div>    
+                </div>
+                <hr style="margin-top: 3px;">
+                [[${detail.boardSubject}]]
+            </div>
             
+
+
 
 
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->
