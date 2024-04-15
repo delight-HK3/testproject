@@ -24,12 +24,18 @@ public class DashboardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SEQ")
     private int seq;
-
+    
     @Column(name = "BOARD_CD")
     private String boardCd;
 
     @Column(name = "BOARD_TITLE")
     private String boardTitle;
+
+    @Column(name = "BOARD_SUBJECT")
+    private String boardSubject;
+
+    @Column(name = "BOARD_SUBJECT_NM")
+    private String boardSubjectNm;
 
     @Column(name = "CATG_NM")
     private String catgNm;

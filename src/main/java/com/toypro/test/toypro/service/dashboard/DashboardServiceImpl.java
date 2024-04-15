@@ -27,9 +27,24 @@ public class DashboardServiceImpl implements DashboardService{
 
     // 게시판 상세정보 출력
     @Override
-    public List<DashboardEntity> searchDetail(String boardCd) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchDetail'");
+    public DashboardEntity searchDetail(String boardCd) {
+        DashboardEntity detail = dashboardRepository.searchdetail(boardCd);
+
+        return detail;
+    }
+
+    // 게시글 조회수 조회
+    @Override
+    public int searchViewCnt(String boardCd) {
+        int cnt = dashboardRepository.searchViewCnt(boardCd);
+
+        return cnt;
+    }
+
+    // 게시글 들어 갈 때 마다 1 증가
+    @Override
+    public void detailCntUp(String boardCd, int cnt) {
+        dashboardRepository.detailCntUp(boardCd, cnt);
     }
     
 }
