@@ -25,13 +25,19 @@
                     </div>    
                 </div>
                 <hr style="margin-top: 3px;">
-                [[${detail.boardSubject}]]
+                <div style="height: 600px;">
+                    <br>
+                    [[${detail.boardSubject}]]
+                    <br>
+                </div>
+                <div class="col-6"></div>
+                <div class="col-6">
+                    
+                    <input type="button" class="btn btn-warning" value="수정">
+                    <input type="button" class="btn btn-danger" value="삭제">
+
+                </div>
             </div>
-            
-
-
-
-
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->
 
             <th:block th:replace="content/common/footer :: footerFragment"></th:block>

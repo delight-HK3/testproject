@@ -7,12 +7,26 @@ CREATE TABLE `t_toy_user` (
   `USER_ID` varchar(100) NOT NULL COMMENT '아이디',
   `USER_PWD` varchar(100) NOT NULL COMMENT '비밀번호',
   `USER_NAME` varchar(100) NOT NULL COMMENT '이름',
-  `USER_EMAIL` varchar(100) NOT NULL COMMENT '이메일',
-  `PHONE_NO` varchar(11) DEFAULT NULL COMMENT '전화번호',
-  `REG_DATE` date NOT NULL COMMENT '최초생성일',
-  `UPDT_DATE` date NOT NULL COMMENT '수정일',
+  `NICK_NAME` varchar(100) DEFAULT NULL COMMENT '닉네임',
+  `USER_EMAIL` varchar(100) DEFAULT NULL COMMENT '이메일',
+  `PHONE_NO` varchar(11) NOT NULL COMMENT '전화번호',
+  `USER_TYPE` varchar(10) DEFAULT NULL COMMENT '계정 타입 0 : 유저 / 1 : 관리자',
+  `reg_date` datetime(6) DEFAULT NULL COMMENT '등록일',
+  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
   PRIMARY KEY (`NO`,`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO toypro.t_toy_user
+(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, reg_date, UPDT_DATE)
+VALUES(1, 'admin', 'admin', '관리자', '관리자', 'admin@gmail.com', '01099991111', '1', NULL, NULL);
+
+INSERT INTO toypro.t_toy_user
+(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, reg_date, UPDT_DATE)
+VALUES(2, '1114', '1111', '이다빈', '사용자1', 'dabin49140@gmail.com', '01092111663', '0', '2024-04-11 00:00:00.000', NULL);
+
+INSERT INTO toypro.t_toy_user
+(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, reg_date, UPDT_DATE)
+VALUES(3, '1111', '5555', '이다빈', '사용자2', 'dabin49140@gmail.com', '01092111663', '0', '2024-04-11 00:00:00.000', NULL);
 
 /* t_cddc_nm 테이블 생성 */
 CREATE TABLE `t_cddc_nm` (
@@ -52,29 +66,30 @@ CREATE TABLE `t_bd_table` (
   `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `BOARD_CD` varchar(20) DEFAULT NULL COMMENT '게시판글 코드',
   `BOARD_TITLE` varchar(50) DEFAULT NULL COMMENT '게시판글 제목',
+  `BOARD_USER_ID` varchar(100) DEFAULT NULL COMMENT '게시판글 작성자 ID',
   `BOARD_CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
   `BOARD_SUBJECT` longtext DEFAULT NULL COMMENT '게시판글 내용',
   `BOARD_CNT` int(11) DEFAULT NULL COMMENT '게시판 조회수',
-  `REG_DATE` date DEFAULT NULL COMMENT '등록일',
-  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
+  `reg_date` datetime(6) DEFAULT NULL COMMENT '등록일',
+  `updt_date` datetime(6) DEFAULT NULL COMMENT '수정일',
   PRIMARY KEY (`SEQ`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO toypro.t_bd_table
-(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
-VALUES(1, '20240412FKQD1', '최초 공지', '0100', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
+(SEQ, BOARD_CD, BOARD_TITLE, BOARD_USER_ID, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, reg_date, updt_date)
+VALUES(1, '20240412FKQD1', '최초 공지', 'admin', '0100', '', 9, '2024-04-12 00:00:00.000', NULL);
 
 INSERT INTO toypro.t_bd_table
-(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
-VALUES(2, '20240412FKQD2', '최초 공지2', '0200', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
+(SEQ, BOARD_CD, BOARD_TITLE, BOARD_USER_ID, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, reg_date, updt_date)
+VALUES(2, '20240412FKQD2', '최초 공지2', '1114', '0200', '', 1, '2024-04-12 00:00:00.000', NULL);
 
 INSERT INTO toypro.t_bd_table
-(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
-VALUES(3, '20240412FKQD3', '최초 공지3', '0100', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
+(SEQ, BOARD_CD, BOARD_TITLE, BOARD_USER_ID, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, reg_date, updt_date)
+VALUES(3, '20240412FKQD3', '최초 공지3', 'admin', '0100', '', 2, '2024-04-12 00:00:00.000', NULL);
 
 INSERT INTO toypro.t_bd_table
-(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
-VALUES(4, '20240412FKQD4', '최초 공지4', '0300', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
+(SEQ, BOARD_CD, BOARD_TITLE, BOARD_USER_ID, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, reg_date, updt_date)
+VALUES(4, '20240412FKQD4', '최초 공지4', '1111', '0300', '', 0, '2024-04-12 00:00:00.000', NULL);
 
 /* t_bd_comm 테이블 생성 */
 CREATE TABLE `t_bd_comm` (

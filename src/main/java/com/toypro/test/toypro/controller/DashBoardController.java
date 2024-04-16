@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.service.dashboard.DashboardService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
 import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +35,7 @@ public class DashBoardController {
     @RequestMapping(value="/List",  method=RequestMethod.GET)
     public ModelAndView List (ModelAndView mav) throws Exception {
         
-        List<DashboardEntity> boardList = dashboardService.searchList();
+        List<DashboardDTO> boardList = dashboardService.searchList();
         
         mav.addObject("boardList", boardList);
         mav.setViewName("content/dashboard/dashboardList");
@@ -47,15 +52,19 @@ public class DashBoardController {
      * @throws Exception
      */
     @RequestMapping(value="/details",  method=RequestMethod.GET)
-    public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd) throws Exception {
+    public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd
+        ,HttpServletRequest request) throws Exception {
+        
+        HttpSession session = request.getSession(true); 
 
         // 현재 게시글의 조회수 정보를 가져오고 조회수 1 증가
         int cnt = dashboardService.searchViewCnt(boardCd);
         cnt++; 
         dashboardService.detailCntUp(boardCd, cnt);
 
-        DashboardEntity detail = dashboardService.searchDetail(boardCd);
-
+        DashboardDTO detail = dashboardService.searchDetail(boardCd);
+        
+        mav.addObject("name", session.getAttribute("name"));
         mav.addObject("detail", detail);
         mav.setViewName("content/dashboard/dashboardDetail");
 
