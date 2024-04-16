@@ -22,6 +22,7 @@ public class AccountServiceImpl implements AccountService{
     private final JavaMailSender javaMailSender;
     private final SignupRepository signupRepository;
 
+    // 이메일 인증
     @Override
     public String mailConfirm(String email) {
        
@@ -63,6 +64,7 @@ public class AccountServiceImpl implements AccountService{
         return key;
     }
 
+    // 회원정보 DB에 입력
     @Override
     public String signin(SigninRequestDto signinRequestDto, String checkKey) {
 
