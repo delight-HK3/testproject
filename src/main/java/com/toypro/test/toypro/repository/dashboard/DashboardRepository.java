@@ -35,18 +35,24 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
 
     // 게시글 상세내용 조회
     @Query(value="SELECT "+
-                 "   a.SEQ" +
-                 "   , a.BOARD_CD"+
-                 "   , a.BOARD_TITLE"+
-                 "   , (select CATG_NM from t_bd_catg where CATG_CD = a.BOARD_CATG_CD) as boardCatgNm"+
-                 "   , (select NICK_NAME from t_toy_user where USER_ID = a.BOARD_USER_ID) as boardNickName "+
-                 "   , a.BOARD_SUBJECT"+
-                 "   , a.BOARD_CNT"+
-                 "   , DATE_FORMAT(a.REG_DATE, '%Y-%m-%d') AS REG_DATE "+
-                 "from t_bd_table a "+
-                 "where 1=1 "+
-                 "and a.BOARD_CD = :boardCd", nativeQuery = true)
-    DashboardDTO searchdetail(String boardCd);
+                "   a.SEQ"+ 
+                "   , a.BOARD_CD"+
+                "   , b.NICK_NAME"+
+                "   , b.USER_ID"+
+                "   , a.BOARD_TITLE"+
+                "   , a.BOARD_SUBJECT"+
+                "   , c.CATG_NM"+
+                "   , a.BOARD_CNT"+
+                "   , a.REG_DATE "+
+                "   , a.UPDT_DATE "+
+                "FROM t_bd_table a "+ 
+                "inner join t_toy_user b "+ 
+                "inner join t_bd_catg c "+ 
+                "where 1=1 " +
+                "and a.BOARD_USER_ID = b.USER_ID " +
+                "and a.BOARD_CATG_CD = c.CATG_CD " +
+                "and a.BOARD_CD = :boardCd" , nativeQuery = true)
+    DashboardEntity searchdetail(String boardCd);
 
     // 게시글 조회수 조회
     @Query(value="SELECT a.BOARD_CNT from t_bd_table a where 1=1 and a.BOARD_CD = :boardCd", nativeQuery = true)
