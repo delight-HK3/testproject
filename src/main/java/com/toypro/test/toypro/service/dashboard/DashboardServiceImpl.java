@@ -36,9 +36,10 @@ public class DashboardServiceImpl implements DashboardService{
     // 게시판 상세정보 출력
     @Override
     public DashboardDTO searchDetail(String boardCd) {
-        DashboardDTO detail = dashboardRepository.searchdetail(boardCd);
+        DashboardEntity detail = dashboardRepository.searchdetail(boardCd);
+        DashboardDTO detailDTO = DashboardDTO.toDetailDTO(detail);
 
-        return detail;
+        return detailDTO;
     }
 
     // 게시글 조회수 조회

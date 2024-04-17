@@ -52,11 +52,8 @@ public class DashBoardController {
      * @throws Exception
      */
     @RequestMapping(value="/details",  method=RequestMethod.GET)
-    public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd
-        ,HttpServletRequest request) throws Exception {
+    public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd) throws Exception {
         
-        HttpSession session = request.getSession(true); 
-
         // 현재 게시글의 조회수 정보를 가져오고 조회수 1 증가
         int cnt = dashboardService.searchViewCnt(boardCd);
         cnt++; 
@@ -64,7 +61,6 @@ public class DashBoardController {
 
         DashboardDTO detail = dashboardService.searchDetail(boardCd);
         
-        mav.addObject("name", session.getAttribute("name"));
         mav.addObject("detail", detail);
         mav.setViewName("content/dashboard/dashboardDetail");
 
