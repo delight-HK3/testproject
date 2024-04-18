@@ -78,6 +78,8 @@ public class AccountController {
         
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
         
+                
+
         if(String.valueOf(socialUserResponse.getId()) != null){
             session.setAttribute("snsType", socialUserResponse.getSnsType());
             session.setAttribute("accessToken", socialUserResponse.getAccessToken());
@@ -132,13 +134,35 @@ public class AccountController {
         String check = signupRepository.searchUser(signinRequestDto.getUserId());
 
         if("T".equals(check)){
-            return "AREADY_USER";
+            return "ALREADY_USER";
         } else {
             return "SUCCESS";
         }
 
     }
     
+    /**
+     * 회원가입 - 중복 닉네임 체크
+     * 
+     * @param signinRequestDto
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
+    @ResponseBody
+    @RequestMapping(value = "/nickNameCheck", method=RequestMethod.GET)
+    public String nickNameCheck(@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
+        
+        // 중복 닉네임이 없으면 F, 있으면 T
+        String check = "";
+
+        if("T".equals(check)){
+            return "ALREADY_USER";
+        } else {
+            return "SUCCESS";
+        }
+    }
+
     /**
      * 이메일 인증 - 이메일 보내기
      * 

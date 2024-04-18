@@ -36,6 +36,9 @@ public class SigninEntity {
     @Column(name = "USER_NAME")
     private String userName;
 
+    @Column(name = "NICK_NAME")
+    private String nickname;
+
     @Column(name = "USER_EMAIL")
     private String userEmail;
 

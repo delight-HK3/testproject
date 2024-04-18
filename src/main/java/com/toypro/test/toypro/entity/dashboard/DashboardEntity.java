@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,6 +54,4 @@ public class DashboardEntity {
     @JoinColumn(name="NICK_NAME")
     private String nickName;        // 게시글 작성자 닉네임
     
-
-
 }

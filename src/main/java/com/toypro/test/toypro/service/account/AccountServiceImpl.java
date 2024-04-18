@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.toypro.test.toypro.repository.signin.SignupRepository;
 import com.toypro.test.toypro.dto.signin.SigninRequestDto;
+import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.entity.signin.SigninEntity;
 
 import org.springframework.mail.javamail.JavaMailSender;
@@ -81,8 +82,9 @@ public class AccountServiceImpl implements AccountService{
                                         .userEmail(signinRequestDto.getUserEmail())
                                         .userName(signinRequestDto.getUserName())
                                         .userPwd(signinRequestDto.getUserPwd())
+                                        .nickname(signinRequestDto.getUserNickName())
                                         .phoneNo(signinRequestDto.getUserPhone())
-                                        .usertype("0")
+                                        .usertype("NORMAL")
                                         .regdate(date)
                                         .build();
 
@@ -92,5 +94,35 @@ public class AccountServiceImpl implements AccountService{
         }
 
     }
+
+    // sns 계정 로그인 유저 가입
+    @Override
+    public String snsSignin(SocialUserResponse socialUserResponse) {
+
+        String checkUserId = signupRepository.searchUser(socialUserResponse.getId());
+
+        if("T".equals(checkUserId)){
+            return "ALREADY_USER";
+            
+        } else {
+            Date date = new Date(); // 오늘 날짜
+
+            SigninEntity signinEntity = SigninEntity.builder()
+                                        .userId(socialUserResponse.getId())
+                                        .userEmail(socialUserResponse.getEmail())
+                                        .userName(socialUserResponse.getName())
+                                        .userPwd("")
+                                        .nickname(socialUserResponse.getName())
+                                        .phoneNo(socialUserResponse.getMobile())
+                                        .usertype(socialUserResponse.getSnsType())
+                                        .regdate(date)
+                                        .build();
+
+            signupRepository.save(signinEntity);
+
+            return "SUCCESS";
+        }
+
+    }   
         
 }
