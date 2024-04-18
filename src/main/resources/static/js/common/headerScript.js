@@ -141,6 +141,7 @@ function signin() {
     var data = {
         userChecknum: $("#userChecknum").val()
         , userName: $("#userName").val()
+        , userNickName: $("#userNickName").val()
         , userId: $("#userId").val()
         , userPwd: $("#userPwd").val()
         , userEmail: $("#userEmail").val()
