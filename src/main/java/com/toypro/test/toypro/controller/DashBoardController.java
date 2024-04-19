@@ -1,5 +1,11 @@
 package com.toypro.test.toypro.controller;
 
+/**
+ * version 0.0.1
+ * 최초 생성 : 2023/12/11
+ * 설명 : 게시판 컨트롤러 클래스
+ */
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.service.dashboard.DashboardService;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
-import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
 
 import lombok.RequiredArgsConstructor;
 
