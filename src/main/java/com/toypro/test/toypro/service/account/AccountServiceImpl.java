@@ -5,10 +5,10 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.toypro.test.toypro.repository.signin.SignupRepository;
-import com.toypro.test.toypro.dto.signin.SigninRequestDto;
+import com.toypro.test.toypro.dto.account.AccountRequestDto;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
-import com.toypro.test.toypro.entity.signin.SigninEntity;
+import com.toypro.test.toypro.entity.account.AccountEntity;
+import com.toypro.test.toypro.repository.account.AccountRepository;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 public class AccountServiceImpl implements AccountService{
 
     private final JavaMailSender javaMailSender;
-    private final SignupRepository signupRepository;
+    private final AccountRepository accountRepository;
 
-    // 이메일 인증
+    // 회원가입 - 이메일 인증
     @Override
     public String mailConfirm(String email) {
        
@@ -65,11 +65,11 @@ public class AccountServiceImpl implements AccountService{
         return key;
     }
 
-    // 회원정보 DB에 입력
+    // 회원가입 - 일반 회원정보 DB에 입력
     @Override
-    public String signin(SigninRequestDto signinRequestDto, String checkKey) {
+    public String signin(AccountRequestDto accountRequestDto, String checkKey) {
 
-        String userCheckNum = signinRequestDto.getUserChecknum();
+        String userCheckNum = accountRequestDto.getUserChecknum();
 
         if(!checkKey.equals(userCheckNum)){
             return "FAILED";
@@ -77,52 +77,71 @@ public class AccountServiceImpl implements AccountService{
             
             Date date = new Date(); // 오늘 날짜
 
-            SigninEntity signinEntity = SigninEntity.builder()
-                                        .userId(signinRequestDto.getUserId())
-                                        .userEmail(signinRequestDto.getUserEmail())
-                                        .userName(signinRequestDto.getUserName())
-                                        .userPwd(signinRequestDto.getUserPwd())
-                                        .nickname(signinRequestDto.getUserNickName())
-                                        .phoneNo(signinRequestDto.getUserPhone())
-                                        .usertype("NORMAL")
+            AccountEntity accountEntity = AccountEntity.builder()
+                                        .userId(accountRequestDto.getUserId())
+                                        .userEmail(accountRequestDto.getUserEmail())
+                                        .userName(accountRequestDto.getUserName())
+                                        .userPwd(accountRequestDto.getUserPwd())
+                                        .nickname(accountRequestDto.getUserNickName())
+                                        .phoneNo(accountRequestDto.getUserPhone())
+                                        .usertype("normal")
                                         .regdate(date)
                                         .build();
 
-            signupRepository.save(signinEntity);
+            accountRepository.save(accountEntity);
 
             return "SUCCESS";
         }
 
     }
 
-    // sns 계정 로그인 유저 가입
+    // 회원가입 - sns 계정 로그인 유저 가입
     @Override
-    public String snsSignin(SocialUserResponse socialUserResponse) {
+    public void snsSignin(SocialUserResponse socialUserResponse) {
 
-        String checkUserId = signupRepository.searchUser(socialUserResponse.getId());
+        String checkUserId = accountRepository.searchUser(socialUserResponse.getId());
 
         if("T".equals(checkUserId)){
-            return "ALREADY_USER";
-            
+
         } else {
+
+            String phoneNo = socialUserResponse.getMobile();
+            
+            if("".equals(phoneNo)){
+                phoneNo = "";
+            } else {
+                phoneNo = phoneNo.replaceAll("-", "");
+            }
+
             Date date = new Date(); // 오늘 날짜
 
-            SigninEntity signinEntity = SigninEntity.builder()
+            AccountEntity accountEntity = AccountEntity.builder()
                                         .userId(socialUserResponse.getId())
                                         .userEmail(socialUserResponse.getEmail())
                                         .userName(socialUserResponse.getName())
                                         .userPwd("")
                                         .nickname(socialUserResponse.getName())
-                                        .phoneNo(socialUserResponse.getMobile())
+                                        .phoneNo(phoneNo)
                                         .usertype(socialUserResponse.getSnsType())
                                         .regdate(date)
                                         .build();
 
-            signupRepository.save(signinEntity);
+            accountRepository.save(accountEntity);
 
-            return "SUCCESS";
         }
 
+    }
+
+    // 회원가입 - 중복 아이디 체크
+    @Override
+    public String searchUser(String userid) {
+        return accountRepository.searchUser(userid);
+    }
+
+    // 회원가입 - 중복 닉네임 체크
+    @Override
+    public String searchNickName(String nickName) {
+        return accountRepository.searchNickName(nickName);
     }   
         
 }
