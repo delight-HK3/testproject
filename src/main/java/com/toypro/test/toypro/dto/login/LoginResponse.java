@@ -2,13 +2,13 @@ package com.toypro.test.toypro.dto.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 public class LoginResponse {
     private Long id;
 }

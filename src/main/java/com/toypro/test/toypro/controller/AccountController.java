@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.toypro.test.toypro.dto.signin.SigninRequestDto;
+import com.toypro.test.toypro.dto.account.AccountRequestDto;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
-
-import com.toypro.test.toypro.repository.signin.SignupRepository;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.service.account.AccountService;
 import com.toypro.test.toypro.type.UserType;
@@ -43,7 +41,6 @@ public class AccountController {
     
     private final UserService userService;
     private final AccountService accountService;
-    private final SignupRepository signupRepository;
 
     private String checkKey = ""; // 인증키 비교
 
@@ -77,14 +74,14 @@ public class AccountController {
         ModelAndView mav = new ModelAndView();
         
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
-        
-                
 
         if(String.valueOf(socialUserResponse.getId()) != null){
-            session.setAttribute("snsType", socialUserResponse.getSnsType());
+
+            accountService.snsSignin(socialUserResponse);
+            
             session.setAttribute("accessToken", socialUserResponse.getAccessToken());
             session.setAttribute("id", socialUserResponse.getId());
-            session.setAttribute("userType", "0");
+            session.setAttribute("userType", socialUserResponse.getSnsType());
             session.setAttribute("name", socialUserResponse.getName());
         }
 
@@ -128,10 +125,10 @@ public class AccountController {
      */
     @ResponseBody
     @RequestMapping(value = "/idCheck", method=RequestMethod.GET)
-    public String idCheck(@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
+    public String idCheck(@ModelAttribute AccountRequestDto accountRequestDto) throws IOException, ServletException {
 
         // 중복 아이디가 없으면 F, 있으면 T
-        String check = signupRepository.searchUser(signinRequestDto.getUserId());
+        String check = accountService.searchUser(accountRequestDto.getUserId());
 
         if("T".equals(check)){
             return "ALREADY_USER";
@@ -151,10 +148,10 @@ public class AccountController {
      */
     @ResponseBody
     @RequestMapping(value = "/nickNameCheck", method=RequestMethod.GET)
-    public String nickNameCheck(@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
+    public String nickNameCheck(@ModelAttribute AccountRequestDto accountRequestDto) throws IOException, ServletException {
         
         // 중복 닉네임이 없으면 F, 있으면 T
-        String check = "";
+        String check = accountService.searchNickName(accountRequestDto.getUserNickName());
 
         if("T".equals(check)){
             return "ALREADY_USER";
@@ -198,9 +195,9 @@ public class AccountController {
      */
     @ResponseBody
     @RequestMapping(value = "/signin", method=RequestMethod.GET)
-    public String signin (@ModelAttribute SigninRequestDto signinRequestDto) throws IOException, ServletException {
+    public String signin (@ModelAttribute AccountRequestDto accountRequestDto) throws IOException, ServletException {
         
-        String check = accountService.signin(signinRequestDto, checkKey);
+        String check = accountService.signin(accountRequestDto, checkKey);
 
         return check;
     }

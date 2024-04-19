@@ -5,9 +5,9 @@ function idCheck() {
     }
 
     if(data.userId == ""){
-        $('.check').css({"color": "red", "font-size": "13px"});
-        $('#check').text("아이디를 입력하시기 바랍니다.");
-        $('#checkYn').val('N');
+        $('.idCheck').css({"color": "red", "font-size": "13px"});
+        $('#idCheck').text("아이디를 입력하시기 바랍니다.");
+        $('#idCheckYn').val('N');
         return;
     }
 
@@ -19,13 +19,46 @@ function idCheck() {
         , contentType : 'application/charset=utf-8'
         , success: function (data) {
             if(data == "SUCCESS"){ // 중복 없음
-                $('.check').css({"color": "green", "font-size": "13px"});
-                $('#check').text("사용가능한 아이디 입니다.");
-                $('#checkYn').val('Y');
+                $('.idCheck').css({"color": "green", "font-size": "13px"});
+                $('#idCheck').text("사용가능한 아이디 입니다.");
+                $('#idCheckYn').val('Y');
             } else { // 중복있음
-                $('.check').css({"color": "red", "font-size": "13px"});
-                $('#check').text("사용불가능한 아이디 입니다.");
-                $('#checkYn').val('N');
+                $('.idCheck').css({"color": "red", "font-size": "13px"});
+                $('#idCheck').text("사용불가능한 아이디 입니다.");
+                $('#idCheckYn').val('N');
+            }
+        }
+    });
+}
+
+/** 닉네임 중복체크 */
+function nickCheck(){
+    var data = {
+        userNickName: $("#userNickName").val()
+    }
+
+    if(data.userNickName == ""){
+        $('.nickCheck').css({"color": "red", "font-size": "13px"});
+        $('#nickCheck').text("닉네임을 입력하시기 바랍니다.");
+        $('#nickCheckYn').val('N');
+        return;
+    }
+
+    $.ajax({
+        url: "./app/accounts/nickNameCheck"
+        , type: 'GET'
+        , data: data
+        , dataType: 'text'
+        , contentType : 'application/charset=utf-8'
+        , success: function (data) {
+            if(data == "SUCCESS"){ // 중복 없음
+                $('.nickCheck').css({"color": "green", "font-size": "13px"});
+                $('#nickCheck').text("사용가능한 닉네임 입니다.");
+                $('#nickCheckYn').val('Y');
+            } else { // 중복있음
+                $('.nickCheck').css({"color": "red", "font-size": "13px"});
+                $('#nickCheck').text("사용불가능한 닉네임 입니다.");
+                $('#nickCheckYn').val('N');
             }
         }
     });
@@ -104,19 +137,26 @@ function resetCheckNum(){
 
 /** 입력값 체크 */
 function inputcheck_1(){
-    var userName = $("#userName").val();    // 입력한 이름 초기화
-    var userId = $("#userId").val();        // 입력한 아이디 초기화
-    var userPwd = $("#userPwd").val();      // 입력한 암호 초기화
-    var userPhone = $("#userPhone").val();      // 입력한 전화번호 초기화
+    var userName = $("#userName").val();            // 입력한 이름
+    var userId = $("#userId").val();                // 입력한 아이디
+    var userPwd = $("#userPwd").val();              // 입력한 암호 
+    var userPhone = $("#userPhone").val();          // 입력한 전화번호
+    var userNickName = $("#userNickName").val();    // 입력한 유저닉네임
 
-    var checkYn = $("#checkYn").val();      // 중복체크 여부
+    var nickCheckYn = $("#nickCheckYn").val();      // 닉네임 중복체크 여부
+    var idCheckYn = $("#idCheckYn").val();          // 아이디 중복체크 여부
 
-    if(userName == "" || userId == "" || userPwd == "" || userPhone == ""){
+    if(userName == "" || userId == "" || userPwd == "" || userPhone == "" || userNickName == ""){
         alert("필수 입력값을 확인 하시기 바랍니다.");
         return;
     }
 
-    if(checkYn == "N") {
+    if(nickCheckYn == "N") {
+        alert("닉네임을 다시 입력하시기 바랍니다.");
+        return; 
+    }
+
+    if(idCheckYn == "N") {
         alert("아이디를 다시 입력하시기 바랍니다.");
         return; 
     }
