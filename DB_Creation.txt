@@ -1,31 +1,8 @@
 /* DB 생성 */
 CREATE DATABASE `toypro` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
-/* t_toy_user 테이블 생성 */
-CREATE TABLE `t_toy_user` (
-  `NO` int(11) NOT NULL AUTO_INCREMENT COMMENT '회원번호',
-  `USER_ID` varchar(100) NOT NULL COMMENT '아이디',
-  `USER_PWD` varchar(100) NOT NULL COMMENT '비밀번호',
-  `USER_NAME` varchar(100) NOT NULL COMMENT '이름',
-  `USER_EMAIL` varchar(100) NOT NULL COMMENT '이메일',
-  `PHONE_NO` varchar(11) DEFAULT NULL COMMENT '전화번호',
-  `REG_DATE` date NOT NULL COMMENT '최초생성일',
-  `UPDT_DATE` date NOT NULL COMMENT '수정일',
-  PRIMARY KEY (`NO`,`USER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- toypro.t_bd_catg definition
 
-/* t_cddc_nm 테이블 생성 */
-CREATE TABLE `t_cddc_nm` (
-  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
-  `CDDC_CD` varchar(100) DEFAULT NULL COMMENT '교육청코드',
-  `CDDC_NM` varchar(100) NOT NULL COMMENT '교육청명',
-  `ORDER_NUM` int(11) NOT NULL COMMENT '정렬번호',
-  `REG_DATE` date DEFAULT NULL COMMENT '생성일자',
-  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일자',
-  PRIMARY KEY (`SEQ`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-/* t_bd_catg 테이블 생성 */
 CREATE TABLE `t_bd_catg` (
   `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
@@ -35,48 +12,8 @@ CREATE TABLE `t_bd_catg` (
   PRIMARY KEY (`SEQ`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO toypro.t_bd_catg
-(SEQ, CATG_CD, CATG_NM, REG_DATE, UPDT_DATE)
-VALUES(1, '0100', '공지', '2024-04-12', NULL);
+-- toypro.t_bd_comm definition
 
-INSERT INTO toypro.t_bd_catg
-(SEQ, CATG_CD, CATG_NM, REG_DATE, UPDT_DATE)
-VALUES(2, '0200', 'Q&A', '2024-04-12', NULL);
-
-INSERT INTO toypro.t_bd_catg
-(SEQ, CATG_CD, CATG_NM, REG_DATE, UPDT_DATE)
-VALUES(3, '0300', '자유', '2024-04-12', NULL);
-
-/* t_bd_table 테이블 생성 */
-CREATE TABLE `t_bd_table` (
-  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
-  `BOARD_CD` varchar(20) DEFAULT NULL COMMENT '게시판글 코드',
-  `BOARD_TITLE` varchar(50) DEFAULT NULL COMMENT '게시판글 제목',
-  `BOARD_CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
-  `BOARD_SUBJECT` longtext DEFAULT NULL COMMENT '게시판글 내용',
-  `BOARD_CNT` int(11) DEFAULT NULL COMMENT '게시판 조회수',
-  `REG_DATE` date DEFAULT NULL COMMENT '등록일',
-  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
-  PRIMARY KEY (`SEQ`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-INSERT INTO toypro.t_bd_table
-(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
-VALUES(1, '20240412FKQD1', '최초 공지', '0100', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
-
-INSERT INTO toypro.t_bd_table
-(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
-VALUES(2, '20240412FKQD2', '최초 공지2', '0200', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
-
-INSERT INTO toypro.t_bd_table
-(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
-VALUES(3, '20240412FKQD3', '최초 공지3', '0100', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
-
-INSERT INTO toypro.t_bd_table
-(SEQ, BOARD_CD, BOARD_TITLE, BOARD_CATG_CD, BOARD_SUBJECT, BOARD_CNT, REG_DATE, UPDT_DATE)
-VALUES(4, '20240412FKQD4', '최초 공지4', '0300', '최초 공지사항 입니다.', 0, '2024-04-12', NULL);
-
-/* t_bd_comm 테이블 생성 */
 CREATE TABLE `t_bd_comm` (
   `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `BOARD_CD` varchar(10) DEFAULT NULL COMMENT '게시판 글코드',
@@ -86,70 +23,44 @@ CREATE TABLE `t_bd_comm` (
   PRIMARY KEY (`SEQ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(1, '7010000', '서울특별시교육청', 1, '2024-03-21', NULL);
+-- toypro.t_bd_table definition
 
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(2, '7150000', '부산광역시교육청', 2, '2024-03-21', NULL);
+CREATE TABLE `t_bd_table` (
+  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
+  `BOARD_CD` varchar(20) DEFAULT NULL COMMENT '게시판글 코드',
+  `BOARD_TITLE` varchar(50) DEFAULT NULL COMMENT '게시판글 제목',
+  `BOARD_USER_ID` varchar(100) DEFAULT NULL COMMENT '게시판글 작성자 ID',
+  `BOARD_CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
+  `BOARD_SUBJECT` longtext DEFAULT NULL COMMENT '게시판글 내용',
+  `BOARD_CNT` int(11) DEFAULT NULL COMMENT '게시판 조회수',
+  `reg_date` datetime(6) DEFAULT NULL COMMENT '등록일',
+  `updt_date` datetime(6) DEFAULT NULL COMMENT '수정일',
+  PRIMARY KEY (`SEQ`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(3, '7240000', '대구광역시교육청', 3, '2024-03-21', NULL);
+-- toypro.t_cddc_nm definition
 
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(4, '7310000', '인천광역시교육청', 4, '2024-03-21', NULL);
+  `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
+  `CDDC_CD` varchar(100) DEFAULT NULL COMMENT '교육청코드',
+  `CDDC_NM` varchar(100) NOT NULL COMMENT '교육청명',
+  `ORDER_NUM` int(11) NOT NULL COMMENT '정렬번호',
+  `REG_DATE` date DEFAULT NULL COMMENT '생성일자',
+  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일자',
+  PRIMARY KEY (`SEQ`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(5, '7380000', '광주광역시교육청', 5, '2024-03-21', NULL);
+-- toypro.t_toy_user definition
 
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(6, '7430000', '대전광역시교육청', 6, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(7, '7480000', '울산광역시교육청', 7, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(8, '9300000', '세종특별자치시교육청', 8, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(9, '7530000', '경기도교육청', 9, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(10, '7801000', '강원특별자치도교육청', 10, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(11, '8000000', '충청북도교육청', 11, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(12, '8140000', '충청남도교육청', 12, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(13, '8320000', '전북특별자치도교육청', 13, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(14, '8490000', '전라남도교육청', 14, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(15, '8750000', '경상북도교육청', 15, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(16, '9010000', '경상남도교육청', 16, '2024-03-21', NULL);
-
-INSERT INTO toypro.t_cddc_nm
-(SEQ, CDDC_CD, CDDC_NM, ORDER_NUM, REG_DATE, UPDT_DATE)
-VALUES(17, '9290000', '제주특별자치도교육청', 17, '2024-03-21', NULL);
+CREATE TABLE `t_toy_user` (
+  `NO` int(11) NOT NULL AUTO_INCREMENT COMMENT '회원번호',
+  `USER_ID` varchar(100) NOT NULL COMMENT '아이디',
+  `USER_PWD` varchar(100) DEFAULT NULL COMMENT '비밀번호',
+  `USER_NAME` varchar(100) NOT NULL COMMENT '이름',
+  `NICK_NAME` varchar(100) DEFAULT NULL COMMENT '닉네임',
+  `USER_EMAIL` varchar(100) DEFAULT NULL COMMENT '이메일',
+  `PHONE_NO` varchar(11) DEFAULT NULL COMMENT '전화번호',
+  `USER_TYPE` varchar(10) DEFAULT NULL COMMENT '계정 타입 0 : 유저 / 1 : 관리자',
+  `REG_DATE` date DEFAULT NULL COMMENT '등록일',
+  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
+  PRIMARY KEY (`NO`,`USER_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

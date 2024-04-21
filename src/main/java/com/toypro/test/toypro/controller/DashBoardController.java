@@ -1,5 +1,11 @@
 package com.toypro.test.toypro.controller;
 
+/**
+ * version 0.0.1
+ * 최초 생성 : 2023/12/11
+ * 설명 : 게시판 컨트롤러 클래스
+ */
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.service.dashboard.DashboardService;
-import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
+import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +36,7 @@ public class DashBoardController {
     @RequestMapping(value="/List",  method=RequestMethod.GET)
     public ModelAndView List (ModelAndView mav) throws Exception {
         
-        List<DashboardEntity> boardList = dashboardService.searchList();
+        List<DashboardDTO> boardList = dashboardService.searchList();
         
         mav.addObject("boardList", boardList);
         mav.setViewName("content/dashboard/dashboardList");
@@ -48,8 +54,6 @@ public class DashBoardController {
      */
     @RequestMapping(value="/details",  method=RequestMethod.GET)
     public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd) throws Exception {
-
-        
 
         mav.setViewName("content/dashboard/dashboardDetail");
 

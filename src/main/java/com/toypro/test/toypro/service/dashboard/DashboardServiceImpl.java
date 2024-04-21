@@ -1,9 +1,11 @@
 package com.toypro.test.toypro.service.dashboard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
 import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
 import com.toypro.test.toypro.repository.dashboard.DashboardRepository;
 
@@ -17,19 +19,21 @@ public class DashboardServiceImpl implements DashboardService{
 
     // 게시판 리스트 출력
     @Override
-    public List<DashboardEntity> searchList() {
+    public List<DashboardDTO> searchList() {
         
         List<DashboardEntity> boardlist = dashboardRepository.searchList();
+        List<DashboardDTO> dtoList = new ArrayList<>();
 
-        return boardlist;
+        for(int i = 0; i < boardlist.size(); i++){
+            DashboardDTO dto = DashboardDTO.toListDTO(boardlist.get(i));
+            dtoList.add(dto);
+        }
+
+        return dtoList;
     
     }
 
-    // 게시판 상세정보 출력
-    @Override
-    public List<DashboardEntity> searchDetail(String boardCd) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchDetail'");
+
     }
     
 }

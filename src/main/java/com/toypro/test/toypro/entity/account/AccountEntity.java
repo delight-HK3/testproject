@@ -1,4 +1,4 @@
-package com.toypro.test.toypro.entity.signin;
+package com.toypro.test.toypro.entity.account;
 
 import java.util.Date;
 
@@ -20,7 +20,7 @@ import lombok.ToString;
 @Builder
 @Getter
 @Entity(name="t_toy_user")
-public class SigninEntity {
+public class AccountEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,9 @@ public class SigninEntity {
 
     @Column(name = "USER_NAME")
     private String userName;
+
+    @Column(name = "NICK_NAME")
+    private String nickname;
 
     @Column(name = "USER_EMAIL")
     private String userEmail;

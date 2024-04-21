@@ -16,7 +16,7 @@
         </ul>
         
         <!-- header btn -->
-        <th:block th:if="${session.snsType != null}">
+        <th:block th:if="${session.userType != null}">
             <div class="col-md-4 text-end">
                 <div class="row">
                     <div class="col-md-8" style="margin-top: 8px">
@@ -30,7 +30,7 @@
             </div>
         </th:block>
 
-        <th:block th:if="${session.snsType == null}">
+        <th:block th:if="${session.userType == null}">
             <div class="col-md-4 text-end">
                 <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal">SignUp</button>
@@ -105,13 +105,25 @@
                             <input type="text" style="margin-bottom: 10px" class="form-control" id="userName" name="userName">
 
                             <div class="row">
-                                <label for="userId" class="form-label"><span style="color: red;">*</span>아이디 &nbsp;<span class="check" id="check"></span></label>
+                                <label for="userNickName" class="form-label"><span style="color: red;">*</span>닉네임 &nbsp;<span class="nickCheck" id="nickCheck"></span></label>
+                                <div class="col-7" style="padding-right: 0px">
+                                    <input type="text" style="margin-bottom: 10px" class="form-control" id="userNickName" name="userNickName">
+                                </div>
+                                <div class="col-5" style="padding-left: 0px">
+                                    <input type="button" class="btn btn-primary" style="width: 100%;" onclick="nickCheck()" value="중복체크">
+                                    <input type="hidden" id="nickCheckYn" name="nickCheckYn">
+                                </div>
+                            </div>
+                            
+
+                            <div class="row">
+                                <label for="userId" class="form-label"><span style="color: red;">*</span>아이디 &nbsp;<span class="idCheck" id="idCheck"></span></label>
                                 <div class="col-7" style="padding-right: 0px">             
                                     <input type="text" style="margin-bottom: 10px" class="form-control" id="userId" name="userId">
                                 </div> 
                                 <div class="col-5" style="padding-left: 0px">
                                     <input type="button" class="btn btn-primary" style="width: 100%;" onclick="idCheck()" value="중복체크">
-                                    <input type="hidden" id="checkYn" name="checkYn">
+                                    <input type="hidden" id="idCheckYn" name="idCheckYn">
                                 </div>
                             </div>
 

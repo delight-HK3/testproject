@@ -27,6 +27,7 @@
                         <th scope="col" style="text-align: center;">No.</th>
                         <th scope="col" style="text-align: center;">구분</th>
                         <th scope="col" style="text-align: center;">제목</th>
+
                         <th scope="col" style="text-align: center;">작성일</th>
                         <th scope="col" style="text-align: center;">조회수</th>
                     </tr>
@@ -37,6 +38,7 @@
                         <td th:text="${List.catgNm}" style="text-align: center;"></td>
                         <td><a style="text-decoration: none;" 
                             th:href="@{/dashboard/details(boardCd=${List.boardCd})}">[[${List.boardTitle}]]</a></td>
+
                         <td th:text="${List.regDate}" style="text-align: center;"></td>
                         <td th:text="${List.boardCnt}" style="text-align: center;"></td>
                     </tr>
