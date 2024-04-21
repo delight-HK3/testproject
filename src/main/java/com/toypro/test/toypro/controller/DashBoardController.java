@@ -54,15 +54,7 @@ public class DashBoardController {
      */
     @RequestMapping(value="/details",  method=RequestMethod.GET)
     public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd) throws Exception {
-        
-        // 현재 게시글의 조회수 정보를 가져오고 조회수 1 증가
-        int cnt = dashboardService.searchViewCnt(boardCd);
-        cnt++; 
-        dashboardService.detailCntUp(boardCd, cnt);
 
-        DashboardDTO detail = dashboardService.searchDetail(boardCd);
-        
-        mav.addObject("detail", detail);
         mav.setViewName("content/dashboard/dashboardDetail");
 
         return mav;
