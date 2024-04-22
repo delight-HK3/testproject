@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+    <head>
+        <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
+
+        <!-- ckeditor 4 -->
+        <script th:src="@{/ckeditor/js/ckeditor.js}"></script>
+        <script>
+             $( document ).ready(function() {
+                CKEDITOR.replace('contents', {
+
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <th:block th:replace="content/common/header :: headerFragment"></th:block>
+
+            <!-- ================================ 게시판 신규작성 영역 ================================ -->
+
+            <textarea id="contents">
+                
+            </textarea>
+
+            <!-- ================================ 게시판 신규작성 영역 ================================ -->
+
+            <th:block th:replace="content/common/footer :: footerFragment"></th:block>
+        </div>
+    </body>
+
+</html>

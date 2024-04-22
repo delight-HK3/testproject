@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.service.dashboard.DashboardService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -43,6 +47,25 @@ public class DashBoardController {
 
         return mav;
     }
+
+    /**
+     * 
+     * 
+     * @param mav
+     * @return
+     */
+    @RequestMapping(value="/add", method=RequestMethod.GET)
+    public ModelAndView requestMethodName(ModelAndView mav, HttpServletRequest request) {
+        
+        HttpSession session = request.getSession(true);
+        String snsType = String.valueOf(session.getAttribute("snsType"));
+        
+
+        mav.setViewName("content/dashboard/dashboardAdd");
+
+        return mav;
+    }
+    
 
     /**
      * 게시판 - 게시글 상세보기
