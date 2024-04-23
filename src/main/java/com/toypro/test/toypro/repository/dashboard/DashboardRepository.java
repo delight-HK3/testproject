@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.toypro.test.toypro.entity.dashboard.DashboardCatgEntity;
 import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
 
 @Repository
@@ -60,6 +61,5 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
     // 게시글 조회수 1증가
     @Query(value="UPDATE t_bd_table SET BOARD_CNT = :cnt WHERE 1=1 and BOARD_CD = :boardCd", nativeQuery = true)
     void detailCntUp(String boardCd, int cnt);
-
     
 } 

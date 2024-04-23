@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.toypro.test.toypro.dto.dashboard.DashboardCatgDTO;
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
 
 @Service
@@ -16,4 +17,6 @@ public interface DashboardService {
     int searchViewCnt(String boardCd); // 게시글 조회수
 
     void detailCntUp(String boardCd, int cnt); // 게시글 조회수 1증가
+
+    List<DashboardCatgDTO> userCatg(String snsType); // 게시글 목록
 }

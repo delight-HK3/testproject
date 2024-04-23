@@ -37,4 +37,5 @@ public class DashboardCatgEntity {
 
     @Column(name="UPDT_DATE")
     private Date updtDate;          // 게시글 수정일
+    
 }

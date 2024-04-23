@@ -7,30 +7,43 @@
     <head>
         <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
 
-        <!-- ckeditor 4 -->
-        <script th:src="@{/ckeditor/js/ckeditor.js}"></script>
-        <script>
-             $( document ).ready(function() {
-                CKEDITOR.replace('contents', {
+        <!-- ckeditor 5 -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/translations/ko.js"></script>
 
-                });
-            });
-        </script>
+        <style>
+            .ck-editor__editable { height: 400px; }
+            .ck-content { font-size: 12px; }
+        </style>
     </head>
     <body>
         <div class="container">
             <th:block th:replace="content/common/header :: headerFragment"></th:block>
-
+            
             <!-- ================================ 게시판 신규작성 영역 ================================ -->
+            <div class="container">
+                <select class="form-select" id="searchCddcCd">
+                    <option th:each="List : ${catgList}" th:value="${List?.catgCd}" 
+                                th:utext="${List?.catgNm}"></option>
+                </select>
+                <br>
+                <textarea id="contents">
+                    
+                </textarea>
 
-            <textarea id="contents">
-                
-            </textarea>
-
+            </div>
             <!-- ================================ 게시판 신규작성 영역 ================================ -->
 
             <th:block th:replace="content/common/footer :: footerFragment"></th:block>
         </div>
+
+        <script>
+
+            ClassicEditor.create( document.querySelector( '#contents' ), {
+                language: "ko"
+            });
+
+       </script>
     </body>
 
 </html>

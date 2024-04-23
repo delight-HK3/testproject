@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.toypro.test.toypro.dto.dashboard.DashboardCatgDTO;
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
+import com.toypro.test.toypro.entity.dashboard.DashboardCatgEntity;
 import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
+import com.toypro.test.toypro.repository.dashboard.DashboardCatgRepository;
 import com.toypro.test.toypro.repository.dashboard.DashboardRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class DashboardServiceImpl implements DashboardService{
 
     private final DashboardRepository dashboardRepository;
+    private final DashboardCatgRepository dashboardCatgRepository;
 
     // 게시판 리스트 출력
     @Override
@@ -54,6 +58,27 @@ public class DashboardServiceImpl implements DashboardService{
     @Override
     public void detailCntUp(String boardCd, int cnt) {
         dashboardRepository.detailCntUp(boardCd, cnt);
+    }
+
+    // 게시글 카테고리 목록 확인
+    @Override
+    public List<DashboardCatgDTO> userCatg(String snsType) {
+
+        List<DashboardCatgEntity> catgList = new ArrayList<>();
+        List<DashboardCatgDTO> dtoList = new ArrayList<>();
+
+        if("Admin".equals(snsType)){
+            catgList = dashboardCatgRepository.findAll();
+        } else {
+            catgList = dashboardCatgRepository.userCatg();
+        }
+
+        for(int i = 0; i < catgList.size(); i++){
+            DashboardCatgDTO dto = DashboardCatgDTO.toCatgListDTO(catgList.get(i));
+            dtoList.add(dto);
+        }
+
+        return dtoList;
     }
     
 }
