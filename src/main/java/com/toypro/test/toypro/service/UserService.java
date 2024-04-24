@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.toypro.test.toypro.dto.social.SocialAuthResponse;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
+import com.toypro.test.toypro.repository.account.AccountRepository;
 import com.toypro.test.toypro.service.login.LoginServiceImpl;
 import com.toypro.test.toypro.service.social.SocialLoginService;
 import com.toypro.test.toypro.type.UserType;
@@ -22,7 +23,7 @@ public class UserService {
 
     private final List<SocialLoginService> loginServices;
     private final HttpServletResponse response;
-
+    
     public SocialUserResponse doSocialLogin(UserType userType, String code) {
         
         SocialLoginService loginService = this.getLoginService(userType);
