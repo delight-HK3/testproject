@@ -1,35 +1,42 @@
-package com.toypro.test.toypro.service.login;
+package com.toypro.test.toypro.service.social;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.toypro.test.toypro.dto.social.SocialAuthResponse;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
-import com.toypro.test.toypro.service.social.SocialLoginService;
 import com.toypro.test.toypro.type.UserType;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
-@Component
-@Qualifier("defaultLoginService")
-public class LoginServiceImpl implements SocialLoginService {
+@RequiredArgsConstructor
+@Qualifier("LoginService")
+public class NormalLoginServiceImpl implements SocialLoginService {
+    
     @Override
     public UserType getServiceName() {
-        return UserType.NORMAL;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getServiceName'");
     }
 
     @Override
     public SocialAuthResponse getAccessToken(String authorizationCode) {
-        return null;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAccessToken'");
     }
 
     @Override
     public SocialUserResponse getUserInfo(String accessToken) {
-        return null;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getUserInfo'");
     }
-    
+
     @Override
     public String getOauthRedirectURL() {
+        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOauthRedirectURL'");
     }
+
+
 }

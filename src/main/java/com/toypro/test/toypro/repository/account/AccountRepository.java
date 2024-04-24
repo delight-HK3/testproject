@@ -17,4 +17,5 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
     @Query(value="select IF( NICK_NAME = :nickName , 'T', 'F' ) from t_toy_user where NICK_NAME = :nickName" , nativeQuery = true)
     String searchNickName(String nickName);
 
+    
 } 
