@@ -32,10 +32,10 @@
                     <br>
                 </div>
                 <div class="col-12" style="text-align: right;">
-                    
-                    <input type="button" class="btn btn-warning" value="수정">
-                    <input type="button" class="btn btn-danger" value="삭제">
-
+                    <th:block th:if="${detail.boardNickName == session.name}">
+                        <input type="button" class="btn btn-warning" value="수정">
+                        <input type="button" class="btn btn-danger" value="삭제">
+                    </th:block>
                 </div>
             </div>
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->

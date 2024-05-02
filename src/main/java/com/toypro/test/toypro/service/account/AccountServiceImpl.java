@@ -12,6 +12,7 @@ import com.toypro.test.toypro.repository.account.AccountRepository;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class AccountServiceImpl implements AccountService{
 
     private final JavaMailSender javaMailSender;
     private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 회원가입 - 이메일 인증
     @Override
@@ -81,7 +83,7 @@ public class AccountServiceImpl implements AccountService{
                                         .userId(accountRequestDto.getUserId())
                                         .userEmail(accountRequestDto.getUserEmail())
                                         .userName(accountRequestDto.getUserName())
-                                        .userPwd(accountRequestDto.getUserPwd())
+                                        .userPwd(passwordEncoder.encode(accountRequestDto.getUserPwd()))
                                         .nickname(accountRequestDto.getUserNickName())
                                         .phoneNo(accountRequestDto.getUserPhone())
                                         .usertype("normal")
