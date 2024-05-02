@@ -42,7 +42,7 @@ public class DashboardServiceImpl implements DashboardService{
     public DashboardDTO searchDetail(String boardCd) {
         DashboardEntity detail = dashboardRepository.searchdetail(boardCd);
         DashboardDTO detailDTO = DashboardDTO.toDetailDTO(detail);
-
+        
         return detailDTO;
     }
 

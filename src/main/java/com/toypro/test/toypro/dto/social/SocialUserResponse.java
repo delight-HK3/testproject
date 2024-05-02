@@ -16,6 +16,7 @@ public class SocialUserResponse {
     private String accessToken;     // accessToken 값
 
     // 유저 정보
+    private int seq;                // 회원번호
     private String id;              // 아이디      
     private String email;           // 이메일
     private String nickname;        // 닉네임

@@ -76,7 +76,8 @@ public class AccountController {
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
 
         if(String.valueOf(socialUserResponse.getId()) != null){
-
+            
+            // 세션에 회원 고유번호 추가시키기
             accountService.snsSignin(socialUserResponse);
             
             session.setAttribute("accessToken", socialUserResponse.getAccessToken());
