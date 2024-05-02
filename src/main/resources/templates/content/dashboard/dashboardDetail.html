@@ -12,32 +12,7 @@
             <th:block th:replace="content/common/header :: headerFragment"></th:block>
 
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->
-            <div class="container">
-                <br><br><br>
-                <h2 class="fw-bold">[[${detail.boardTitle}]]</h2>
-                <br><br><br>
-                <div class="row">
-                    <div class="col-6">
-                        <p>카테고리 : [[${detail.catgNm}]]</p>
-                        <p style="margin-bottom: 3px;">작성일 : [[${detail.regDate}]] &nbsp; 작성자 : [[${detail.boardNickName}]]</p>
-                    </div>
-                    <div class="col-6" style="text-align: right;">
-                        <p style="margin-bottom: 3px;">조회수 : [[${detail.boardCnt}]]</p>
-                    </div>    
-                </div>
-                <hr style="margin-top: 3px;">
-                <div style="height: 600px;">
-                    <br>
-                    [[${detail.boardSubject}]]
-                    <br>
-                </div>
-                <div class="col-12" style="text-align: right;">
-                    <th:block th:if="${detail.boardNickName == session.name}">
-                        <input type="button" class="btn btn-warning" value="수정">
-                        <input type="button" class="btn btn-danger" value="삭제">
-                    </th:block>
-                </div>
-            </div>
+
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->
 
             <th:block th:replace="content/common/footer :: footerFragment"></th:block>

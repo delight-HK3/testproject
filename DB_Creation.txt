@@ -40,7 +40,6 @@ CREATE TABLE `t_bd_table` (
 
 -- toypro.t_cddc_nm definition
 
-CREATE TABLE `t_cddc_nm` (
   `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `CDDC_CD` varchar(100) DEFAULT NULL COMMENT '교육청코드',
   `CDDC_NM` varchar(100) NOT NULL COMMENT '교육청명',

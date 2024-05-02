@@ -140,28 +140,6 @@ public class AccountController {
     }
     
     /**
-     * 회원가입 - 중복 닉네임 체크
-     * 
-     * @param signinRequestDto
-     * @return
-     * @throws IOException
-     * @throws ServletException
-     */
-    @ResponseBody
-    @RequestMapping(value = "/nickNameCheck", method=RequestMethod.GET)
-    public String nickNameCheck(@ModelAttribute AccountRequestDto accountRequestDto) throws IOException, ServletException {
-        
-        // 중복 닉네임이 없으면 F, 있으면 T
-        String check = accountService.searchNickName(accountRequestDto.getUserNickName());
-
-        if("T".equals(check)){
-            return "ALREADY_USER";
-        } else {
-            return "SUCCESS";
-        }
-    }
-
-    /**
      * 이메일 인증 - 이메일 보내기
      * 
      * @param email
@@ -199,7 +177,7 @@ public class AccountController {
     public String signin (@ModelAttribute AccountRequestDto accountRequestDto) throws IOException, ServletException {
         
         String check = accountService.signin(accountRequestDto, checkKey);
-
+        
         return check;
     }
 
