@@ -25,12 +25,19 @@ public class UserService {
     private final HttpServletResponse response;
     
     public SocialUserResponse doSocialLogin(UserType userType, String code) {
-        
-        SocialLoginService loginService = this.getLoginService(userType);
-        SocialAuthResponse socialAuthResponse = loginService.getAccessToken(code);
+        SocialUserResponse socialUserResponse;
+        SocialLoginService loginService;
 
-        SocialUserResponse socialUserResponse = loginService.getUserInfo(socialAuthResponse.getAccess_token());
-        log.info("socialUserResponse {} ", socialUserResponse.toString());
+        if(userType.NORMAL.equals(userType)){
+            loginService = this.getLoginService(userType);
+            socialUserResponse = loginService.getUserInfo("");
+        } else {
+            loginService = this.getLoginService(userType);
+            SocialAuthResponse socialAuthResponse = loginService.getAccessToken(code);
+
+            socialUserResponse = loginService.getUserInfo(socialAuthResponse.getAccess_token());
+            log.info("socialUserResponse {} ", socialUserResponse.toString());
+        }
         
         return socialUserResponse;
     }
