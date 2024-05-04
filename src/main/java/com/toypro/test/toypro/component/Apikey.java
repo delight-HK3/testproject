@@ -41,7 +41,7 @@ public class Apikey {
         return "//dapi.kakao.com/v2/maps/sdk.js?appkey="+kakaoKey+"&libraries=clusterer";
     }
 
-    // 
+    // 공공 API 키 호출
     public String dataKey(){
         return this.datakey;
     }

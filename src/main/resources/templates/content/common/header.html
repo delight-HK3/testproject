@@ -1,6 +1,6 @@
 <th:block th:fragment="headerFragment">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <a href="/" class="d-flex align-items-center col-md-4 mb-2 mb-md-0 text-dark text-decoration-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bootstrap-fill" viewBox="0 0 16 16">
                 <path d="M6.375 7.125V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23zm0 3.762h1.898c1.184 0 1.81-.48 1.81-1.377 0-.885-.65-1.348-1.886-1.348H6.375v2.725z"/>
                 <path d="M4.002 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4h-8zm1.06 12V3.545h3.399c1.587 0 2.543.809 2.543 2.11 0 .884-.65 1.675-1.483 1.816v.1c1.143.117 1.904.931 1.904 2.033 0 1.488-1.084 2.396-2.888 2.396z"/>
@@ -9,24 +9,35 @@
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/gis/coordinate" class="nav-link px-2 link-dark">Google GIS</a></li>
-            <li><a href="/review/List" class="nav-link px-2 link-dark">Review</a></li>
-            <li><a href="/gis/clustering" class="nav-link px-2 link-dark">clustering</a></li>
+            <li><a href="/dashboard/List" class="nav-link px-2 link-dark">Dashboard</a></li>
+            <li><a href="/gis/clustering" class="nav-link px-2 link-dark">Clustering</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
         </ul>
         
         <!-- header btn -->
-        <div class="col-md-3 text-end">
-            <th:block th:if="${session.snsType == null}">
+        <th:block th:if="${session.userType != null}">
+            <div class="col-md-4 text-end">
+                <div class="row">
+                    <div class="col-md-8" style="margin-top: 8px">
+                        <span><a href="#" style="text-decoration: none;" class="px-2 me-2" th:text="${session.name}"></a>
+                            님 환영합니다.</span>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="/app/accounts/logout" class="btn btn-outline-primary me-2">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+
+        <th:block th:if="${session.userType == null}">
+            <div class="col-md-4 text-end">
                 <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">로그인</button>
-            </th:block>
-            
-            <th:block th:if="${session.snsType != null}">
-                <button type="button" class="btn btn-outline-primary me-2" >로그아웃</button>
-            </th:block>
-            
-            <button type="button" class="btn btn-primary">Sign-up</button>
-        </div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal">SignUp</button>
+            </div>
+        </th:block>
+
+
         <!-- // header btn -->
 
         <!-- login modal btn -->
@@ -38,24 +49,133 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   <button class="btn btn-google" onclick="window.open('../app/accounts/auth/google','Login','width=600,height=800')" 
-                        style="width: 100%; margin-bottom: 10px">
-                        구글로 로그인
-                    </button>
-                    <br>
-                    <button class="btn btn-naver" onclick="window.open('../app/accounts/auth/naver','Login','width=600,height=800')" 
-                        style="width: 100%; margin-bottom: 10px">
-                        네이버로 로그인
-                    </button>
-                    <br>
-                    <button class="btn btn-kakao" onclick="window.open('../app/accounts/auth/kakao','Login','width=600,height=800')" 
-                        style="width: 100%; margin-bottom: 10px">
-                        카카오로 로그인
-                    </button>
+                    <form action="/app/accounts/login" accept-charset="utf-8" name="loginform" method="post">
+                        <label for="inputId" class="form-label">아이디</label>
+                        <input type="text" class="form-control" id="inputId" name="inputId">
+
+                        <label for="inputPass" class="form-label">비밀번호</label>
+                        <input type="password" class="form-control" id="inputPass" name="inputPass">
+                        <br>
+                        <input style="width: 100%;" type="button" class="btn btn-primary" value="일반로그인">
+                    </form>
+                    <br><br>
+
+                    <!-- ===================================== sns Login Btn ===================================== -->
+                    <div class="row">
+                        <p style="font-size: 13px; text-align: center;">SNS 로그인</p><br>
+                        <!-- 구글로그인 버튼 -->
+                        <div class="col-4" style="text-align: center;">
+                            <img src="../img/googleBtn.png" 
+                                onclick="window.open('../app/accounts/auth/google','Login','width=600,height=800')">
+                        </div>
+                        <!-- // 구글로그인 버튼 -->
+
+                        <!-- 네이버로그인 버튼 -->
+                        <div class="col-4" style="text-align: center;">
+                            <img src="../img/naverBtn.png" 
+                                onclick="window.open('../app/accounts/auth/naver','Login','width=600,height=800')">
+                        </div>
+                        <!-- // 네이버로그인 버튼 -->
+
+                        <!-- 카카오로그인 버튼 -->
+                        <div class="col-4" style="text-align: center;">
+                            <img src="../img/kakaoBtn.png" 
+                                onclick="window.open('../app/accounts/auth/kakao','Login','width=600,height=800')">
+                        </div>
+                        <!-- //카카오로그인 버튼 -->
+                        <br><br><br>
+                    </div>
+                    <!-- ===================================== sns Login Btn ===================================== -->
                 </div>
               </div>
             </div>
           </div>
         <!-- // login modal btn -->
+
+        <!-- sign-Up modal btn -->
+        <div class="modal fade" id="signUpModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">회원가입</h5>
+                        <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clear_1()">
+                    </div>
+                    <div class="modal-body">
+                        <label for="userName" class="form-label"><span style="color: red;">*</span>이름</label>
+                        <input type="text" style="margin-bottom: 10px" class="form-control" id="userName" name="userName">
+
+                        <div class="row">
+                            <label for="userNickName" class="form-label"><span style="color: red;">*</span>닉네임 &nbsp;<span class="nickCheck" id="nickCheck"></span></label>
+                            <div class="col-7" style="padding-right: 0px">
+                                <input type="text" style="margin-bottom: 10px" class="form-control" id="userNickName" name="userNickName">
+                            </div>
+                            <div class="col-5" style="padding-left: 0px">
+                                <input type="button" class="btn btn-primary" style="width: 100%;" onclick="nickCheck()" value="중복체크">
+                                <input type="hidden" id="nickCheckYn" name="nickCheckYn">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label for="userId" class="form-label"><span style="color: red;">*</span>아이디 &nbsp;<span class="idCheck" id="idCheck"></span></label>
+                            <div class="col-7" style="padding-right: 0px">             
+                                <input type="text" style="margin-bottom: 10px" class="form-control" id="userId" name="userId">
+                            </div> 
+                            <div class="col-5" style="padding-left: 0px">
+                                <input type="button" class="btn btn-primary" style="width: 100%;" onclick="idCheck()" value="중복체크">
+                                <input type="hidden" id="idCheckYn" name="idCheckYn">
+                            </div>
+                        </div>
+
+                        <label for="userPwd" class="form-label"><span style="color: red;">*</span>비밀번호</label>
+                        <input type="password" style="margin-bottom: 10px" class="form-control" id="userPwd" name="userPwd">
+
+                        <label for="userPhone" class="form-label"><span style="color: red;">*</span>전화번호</label>
+                        <input type="text" style="margin-bottom: 10px" class="form-control" id="userPhone" name="userPhone" maxlength="11">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" style="width: 100%;" onclick="inputcheck_1()">이메일 인증</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- // sign-Up modal btn -->
+
+    <!-- sign-Up phone check modal btn -->
+    <div class="modal fade" id="emailModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">회원가입</h5>
+                    <input type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clear_2()">
+                </div>
+                <div class="modal-body">
+                    <form id="email">
+                        <label for="userEmail" class="form-label"><span style="color: red;">*</span>이메일</label>
+
+                        <div class="row">
+                            <div class="col-7" style="padding-right: 0px">
+                                <input type="email" style="margin-bottom: 10px" class="form-control" id="userEmail" name="userEmail">
+                            </div> 
+                            <div class="col-5" style="padding-left: 0px">
+                                <input type="button" class="btn btn-primary" style="width: 100%;" onclick="emailCheck()" value="인증번호">
+                            </div>
+                        </div>
+
+                        <label for="userChecknum" class="form-label"><span style="color: red;">*</span>인증번호 입력</label>
+                        <input type="text" class="form-control" id="userChecknum" name="userChecknum">
+                        <div class="col-sm-12" style="padding-right: 5px; text-align: right;">
+                            <span id="timer" style="color: green"></span>
+                        </div>            
+                    </form>
+
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-success" style="width: 100%;" onclick="signin()" value="회 원 가 입">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- // sign-Up phone check modal btn -->
     </header>
 </th:block>

@@ -23,8 +23,13 @@
         <!-- google Map Script -->
 
         <script type="text/javascript">
-            function check(sns){
 
+            $( document ).ready(function() {
+                $("#naverMap").css("display","none");
+            });
+
+            function check(sns){
+                
                 var data = {
                     searchSchoolSe: $("#searchSchoolSe").val()
                     , searchNumOfRows: $("#searchNumOfRows").val()
@@ -63,7 +68,9 @@
     <body>
         <div class="container">
             <th:block th:replace="content/common/header :: headerFragment"></th:block>
-            
+            <br>
+            <h2 style="text-align: center;">데이터 클러스터링 기능</h2>
+            <br>
             <!-- 검색 form -->
             <div class="row">
                 <!-- ============================== 1번째 라인 ============================== -->
@@ -130,11 +137,11 @@
 
                 <br><br>
 
-                <div class="col-6" style="margin-top: 15px">
+                <div class="col-6" style="margin-top: 30px">
                     <input type="button" style="width: 100%;" id="naver" class="btn btn-success" onclick="check('naver')" value="네이버 지도 조회" />
                 </div>
 
-                <div class="col-6" style="margin-top: 15px">
+                <div class="col-6" style="margin-top: 30px">
                     <input type="button" style="width: 100%;" id="kakao" class="btn btn-warning" onclick="check('kakao')" value="카카오 지도 조회" />
                 </div>
             </div>

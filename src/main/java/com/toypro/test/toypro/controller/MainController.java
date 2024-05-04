@@ -9,14 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
-
-
     
     @RequestMapping(value="/",  method = RequestMethod.GET)
     public ModelAndView index (ModelAndView mav, HttpServletRequest request) throws Exception{
 
-        // System.out.println("clientID : "+clientID);
-        
         mav.setViewName("content/main/index");
         
         return mav;

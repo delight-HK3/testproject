@@ -5,34 +5,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
-@Table(name="t_cddc_nm")
+@Entity(name="t_cddc_nm")
 public class SchooleCodeEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SEQ")
     private int seq;
-
+    
     @Column(name = "CDDC_CD")
     private String cddcCd;
 
     @Column(name = "CDDC_NM")
     private String cddcNm;
 
-    @Builder
-    public void codeList(int seq, String cddcCd, String cddcNm){
-        this.seq = seq;
-        this.cddcCd = cddcCd;
-        this.cddcNm = cddcNm;
-    }
+    
 }   

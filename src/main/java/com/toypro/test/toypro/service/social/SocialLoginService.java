@@ -24,7 +24,7 @@ public interface SocialLoginService {
             return UserType.KAKAO;
         }
         else {
-            return null;
+            return UserType.NORMAL;
         }
     }
 }

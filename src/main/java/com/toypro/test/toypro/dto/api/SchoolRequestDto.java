@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SchoolRequestDto {
+public class SchoolRequestDTO {
     
     private String searchPageNo;      // 페이지 번호
     private String searchNumOfRows;   // 한 페이지 결과 수

@@ -1,5 +1,11 @@
 package com.toypro.test.toypro.controller;
 
+/**
+ * version 0.0.1
+ * 최초 생성 : 2024/03/28
+ * 설명 : 지도 관련 컨트롤러 
+ */
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +19,6 @@ import java.util.List;
 import org.json.JSONObject;
 import org.json.XML;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -23,24 +28,30 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.component.Apikey;
-import com.toypro.test.toypro.dto.api.SchoolRequestDto;
+import com.toypro.test.toypro.dto.api.SchoolRequestDTO;
 import com.toypro.test.toypro.entity.gis.SchooleCodeEntity;
-import com.toypro.test.toypro.service.gis.GisService;
+import com.toypro.test.toypro.repository.gis.SchooleCodeRepository;
+
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @RestController
+@RequiredArgsConstructor // 생성자 주입
 @RequestMapping(value = "/gis")
 public class GisController {
 
-    @Autowired
-    Apikey apikey;
+    private final Apikey apikey;
+    private final SchooleCodeRepository schooleCodeRepository; 
 
-    @Autowired
-    private GisService gisService;
-
-    // gis 테스트
+    /**
+     * 구글지도를 활용한 좌표 획득
+     * 
+     * @param mav
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/coordinate",  method = RequestMethod.GET)
     public ModelAndView coordinate (ModelAndView mav) throws Exception{
 
@@ -50,12 +61,18 @@ public class GisController {
         return mav;
     }
 
-    // 클러스터 테스트
+    /**
+     * 데이터 클러스터링 - 지도표출
+     * 
+     * @param mav
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value="/clustering", method=RequestMethod.GET)
     public ModelAndView clusterer (ModelAndView mav) throws Exception{
 
-        List<SchooleCodeEntity> codeList = gisService.getCodeList();
-
+        List<SchooleCodeEntity> codeList = schooleCodeRepository.findAll();
+        
         mav.addObject("codeList", codeList);
         mav.addObject("kakaoMap", apikey.kakaoMap());   // 카카오 맵
         mav.addObject("naverMap", apikey.naverMap());   // 네이버 맵 
@@ -65,11 +82,19 @@ public class GisController {
         return mav;
     }
     
-    // 공공데이터를 활용한 전국 초,중,고 정보 가져오기
+    /**
+     * 데이터 클러스터링 - 공공데이터를 활용한 전국 초,중,고 정보 가져오기
+     * 
+     * @param searchDto
+     * @return
+     * @throws MalformedURLException
+     * @throws IOException
+     * @throws Exception
+     */
     @CrossOrigin("*")
     @ResponseBody
     @RequestMapping(value="/clusteringGps", method=RequestMethod.GET)
-    public String requestMethodName(@ModelAttribute SchoolRequestDto searchDto) throws MalformedURLException, IOException, Exception {
+    public String requestMethodName(@ModelAttribute SchoolRequestDTO searchDto) throws MalformedURLException, IOException, Exception {
 
         String addr = "http://api.data.go.kr/openapi/tn_pubr_public_elesch_mskul_lc_api?ServiceKey="; // 공공데이터 url
         String serviceKey = apikey.dataKey(); // 공공데이터 api 키값
