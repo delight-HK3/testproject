@@ -16,8 +16,7 @@ public class NormalLoginServiceImpl implements SocialLoginService {
     
     @Override
     public UserType getServiceName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getServiceName'");
+        return UserType.NORMAL;
     }
 
     @Override
@@ -28,7 +27,7 @@ public class NormalLoginServiceImpl implements SocialLoginService {
 
     @Override
     public SocialUserResponse getUserInfo(String accessToken) {
-        // TODO Auto-generated method stub
+        System.out.println("노멀로그인 서비스 impl");
         throw new UnsupportedOperationException("Unimplemented method 'getUserInfo'");
     }
 

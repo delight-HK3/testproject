@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.dto.account.AccountRequestDto;
+import com.toypro.test.toypro.dto.login.LoginRequest;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.service.account.AccountService;
+import com.toypro.test.toypro.service.social.SocialLoginService;
 import com.toypro.test.toypro.type.UserType;
 
 import jakarta.servlet.ServletException;
@@ -52,9 +54,27 @@ public class AccountController {
      */
     @GetMapping(value = "/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
-
+        
         log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", userType);
         userService.request(userType);
+    }
+    
+    /**
+     * 일반 로그인
+     * 
+     * @param formInput
+     * @return
+     */
+    @PostMapping(value = "/normal")
+    public ModelAndView normalLogin(LoginRequest formInput) {
+        ModelAndView mav = new ModelAndView();
+        System.out.println(formInput);
+
+        SocialUserResponse userInfo = userService.doSocialLogin(UserType.NORMAL,"");
+
+        mav.setViewName("content/sns/doneSnsLogin"); // 메인페이지로 이동
+        
+        return mav;        
     }
 
     /**
@@ -77,7 +97,7 @@ public class AccountController {
 
         if(String.valueOf(socialUserResponse.getId()) != null){
             
-            // 세션에 회원 고유번호 추가시키기
+            // sns 로그인시 DB에 저장
             accountService.snsSignin(socialUserResponse);
             
             session.setAttribute("accessToken", socialUserResponse.getAccessToken());
@@ -86,7 +106,7 @@ public class AccountController {
             session.setAttribute("name", socialUserResponse.getName());
         }
 
-        mav.setViewName("content/sns/doneSnsLogin");
+        mav.setViewName("content/sns/doneSnsLogin"); // 메인페이지로 이동
         
         return mav;        
     }
