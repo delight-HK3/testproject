@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginResponse {
-    private Long id;
+public class LoginRequest {
+    private String inputId;
+    private String inputPass;
 }

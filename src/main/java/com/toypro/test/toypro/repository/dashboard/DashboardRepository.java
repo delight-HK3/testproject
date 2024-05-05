@@ -27,7 +27,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "inner join t_toy_user b "+ 
                 "inner join t_bd_catg c "+ 
                 "where 1=1 " +
-                "and a.BOARD_USER_ID = b.USER_ID " +
+                "and a.BOARD_USER_NO = b.NO " +
                 "and a.BOARD_CATG_CD = c.CATG_CD " +
                 "ORDER BY a.BOARD_CATG_CD asc" , nativeQuery = true)
     List<DashboardEntity> searchList();
@@ -39,6 +39,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "   , b.NICK_NAME"+
                 "   , b.USER_ID"+
                 "   , a.BOARD_TITLE"+
+                "   , a.BOARD_USER_NO"+
                 "   , a.BOARD_SUBJECT"+
                 "   , c.CATG_NM"+
                 "   , a.BOARD_CNT"+
@@ -48,7 +49,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "inner join t_toy_user b "+ 
                 "inner join t_bd_catg c "+ 
                 "where 1=1 " +
-                "and a.BOARD_USER_ID = b.USER_ID " +
+                "and a.BOARD_USER_NO = b.NO " +
                 "and a.BOARD_CATG_CD = c.CATG_CD " +
                 "and a.BOARD_CD = :boardCd" , nativeQuery = true)
     DashboardEntity searchdetail(String boardCd);
@@ -60,4 +61,5 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
     // 게시글 조회수 1증가
     @Query(value="UPDATE t_bd_table SET BOARD_CNT = :cnt WHERE 1=1 and BOARD_CD = :boardCd", nativeQuery = true)
     void detailCntUp(String boardCd, int cnt);
+    
 } 

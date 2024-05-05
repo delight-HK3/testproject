@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.service.dashboard.DashboardService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+import com.toypro.test.toypro.dto.dashboard.DashboardCatgDTO;
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +32,7 @@ public class DashBoardController {
     private final DashboardService dashboardService;
 
     /**
-     * 게시판 - 게시글 목록
+     * 게시판 - 게시글 목록 페이지
      * 
      * @param mav
      * @return
@@ -45,7 +50,28 @@ public class DashBoardController {
     }
 
     /**
-     * 게시판 - 게시글 상세보기
+     * 게시판 - 신규 게시글 추가 페이지
+     * 
+     * @param mav
+     * @return
+     */
+    @RequestMapping(value="/add", method=RequestMethod.GET)
+    public ModelAndView requestMethodName(ModelAndView mav, HttpServletRequest request) {
+        
+        HttpSession session = request.getSession(true);
+        String snsType = String.valueOf(session.getAttribute("snsType"));
+        
+        List<DashboardCatgDTO> catgList = dashboardService.userCatg(snsType);
+
+        mav.addObject("catgList", catgList);
+        mav.setViewName("content/dashboard/dashboardAdd");
+
+        return mav;
+    }
+    
+
+    /**
+     * 게시판 - 게시글 상세보기 페이지
      * 
      * @param mav
      * @param boardCd

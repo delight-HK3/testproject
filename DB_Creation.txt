@@ -29,7 +29,7 @@ CREATE TABLE `t_bd_table` (
   `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `BOARD_CD` varchar(20) DEFAULT NULL COMMENT '게시판글 코드',
   `BOARD_TITLE` varchar(50) DEFAULT NULL COMMENT '게시판글 제목',
-  `BOARD_USER_ID` varchar(100) DEFAULT NULL COMMENT '게시판글 작성자 ID',
+  `BOARD_USER_NO` int(11) DEFAULT NULL COMMENT '게시판 유저번호',
   `BOARD_CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
   `BOARD_SUBJECT` longtext DEFAULT NULL COMMENT '게시판글 내용',
   `BOARD_CNT` int(11) DEFAULT NULL COMMENT '게시판 조회수',
@@ -40,6 +40,7 @@ CREATE TABLE `t_bd_table` (
 
 -- toypro.t_cddc_nm definition
 
+CREATE TABLE `t_cddc_nm` (
   `SEQ` int(11) NOT NULL AUTO_INCREMENT COMMENT '일련번호',
   `CDDC_CD` varchar(100) DEFAULT NULL COMMENT '교육청코드',
   `CDDC_NM` varchar(100) NOT NULL COMMENT '교육청명',
