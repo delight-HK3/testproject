@@ -100,8 +100,8 @@ VALUES(1, 'admin', 'admin', '관리자', '관리자', 'admin@gmail.com', '010999
 
 INSERT INTO toypro.t_toy_user
 (`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, reg_date, UPDT_DATE)
-VALUES(2, '1114', '1111', '사용자1', '사용자1', 'user1@gmail.com', '01011112222', 'NORMAL', '2024-04-11', NULL);
+VALUES(2, '1114', '1111', '사용자1', '사용자1', 'user1@gmail.com', '01011112222', 'normal', '2024-04-11', NULL);
 
 INSERT INTO toypro.t_toy_user
 (`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, reg_date, UPDT_DATE)
-VALUES(3, '1111', '5555', '사용자2', '사용자2', 'user2@gmail.com', '01033334444', 'NORMAL', '2024-04-11', NULL);
+VALUES(3, '1111', '5555', '사용자2', '사용자2', 'user2@gmail.com', '01033334444', 'normal', '2024-04-11', NULL);

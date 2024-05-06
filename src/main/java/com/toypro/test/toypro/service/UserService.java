@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.toypro.test.toypro.dto.social.SocialAuthResponse;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
-import com.toypro.test.toypro.repository.account.AccountRepository;
 import com.toypro.test.toypro.service.social.NormalLoginServiceImpl;
 import com.toypro.test.toypro.service.social.SocialLoginService;
 import com.toypro.test.toypro.type.UserType;
@@ -30,7 +29,7 @@ public class UserService {
 
         if(userType.NORMAL.equals(userType)){
             loginService = this.getLoginService(userType);
-            socialUserResponse = loginService.getUserInfo("");
+            socialUserResponse = loginService.getUserInfo(code);
         } else {
             loginService = this.getLoginService(userType);
             SocialAuthResponse socialAuthResponse = loginService.getAccessToken(code);
@@ -49,7 +48,7 @@ public class UserService {
                 return loginService;
             }
         }
-        return new NormalLoginServiceImpl();
+        return new NormalLoginServiceImpl(null);
     }
 
     public void request(UserType userType) {

@@ -109,7 +109,7 @@ public class AccountServiceImpl implements AccountService{
 
             String phoneNo = socialUserResponse.getMobile();
             
-            if("".equals(phoneNo)){
+            if(phoneNo == null){
                 phoneNo = "";
             } else {
                 phoneNo = phoneNo.replaceAll("-", "");
