@@ -19,5 +19,5 @@ public class AccountRequestDto {
     private String userPwd;      // 입력한 비밀번호
     private String userEmail;    // 입력한 이메일
     private String userPhone;    // 입력한 전화번호
-    
+
 }

@@ -9,6 +9,7 @@ package com.toypro.test.toypro.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class AccountController {
     
     private final UserService userService;
     private final AccountService accountService;
+    private final PasswordEncoder passwordEncoder;
 
     private String checkKey = ""; // 인증키 비교
 
@@ -66,12 +68,25 @@ public class AccountController {
      * @return
      */
     @PostMapping(value = "/normal")
-    public ModelAndView normalLogin(LoginRequest formInput) {
+    public ModelAndView normalLogin(LoginRequest formInput, HttpServletRequest request) {
+        String inputId = formInput.getInputId();
+        String inputPass = formInput.getInputPass();
+
+        HttpSession session = request.getSession(true); 
         ModelAndView mav = new ModelAndView();
-        System.out.println(formInput);
 
-        SocialUserResponse userInfo = userService.doSocialLogin(UserType.NORMAL,"");
+        SocialUserResponse userInfo = userService.doSocialLogin(UserType.NORMAL,inputId);
+        
+        if(passwordEncoder.matches(userInfo.getPwd(), inputPass)){
+            session.setAttribute("accessToken", userInfo.getAccessToken());
+            session.setAttribute("id", userInfo.getId());
+            session.setAttribute("userType", userInfo.getSnsType());
+            session.setAttribute("name", userInfo.getName());
+        } else {
+            mav.addObject("message","아이디 혹은 비밀번호가 맞지 않습니다.");
+        }
 
+        mav.addObject("usertype","NORMAL");
         mav.setViewName("content/sns/doneSnsLogin"); // 메인페이지로 이동
         
         return mav;        
@@ -105,7 +120,8 @@ public class AccountController {
             session.setAttribute("userType", socialUserResponse.getSnsType());
             session.setAttribute("name", socialUserResponse.getName());
         }
-
+        mav.addObject("message","SNS_LOGIN");
+        mav.addObject("usertype","SNS");
         mav.setViewName("content/sns/doneSnsLogin"); // 메인페이지로 이동
         
         return mav;        
@@ -136,6 +152,27 @@ public class AccountController {
 
     }
     
+    /**
+     * 회원가입 - 중복 닉네임 체크
+     * 
+     * @param accountRequestDto
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
+    @ResponseBody
+    @RequestMapping(value = "/nickNameCheck", method=RequestMethod.GET)
+    public String nickNameCheck(@ModelAttribute AccountRequestDto accountRequestDto) throws IOException, ServletException {
+        
+        String check = accountService.searchNickName(accountRequestDto.getUserNickName());
+
+        if("T".equals(check)){
+            return "ALREADY_NICK";
+        } else {
+            return "SUCCESS";
+        }
+    }
+
     /**
      * 회원가입 - 중복 아이디 체크
      * 
