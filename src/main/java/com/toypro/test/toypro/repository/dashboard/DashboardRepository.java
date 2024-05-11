@@ -31,7 +31,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "and a.BOARD_CATG_CD = c.CATG_CD " +
                 "ORDER BY a.BOARD_CATG_CD asc" , nativeQuery = true)
     List<DashboardEntity> searchList();
-
+    
     // 게시글 상세내용 조회
     @Query(value="SELECT "+
                 "   a.SEQ"+ 
