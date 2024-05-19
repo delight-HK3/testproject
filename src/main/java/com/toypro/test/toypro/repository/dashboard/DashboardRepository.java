@@ -19,6 +19,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "   , b.USER_ID"+
                 "   , a.BOARD_TITLE"+
                 "   , a.BOARD_SUBJECT"+
+                "   , a.BOARD_USER_NO"+
                 "   , c.CATG_NM"+
                 "   , a.BOARD_CNT"+
                 "   , a.REG_DATE "+
