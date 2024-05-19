@@ -1,5 +1,7 @@
 package com.toypro.test.toypro.dto.social;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.toypro.test.toypro.entity.account.AccountEntity;
 
 import lombok.AllArgsConstructor;
