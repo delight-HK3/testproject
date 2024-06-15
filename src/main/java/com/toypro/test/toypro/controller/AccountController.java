@@ -76,12 +76,13 @@ public class AccountController {
         ModelAndView mav = new ModelAndView();
 
         SocialUserResponse userInfo = userService.doSocialLogin(UserType.NORMAL,inputId);
-        
-        if(passwordEncoder.matches(userInfo.getPwd(), inputPass)){
+
+        if(passwordEncoder.matches(inputPass, userInfo.getPwd())){
             session.setAttribute("accessToken", userInfo.getAccessToken());
             session.setAttribute("id", userInfo.getId());
             session.setAttribute("userType", userInfo.getSnsType());
             session.setAttribute("name", userInfo.getName());
+            mav.addObject("message","");
         } else {
             mav.addObject("message","아이디 혹은 비밀번호가 맞지 않습니다.");
         }

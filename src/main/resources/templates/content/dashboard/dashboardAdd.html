@@ -24,13 +24,22 @@
             <div class="container">
                 <select class="form-select" id="searchCddcCd">
                     <option th:each="List : ${catgList}" th:value="${List?.catgCd}" 
-                                th:utext="${List?.catgNm}"></option>
+                            th:utext="${List?.catgNm}"></option>
                 </select>
                 <br>
                 <textarea id="contents">
                     
                 </textarea>
-
+                <br>
+                <div class="row">
+                    <div class="col-6" style="text-align: left;">
+                        <input type="button" class="btn btn-warning" id="btnClear" name="btnClear" value="전체지우기">
+                    </div>
+                    <div class="col-6" style="text-align: right;">
+                        <input type="button" class="btn btn-primary" id="btnSave" name="btnSave" value="등록하기">
+                    </div> 
+                </div>
+                
             </div>
             <!-- ================================ 게시판 신규작성 영역 ================================ -->
 
