@@ -58,8 +58,8 @@ public class DashBoardController {
     @RequestMapping(value="/add", method=RequestMethod.GET)
     public ModelAndView requestMethodName(ModelAndView mav, HttpServletRequest request) {
         
-        HttpSession session = request.getSession(true);
-        String snsType = String.valueOf(session.getAttribute("snsType"));
+        HttpSession session = request.getSession(false);
+        String snsType = String.valueOf(session.getAttribute("userType"));
         
         List<DashboardCatgDTO> catgList = dashboardService.userCatg(snsType);
 
@@ -81,6 +81,10 @@ public class DashBoardController {
     @RequestMapping(value="/details",  method=RequestMethod.GET)
     public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd) throws Exception {
 
+        dashboardService.detailCntUp(boardCd); // 조회수 1증가
+        DashboardDTO detail = dashboardService.searchDetail(boardCd);
+
+        mav.addObject("detail", detail);
         mav.setViewName("content/dashboard/dashboardDetail");
 
         return mav;
