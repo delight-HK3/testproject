@@ -16,7 +16,7 @@ public interface DashboardService {
 
     int searchViewCnt(String boardCd); // 게시글 조회수
 
-    void detailCntUp(String boardCd, int cnt); // 게시글 조회수 1증가
+    void detailCntUp(String boardCd); // 게시글 조회수 1증가
 
     List<DashboardCatgDTO> userCatg(String snsType); // 게시글 목록
 }
