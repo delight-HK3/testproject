@@ -205,14 +205,29 @@ function signin() {
 
 /** modal창 닫을시 입력한 값 초기화 */
 function clear_1(){
-    $('#check').text("");
-    $('#signUp')[0].reset();
+    $('#userName').val("");     // 사용자명 지우기
+
+    $('#userNickName').val(""); // 닉네임 지우기
+    $('#nickCheck').text("");   // 닉네임 체크문구 지우기
+    $('#nickCheckYn').val("");  // 닉네임 중복여부 지우기
+
+    $('#userId').val("");       // 아이디 지우기
+    $('#idCheck').text("");     // 이이디 체크문구 지우기
+    $('#idCheckYn').val("");    // 아이디 중복여부 지우기
+    
+    $('#userPwd').val("");      // 비밀번호 지우기
+    $('#userPhone').val("");    // 전화번호 지우기
 }
 
 /** modal창 닫을시 입력한 값 초기화 */
 function clear_2(){
-    $('#check').text("");
+    this.clear_1();
+    
+    $('#userEmail').val("");
+    $('#userChecknum').val();
     $('#timer').text("");
-    $('#signUp')[0].reset();
+
+    resetCheckNum();
+
     $('#email')[0].reset();
 }

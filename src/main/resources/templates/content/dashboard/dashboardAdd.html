@@ -10,6 +10,7 @@
         <!-- ckeditor 5 -->
         <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/translations/ko.js"></script>
+        <script th:src="@{/js/dashboard.js}"></script>
 
         <style>
             .ck-editor__editable { height: 400px; }
@@ -32,11 +33,8 @@
                 </textarea>
                 <br>
                 <div class="row">
-                    <div class="col-6" style="text-align: left;">
-                        <input type="button" class="btn btn-warning" id="btnClear" name="btnClear" value="전체지우기">
-                    </div>
                     <div class="col-6" style="text-align: right;">
-                        <input type="button" class="btn btn-primary" id="btnSave" name="btnSave" value="등록하기">
+                        <input type="button" class="btn btn-outline-primary" id="btnSave" name="btnSave" onclick="btnSave()" value="등록하기">
                     </div> 
                 </div>
                 
