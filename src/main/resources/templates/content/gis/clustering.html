@@ -7,6 +7,10 @@
     <head>
         <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
 
+        <!-- naver Map css -->
+        <link rel="stylesheet" th:href="@{/css/navermarker.css}" />
+        <!-- naver Map css -->
+
         <!-- kakao Map Script -->
         <script type="text/javascript" th:src="@{${kakaoMap}}"></script>
         <script type="text/javascript" th:src="@{/js/kakaoClustering.js}"></script>
@@ -17,10 +21,6 @@
         <script type="text/javascript" th:src="@{/js/naverClustering.js}"></script>
         <script type="text/javascript" th:src="@{/js/MarkerClustering.js}"></script> <!-- 네이버지도 클러스터 설정 js 파일 -->
         <!-- naver Map Script -->
-
-        <!-- google Map Script -->
-
-        <!-- google Map Script -->
 
         <script type="text/javascript">
 
