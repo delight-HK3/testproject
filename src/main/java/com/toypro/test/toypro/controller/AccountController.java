@@ -26,7 +26,6 @@ import com.toypro.test.toypro.dto.login.LoginRequest;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.service.account.AccountService;
-import com.toypro.test.toypro.service.social.SocialLoginService;
 import com.toypro.test.toypro.type.UserType;
 
 import jakarta.servlet.ServletException;
@@ -79,6 +78,7 @@ public class AccountController {
 
         if(passwordEncoder.matches(inputPass, userInfo.getPwd())){
             session.setAttribute("accessToken", userInfo.getAccessToken());
+            session.setAttribute("no", userInfo.getNo());
             session.setAttribute("id", userInfo.getId());
             session.setAttribute("userType", userInfo.getSnsType());
             session.setAttribute("name", userInfo.getName());
@@ -118,6 +118,7 @@ public class AccountController {
             
             session.setAttribute("accessToken", socialUserResponse.getAccessToken());
             session.setAttribute("id", socialUserResponse.getId());
+            session.setAttribute("no", socialUserResponse.getNo());
             session.setAttribute("userType", socialUserResponse.getSnsType());
             session.setAttribute("name", socialUserResponse.getName());
         }

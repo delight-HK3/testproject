@@ -26,7 +26,15 @@ function naverMap(myItem){
         }); 
         
         var InfoWindow = new naver.maps.InfoWindow({
-            content: '<div style="width:200px; text-align:center">' + spot.schoolNm + '</div>'
+            content: '<div class="naverMarkerDiv">'+
+                        '학교명 : ' + spot.schoolNm + '<br>'+
+                        '설립일자 : '+ spot.fondDate + '<br>'+
+                        '주소 : '+ spot.lnmadr + '<br>'+
+                        '상태 : '+ spot.operSttus +
+                     '</div>',
+            maxWidth : 0,
+            borderWidth : 1,
+            backgroundColor : '#fafafa'
         });
 
         markers.push(marker);
