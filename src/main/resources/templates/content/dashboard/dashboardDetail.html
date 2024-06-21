@@ -6,6 +6,7 @@
 
     <head>
         <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
+
     </head>
     <body>
         <div class="container">
@@ -33,10 +34,9 @@
                     <br>
                 </div>
                 <div class="col-12" style="text-align: right;">
-                    
-                        <input type="button" class="btn btn-warning" value="수정">
-                        <input type="button" class="btn btn-danger" value="삭제">
-
+                    <a th:href="@{/dashboard/List}" id="list" name="list" class="btn btn-primary">목록</a>
+                    <a th:href="@{/dashboard/Edit(boardCd=${detail.boardCd})}" id="edit" name="edit" class="btn btn-warning">수정</a>
+                    <a th:href="@{/dashboard/Delete(boardCd=${detail.boardCd})}" id="delete" name="delete" class="btn btn-danger">삭제</a>
                 </div>
             </div>
 

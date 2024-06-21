@@ -19,6 +19,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "   , b.USER_ID"+
                 "   , a.BOARD_TITLE"+
                 "   , a.BOARD_SUBJECT"+
+                "   , a.BOARD_USER_NO"+
                 "   , c.CATG_NM"+
                 "   , a.BOARD_CNT"+
                 "   , a.REG_DATE "+
@@ -31,7 +32,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "and a.BOARD_CATG_CD = c.CATG_CD " +
                 "ORDER BY a.BOARD_CATG_CD asc" , nativeQuery = true)
     List<DashboardEntity> searchList();
-
+    
     // 게시글 상세내용 조회
     @Query(value="SELECT "+
                 "   a.SEQ"+ 
@@ -59,7 +60,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
     int searchViewCnt(String boardCd);
 
     // 게시글 조회수 1증가
-    @Query(value="UPDATE t_bd_table SET BOARD_CNT = :cnt WHERE 1=1 and BOARD_CD = :boardCd", nativeQuery = true)
-    void detailCntUp(String boardCd, int cnt);
+    @Query(value="UPDATE t_bd_table SET BOARD_CNT = BOARD_CNT + 1 WHERE 1=1 and BOARD_CD = :boardCd", nativeQuery = true)
+    void detailCntUp(String boardCd);
     
 } 

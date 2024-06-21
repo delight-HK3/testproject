@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.toypro.test.toypro.dto.social.SocialAuthResponse;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
+import com.toypro.test.toypro.entity.account.AccountEntity;
+import com.toypro.test.toypro.repository.social.NormalLoginRepository;
 import com.toypro.test.toypro.type.UserType;
 
 import lombok.RequiredArgsConstructor;
@@ -14,10 +16,11 @@ import lombok.RequiredArgsConstructor;
 @Qualifier("LoginService")
 public class NormalLoginServiceImpl implements SocialLoginService {
     
+    private final NormalLoginRepository normalLoginRepository;
+
     @Override
     public UserType getServiceName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getServiceName'");
+        return UserType.NORMAL;
     }
 
     @Override
@@ -28,8 +31,11 @@ public class NormalLoginServiceImpl implements SocialLoginService {
 
     @Override
     public SocialUserResponse getUserInfo(String accessToken) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserInfo'");
+
+        AccountEntity accountEntity = normalLoginRepository.searchUser(accessToken);
+        SocialUserResponse socialUserResponse = SocialUserResponse.toLoginDTO(accountEntity);
+        
+        return socialUserResponse;
     }
 
     @Override
@@ -37,6 +43,5 @@ public class NormalLoginServiceImpl implements SocialLoginService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOauthRedirectURL'");
     }
-
 
 }

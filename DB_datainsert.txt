@@ -95,13 +95,17 @@ INSERT INTO toypro.t_cddc_nm
 VALUES(17, '9290000', '제주특별자치도교육청', 17, '2024-03-21', NULL);
 
 INSERT INTO toypro.t_toy_user
-(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, reg_date, UPDT_DATE)
-VALUES(1, 'admin', 'admin', '관리자', '관리자', 'admin@gmail.com', '01099991111', 'Admin', NULL, NULL);
+(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, REG_DATE, UPDT_DATE)
+VALUES(1, 'admin', '$2a$10$G3AzuA02ayZbJCsy.evNze64TMq..4Wx2XvP0VNQ4NyKJEXK/WNHW', '관리자', '관리자', 'dabin49140@gmail.com', '01022223333', 'Admin', '2024-05-19', NULL);
 
 INSERT INTO toypro.t_toy_user
-(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, reg_date, UPDT_DATE)
-VALUES(2, '1114', '1111', '사용자1', '사용자1', 'user1@gmail.com', '01011112222', 'NORMAL', '2024-04-11', NULL);
+(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, REG_DATE, UPDT_DATE)
+VALUES(8, 'test800', '$2a$10$/Tek6AfNCx8aKLVr8cmMxu5qSDby8FghN0EosC/BPpq6xNyJfDktW', '이다빈', '테스터2', 'dabin49140@gmail.com', '01022223333', 'normal', '2024-05-06', NULL);
 
 INSERT INTO toypro.t_toy_user
-(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, reg_date, UPDT_DATE)
-VALUES(3, '1111', '5555', '사용자2', '사용자2', 'user2@gmail.com', '01033334444', 'NORMAL', '2024-04-11', NULL);
+(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, REG_DATE, UPDT_DATE)
+VALUES(10, '11112', '$2a$10$VgXPqZAgup5hHZ1fwQ6T7OUDMkSh8twIhuUc1AB7x79DkPQSUG9li', '테스터11', '테스터22', 'dabin49140@gmail.com', '01092111664', 'normal', '2024-05-19', NULL);
+
+INSERT INTO toypro.t_toy_user
+(`NO`, USER_ID, USER_PWD, USER_NAME, NICK_NAME, USER_EMAIL, PHONE_NO, USER_TYPE, REG_DATE, UPDT_DATE)
+VALUES(11, '1234', '$2a$10$5/Xvg/RIFkGq9oKEzW6YQ.2XTiXXcklhPP7vXf2GZNXe3fSSmwT/u', '테스터213', '테스터222', 'dabin49140@gmail.com', '01022223333', 'normal', '2024-05-19', NULL);

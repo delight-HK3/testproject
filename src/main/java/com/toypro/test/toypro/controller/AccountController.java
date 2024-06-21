@@ -9,10 +9,11 @@ package com.toypro.test.toypro.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.dto.account.AccountRequestDto;
+import com.toypro.test.toypro.dto.login.LoginRequest;
 import com.toypro.test.toypro.dto.social.SocialUserResponse;
 import com.toypro.test.toypro.service.UserService;
 import com.toypro.test.toypro.service.account.AccountService;
+import com.toypro.test.toypro.service.social.SocialLoginService;
 import com.toypro.test.toypro.type.UserType;
 
 import jakarta.servlet.ServletException;
@@ -41,6 +44,7 @@ public class AccountController {
     
     private final UserService userService;
     private final AccountService accountService;
+    private final PasswordEncoder passwordEncoder;
 
     private String checkKey = ""; // 인증키 비교
 
@@ -52,9 +56,41 @@ public class AccountController {
      */
     @GetMapping(value = "/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
-
+        
         log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", userType);
         userService.request(userType);
+    }
+    
+    /**
+     * 일반 로그인
+     * 
+     * @param formInput
+     * @return
+     */
+    @PostMapping(value = "/normal")
+    public ModelAndView normalLogin(LoginRequest formInput, HttpServletRequest request) {
+        String inputId = formInput.getInputId();
+        String inputPass = formInput.getInputPass();
+
+        HttpSession session = request.getSession(true); 
+        ModelAndView mav = new ModelAndView();
+
+        SocialUserResponse userInfo = userService.doSocialLogin(UserType.NORMAL,inputId);
+
+        if(passwordEncoder.matches(inputPass, userInfo.getPwd())){
+            session.setAttribute("accessToken", userInfo.getAccessToken());
+            session.setAttribute("id", userInfo.getId());
+            session.setAttribute("userType", userInfo.getSnsType());
+            session.setAttribute("name", userInfo.getName());
+            mav.addObject("message","");
+        } else {
+            mav.addObject("message","아이디 혹은 비밀번호가 맞지 않습니다.");
+        }
+
+        mav.addObject("usertype","NORMAL");
+        mav.setViewName("content/sns/doneSnsLogin"); // 메인페이지로 이동
+        
+        return mav;        
     }
 
     /**
@@ -77,7 +113,7 @@ public class AccountController {
 
         if(String.valueOf(socialUserResponse.getId()) != null){
             
-            // 세션에 회원 고유번호 추가시키기
+            // sns 로그인시 DB에 저장
             accountService.snsSignin(socialUserResponse);
             
             session.setAttribute("accessToken", socialUserResponse.getAccessToken());
@@ -85,8 +121,9 @@ public class AccountController {
             session.setAttribute("userType", socialUserResponse.getSnsType());
             session.setAttribute("name", socialUserResponse.getName());
         }
-
-        mav.setViewName("content/sns/doneSnsLogin");
+        mav.addObject("message","SNS_LOGIN");
+        mav.addObject("usertype","SNS");
+        mav.setViewName("content/sns/doneSnsLogin"); // 메인페이지로 이동
         
         return mav;        
     }
@@ -116,6 +153,27 @@ public class AccountController {
 
     }
     
+    /**
+     * 회원가입 - 중복 닉네임 체크
+     * 
+     * @param accountRequestDto
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
+    @ResponseBody
+    @RequestMapping(value = "/nickNameCheck", method=RequestMethod.GET)
+    public String nickNameCheck(@ModelAttribute AccountRequestDto accountRequestDto) throws IOException, ServletException {
+        
+        String check = accountService.searchNickName(accountRequestDto.getUserNickName());
+
+        if("T".equals(check)){
+            return "ALREADY_NICK";
+        } else {
+            return "SUCCESS";
+        }
+    }
+
     /**
      * 회원가입 - 중복 아이디 체크
      * 

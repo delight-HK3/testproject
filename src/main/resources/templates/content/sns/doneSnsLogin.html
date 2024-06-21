@@ -7,14 +7,27 @@
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <script>
-        window.onload=function(){
-            opener.document.location.href="/";
-            self.close();
-        }
+    <script th:inline="javascript">
+        $( document ).ready(function() {
+            var message = [[${message}]]; // 각종 에러메세지
+            var usertype = [[${usertype}]]; // 유저 로그인타입 구분
+
+            if(usertype == "NORMAL"){ // 일반 로그인
+                if(message == ""){ // 메세지가 없는 경우 
+                    location.href="/";
+                } else { // 메세지가 있는 경우
+                    alert(message);
+                    location.href="/";
+                }
+            } else { // sns 로그인
+                opener.document.location.href="/";
+                self.close();
+            }
+        }); 
     </script>
 </body>
 </html>

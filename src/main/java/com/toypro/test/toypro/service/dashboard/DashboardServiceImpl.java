@@ -56,8 +56,8 @@ public class DashboardServiceImpl implements DashboardService{
 
     // 게시글 들어 갈 때 마다 1 증가
     @Override
-    public void detailCntUp(String boardCd, int cnt) {
-        dashboardRepository.detailCntUp(boardCd, cnt);
+    public void detailCntUp(String boardCd) {
+        dashboardRepository.detailCntUp(boardCd);
     }
 
     // 게시글 카테고리 목록 확인
