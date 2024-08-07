@@ -56,11 +56,12 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
     DashboardEntity searchdetail(String boardCd);
 
     // 게시글 조회수 조회
-    @Query(value="SELECT a.BOARD_CNT from t_bd_table a where 1=1 and a.BOARD_CD = :boardCd", nativeQuery = true)
+    @Query(value="SELECT "+
+                 " a.BOARD_CNT from t_bd_table a where 1=1 and a.BOARD_CD = :boardCd", nativeQuery = true)
     int searchViewCnt(String boardCd);
 
-    // 게시글 조회수 1증가
-    @Query(value="UPDATE t_bd_table SET BOARD_CNT = BOARD_CNT + 1 WHERE 1=1 and BOARD_CD = :boardCd", nativeQuery = true)
-    void detailCntUp(String boardCd);
+    @Query(value="UPDATE "+
+                 " t_bd_table SET BOARD_CNT = :cnt WHERE 1=1 and BOARD_CD = :boardCd", nativeQuery = true)
+    void detailCntUp(String boardCd, int cnt);
     
 } 
