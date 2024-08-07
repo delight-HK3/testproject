@@ -6,6 +6,7 @@
 
     <head>
         <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
+
     </head>
     <body>
         <div class="container">
@@ -33,10 +34,12 @@
                     <br>
                 </div>
                 <div class="col-12" style="text-align: right;">
-                    
-                        <input type="button" class="btn btn-warning" value="수정">
-                        <input type="button" class="btn btn-danger" value="삭제">
-
+                    <a th:href="@{/dashboard/List}" id="list" name="list" class="btn btn-outline-primary">목록</a>
+                    <!-- 세션과 유저 일련번호가 같으면 버튼생성 -->
+                    <th:block th:if="${session.no == detail.boardUserNo}">
+                        <a th:href="@{/dashboard/Edit(boardCd=${detail.boardCd})}" id="edit" name="edit" class="btn btn-outline-secondary">수정</a>
+                        <a th:href="@{/dashboard/Delete(boardCd=${detail.boardCd})}" id="delete" name="delete" class="btn btn-outline-danger">삭제</a>
+                    </th:block>
                 </div>
             </div>
 

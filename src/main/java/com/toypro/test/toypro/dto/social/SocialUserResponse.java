@@ -1,7 +1,5 @@
 package com.toypro.test.toypro.dto.social;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.toypro.test.toypro.entity.account.AccountEntity;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +18,7 @@ public class SocialUserResponse {
     private String accessToken;     // accessToken 값
 
     // 유저 정보
-    private int seq;                // 회원번호
+    private int no;                // 회원번호
     private String id;              // 아이디
     private String pwd;             // 비밀번호      
     private String email;           // 이메일
@@ -37,6 +35,7 @@ public class SocialUserResponse {
     public static SocialUserResponse toLoginDTO(AccountEntity entity){
 
         return SocialUserResponse.builder()
+                            .no(entity.getNo())
                             .id(entity.getUserId())
                             .pwd(entity.getUserPwd())
                             .name(entity.getUserName())

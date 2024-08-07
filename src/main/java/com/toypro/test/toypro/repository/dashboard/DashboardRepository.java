@@ -60,7 +60,6 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                  " a.BOARD_CNT from t_bd_table a where 1=1 and a.BOARD_CD = :boardCd", nativeQuery = true)
     int searchViewCnt(String boardCd);
 
-    // 게시글 조회수 1증가
     @Query(value="UPDATE "+
                  " t_bd_table SET BOARD_CNT = :cnt WHERE 1=1 and BOARD_CD = :boardCd", nativeQuery = true)
     void detailCntUp(String boardCd, int cnt);
