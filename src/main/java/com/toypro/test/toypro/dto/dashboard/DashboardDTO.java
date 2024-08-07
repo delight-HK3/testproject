@@ -4,17 +4,11 @@ import java.text.SimpleDateFormat;
 
 import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@ToString
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DashboardDTO {
     
     private int seq;              // 게시판 일련번호

@@ -1,14 +1,10 @@
 package com.toypro.test.toypro.dto.kakao;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class KaKaoLoginResponse {
     private String id;
     
@@ -17,8 +13,6 @@ public class KaKaoLoginResponse {
 
     @Builder
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class KakaoLoginData {
         private String gender;
         private String email;
@@ -31,16 +25,12 @@ public class KaKaoLoginResponse {
         
         @Builder
         @Data
-        @NoArgsConstructor
-        @AllArgsConstructor
         public static class KakaoProfile {
             private String nickname;
         }
 
         @Builder
         @Data
-        @NoArgsConstructor
-        @AllArgsConstructor
         public static class KakaoPropery {
             private String nickname;
         }

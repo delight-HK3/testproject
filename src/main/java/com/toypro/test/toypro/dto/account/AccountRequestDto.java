@@ -1,14 +1,10 @@
 package com.toypro.test.toypro.dto.account;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class AccountRequestDto {
     
     private String userChecknum; // 인증번호
