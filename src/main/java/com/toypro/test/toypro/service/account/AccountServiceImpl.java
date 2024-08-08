@@ -102,7 +102,7 @@ public class AccountServiceImpl implements AccountService{
     public void snsSignin(SocialUserResponse socialUserResponse) {
 
         String checkUserId = accountRepository.searchUser(socialUserResponse.getId());
-
+        
         if("T".equals(checkUserId)){
 
         } else {
