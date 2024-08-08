@@ -14,7 +14,7 @@ public class DashboardDTO {
     private int seq;              // 게시판 일련번호
     private String boardCd;       // 게시판 게시글 코드
     private String boardTitle;    // 게시판 게시글 제목
-    private int boardUserNo;   // 게시판 사용자 번호
+    private int boardUserNo;      // 게시판 사용자 번호
     private String catgNm;        // 게시판 카테고리 이름
     private String boardSubject;  // 게시판 내용
     private String boardNickName; // 게시판 게시자 닉네임
