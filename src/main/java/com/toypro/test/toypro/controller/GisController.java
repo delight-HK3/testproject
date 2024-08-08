@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.component.Apikey;
-import com.toypro.test.toypro.dto.api.SchoolRequestDTO;
+import com.toypro.test.toypro.dto.api.SchoolRequestDto;
 import com.toypro.test.toypro.entity.gis.SchooleCodeEntity;
 import com.toypro.test.toypro.repository.gis.SchooleCodeRepository;
 
@@ -94,7 +94,7 @@ public class GisController {
     @CrossOrigin("*")
     @ResponseBody
     @RequestMapping(value="/clusteringGps", method=RequestMethod.GET)
-    public String requestMethodName(@ModelAttribute SchoolRequestDTO searchDto) throws MalformedURLException, IOException, Exception {
+    public String requestMethodName(@ModelAttribute SchoolRequestDto searchDto) throws MalformedURLException, IOException, Exception {
 
         String addr = "http://api.data.go.kr/openapi/tn_pubr_public_elesch_mskul_lc_api?ServiceKey="; // 공공데이터 url
         String serviceKey = apikey.dataKey(); // 공공데이터 api 키값

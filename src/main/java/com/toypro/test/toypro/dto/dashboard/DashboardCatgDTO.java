@@ -2,17 +2,11 @@ package com.toypro.test.toypro.dto.dashboard;
 
 import com.toypro.test.toypro.entity.dashboard.DashboardCatgEntity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@ToString
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DashboardCatgDTO {
 
     private String catgCd;        // 게시판 카테고리 코드

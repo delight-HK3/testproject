@@ -1,15 +1,11 @@
 package com.toypro.test.toypro.dto.api;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class SchoolRequestDTO {
+public class SchoolRequestDto {
     
     private String searchPageNo;      // 페이지 번호
     private String searchNumOfRows;   // 한 페이지 결과 수
