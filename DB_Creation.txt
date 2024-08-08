@@ -33,10 +33,10 @@ CREATE TABLE `t_bd_table` (
   `BOARD_CATG_CD` varchar(10) DEFAULT NULL COMMENT '카테고리 코드',
   `BOARD_SUBJECT` longtext DEFAULT NULL COMMENT '게시판글 내용',
   `BOARD_CNT` int(11) DEFAULT NULL COMMENT '게시판 조회수',
-  `reg_date` datetime(6) DEFAULT NULL COMMENT '등록일',
-  `updt_date` datetime(6) DEFAULT NULL COMMENT '수정일',
+  `reg_date` date DEFAULT NULL COMMENT '등록일',
+  `updt_date` date DEFAULT NULL COMMENT '수정일',
   PRIMARY KEY (`SEQ`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- toypro.t_cddc_nm definition
 

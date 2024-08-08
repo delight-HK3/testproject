@@ -1,14 +1,11 @@
 package com.toypro.test.toypro.dto.naver;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class NaverLoginResponse {
     @Builder.Default
     private Response response = Response.builder().build();
@@ -18,8 +15,6 @@ public class NaverLoginResponse {
 
     @Builder
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class Response {
         private String id;
         private String email;

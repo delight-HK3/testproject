@@ -10,11 +10,24 @@
         <!-- ckeditor 5 -->
         <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/translations/ko.js"></script>
+        <script th:src="@{/js/dashboard.js}"></script>
 
         <style>
             .ck-editor__editable { height: 400px; }
             .ck-content { font-size: 12px; }
         </style>
+
+        <script>
+            $( document ).ready(function() {
+                var today = new Date();
+
+                var year = today.getFullYear();
+                var month = ('0' + (today.getMonth() + 1)).slice(-2);
+                var day = ('0' + today.getDate()).slice(-2);
+
+                $("#regDate").val(year + '-' + month + '-' + day);
+            });
+        </script>
     </head>
     <body>
         <div class="container">
@@ -22,21 +35,41 @@
             
             <!-- ================================ 게시판 신규작성 영역 ================================ -->
             <div class="container">
-                <select class="form-select" id="searchCddcCd">
-                    <option th:each="List : ${catgList}" th:value="${List?.catgCd}" 
-                            th:utext="${List?.catgNm}"></option>
-                </select>
+                <div class="row">
+                    <!-- 제목입력 -->
+                    <div class="col-4">
+                        <label for="boardTitle" class="form-label">제목</label>
+                        <input type="text" class="form-control" id="boardTitle" value=""/>
+                    </div>
+                    <!-- //제목입력 -->
+                    
+                    <!-- 날짜 -->
+                    <div class="col-4">
+                        <label for="regDate" class="form-label">날짜</label>
+                        <input type="text" class="form-control" id="regDate" value="20" readonly/>
+                    </div>
+                    <!-- //날짜 -->
+                    
+                    <!-- 카테고리 선택 -->
+                    <div class="col-4">
+                        <label for="catgCd" class="form-label">카테고리</label>
+                        <select class="form-select" id="catgCd">
+                            <option th:each="List : ${catgList}" th:value="${List?.catgCd}" 
+                                    th:utext="${List?.catgNm}"></option>
+                        </select>
+                    </div>
+                    <!-- //카테고리 선택 -->
+                </div>
                 <br>
-                <textarea id="contents">
+                <!-- 게시글 작성 부분 -->
+                <textarea id="boardSubject">
                     
                 </textarea>
+                <!-- // 게시글 작성 부분 -->
                 <br>
                 <div class="row">
-                    <div class="col-6" style="text-align: left;">
-                        <input type="button" class="btn btn-warning" id="btnClear" name="btnClear" value="전체지우기">
-                    </div>
-                    <div class="col-6" style="text-align: right;">
-                        <input type="button" class="btn btn-primary" id="btnSave" name="btnSave" value="등록하기">
+                    <div class="col-12" style="text-align: right;">
+                        <input type="button" class="btn btn-outline-primary" id="btnSave" name="btnSave" onclick="btnSave()" value="등록하기">
                     </div> 
                 </div>
                 
@@ -48,7 +81,7 @@
 
         <script>
 
-            ClassicEditor.create( document.querySelector( '#contents' ), {
+            ClassicEditor.create( document.querySelector( '#boardSubject' ), {
                 language: "ko"
             });
 
