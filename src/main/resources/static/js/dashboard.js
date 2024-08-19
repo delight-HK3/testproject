@@ -6,4 +6,17 @@ function btnSave(){
         , catgCd: $("#catgCd").val()
         , boardSubject: $("#boardSubject").val()
     }
+
+    $.ajax({
+        url: "./save"
+        , type: 'GET'
+        , data: data
+        , dataType: 'text'
+        , contentType : 'application/charset=utf-8'
+        , success: function (data) {
+            if(data == "SUCCESS"){
+                location.href="/dashboard/List";
+            }
+        }
+    });
 }

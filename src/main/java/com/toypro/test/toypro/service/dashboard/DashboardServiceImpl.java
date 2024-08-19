@@ -1,17 +1,22 @@
 package com.toypro.test.toypro.service.dashboard;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.toypro.test.toypro.dto.dashboard.DashboardCatgDTO;
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
+import com.toypro.test.toypro.dto.dashboard.DashboardSaveDTO;
 import com.toypro.test.toypro.entity.dashboard.DashboardCatgEntity;
 import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
 import com.toypro.test.toypro.repository.dashboard.DashboardCatgRepository;
 import com.toypro.test.toypro.repository.dashboard.DashboardRepository;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -60,6 +65,32 @@ public class DashboardServiceImpl implements DashboardService{
         dashboardRepository.detailCntUp(boardCd);
     }
 
+    // 게시글 저장
+    @Override
+    public void dashboardSave(DashboardSaveDTO dashboardSaveDTO, int userNo) throws ParseException {
+
+        // 문자열 -> date 타입으로 cast
+        String regDate = dashboardSaveDTO.getRegDate();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = formatter.parse(regDate);
+
+        // 게시판코드 작성
+        String boardCd = regDate + "FK" + userNo + "QD";
+
+        DashboardEntity dashboardEntity = DashboardEntity.builder()
+                                        .boardCd(boardCd)
+                                        .boardTitle(dashboardSaveDTO.getBoardTitle())
+                                        .boardUserNo(userNo)
+                                        .catgCd(dashboardSaveDTO.getCatgCd())
+                                        .boardSubject(dashboardSaveDTO.getBoardSubject())
+                                        .boardCnt(0)
+                                        .regDate(date)
+                                        .updtDate(null)
+                                        .build();
+
+        //dashboardRepository.save(dashboardEntity);
+    }
+
     // 게시글 카테고리 목록 확인
     @Override
     public List<DashboardCatgDTO> userCatg(String snsType) {
@@ -80,5 +111,6 @@ public class DashboardServiceImpl implements DashboardService{
 
         return dtoList;
     }
+
     
 }
