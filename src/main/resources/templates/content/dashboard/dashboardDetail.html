@@ -5,12 +5,12 @@
       layout:decorate="~{layout/default_layout}">
 
     <head>
-        <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
+        <th:block th:replace="~{content/common/headScript :: headerScriptFragment}"></th:block>
 
     </head>
     <body>
         <div class="container">
-            <th:block th:replace="content/common/header :: headerFragment"></th:block>
+            <th:block th:replace="~{content/common/header :: headerFragment}"></th:block>
 
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->
 
@@ -45,7 +45,7 @@
 
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->
 
-            <th:block th:replace="content/common/footer :: footerFragment"></th:block>
+            <th:block th:replace="~{content/common/footer :: footerFragment}"></th:block>
         </div>
     </body>
 </html>
