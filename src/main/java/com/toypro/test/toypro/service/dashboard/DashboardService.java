@@ -1,11 +1,13 @@
 package com.toypro.test.toypro.service.dashboard;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.toypro.test.toypro.dto.dashboard.DashboardCatgDTO;
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
+import com.toypro.test.toypro.dto.dashboard.DashboardSaveDTO;
 
 @Service
 public interface DashboardService {
@@ -17,6 +19,8 @@ public interface DashboardService {
     int searchViewCnt(String boardCd); // 게시글 조회수
 
     void detailCntUp(String boardCd); // 게시글 조회수 1증가
+
+    void dashboardSave(DashboardSaveDTO dashboardSaveDTO, int userNo) throws ParseException; // 게시글 저장
 
     List<DashboardCatgDTO> userCatg(String snsType); // 게시글 목록
 }

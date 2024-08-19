@@ -19,6 +19,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "   , b.USER_ID"+
                 "   , a.BOARD_TITLE"+
                 "   , a.BOARD_SUBJECT"+
+                "   , a.BOARD_CATG_CD"+
                 "   , a.BOARD_USER_NO"+
                 "   , c.CATG_NM"+
                 "   , a.BOARD_CNT"+
@@ -41,6 +42,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "   , b.USER_ID"+
                 "   , a.BOARD_TITLE"+
                 "   , a.BOARD_USER_NO"+
+                "   , a.BOARD_CATG_CD"+
                 "   , a.BOARD_SUBJECT"+
                 "   , c.CATG_NM"+
                 "   , a.BOARD_CNT"+
@@ -60,8 +62,12 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                  " a.BOARD_CNT from t_bd_table a where 1=1 and a.BOARD_CD = :boardCd", nativeQuery = true)
     int searchViewCnt(String boardCd);
 
+    // 게시글 조회수 1증가
     @Query(value="UPDATE "+
                  "t_bd_table SET BOARD_CNT = BOARD_CNT + 1 WHERE 1=1 and BOARD_CD = :boardCd", nativeQuery = true)
     void detailCntUp(String boardCd);
+    
+    // 접속한 사용자가 현재 몇개의 게시글을 작성했는지 조회
+    
     
 } 
