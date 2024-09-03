@@ -5,7 +5,7 @@
       layout:decorate="~{layout/default_layout}">
 
     <head>
-        <th:block th:replace="content/common/headScript :: headerScriptFragment"></th:block>
+        <th:block th:replace="~{content/common/headScript :: headerScriptFragment}"></th:block>
 
         <!-- naver Map css -->
         <link rel="stylesheet" th:href="@{/css/navermarker.css}" />
@@ -67,7 +67,7 @@
     </head>
     <body>
         <div class="container">
-            <th:block th:replace="content/common/header :: headerFragment"></th:block>
+            <th:block th:replace="~{content/common/header :: headerFragment}"></th:block>
             <br>
             <h2 style="text-align: center;">데이터 클러스터링 기능</h2>
             <br>
@@ -157,7 +157,7 @@
                 </div>
             </div>
 
-            <th:block th:replace="content/common/footer :: footerFragment"></th:block>
+            <th:block th:replace="~{content/common/footer :: footerFragment}"></th:block>
         </div>
     </body>
 </html>

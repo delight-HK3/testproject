@@ -1,5 +1,8 @@
 package com.toypro.test.toypro.controller;
 
+import java.io.IOException;
+import java.text.ParseException;
+
 /**
  * version 0.0.1
  * 최초 생성 : 2023/12/11
@@ -8,19 +11,23 @@ package com.toypro.test.toypro.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.toypro.test.toypro.service.dashboard.DashboardService;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import com.toypro.test.toypro.dto.dashboard.DashboardCatgDTO;
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
+import com.toypro.test.toypro.dto.dashboard.DashboardSaveDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +46,7 @@ public class DashBoardController {
      * @throws Exception
      */
     @RequestMapping(value="/List",  method=RequestMethod.GET)
-    public ModelAndView List (ModelAndView mav) throws Exception {
+    public ModelAndView dashBoardList (ModelAndView mav) throws Exception {
         
         List<DashboardDTO> boardList = dashboardService.searchList();
         
@@ -56,7 +63,7 @@ public class DashBoardController {
      * @return
      */
     @RequestMapping(value="/add", method=RequestMethod.GET)
-    public ModelAndView requestMethodName(ModelAndView mav, HttpServletRequest request) {
+    public ModelAndView dashBoardAdd (ModelAndView mav, HttpServletRequest request) {
         
         HttpSession session = request.getSession(false);
         String snsType = String.valueOf(session.getAttribute("userType"));
@@ -68,7 +75,24 @@ public class DashBoardController {
 
         return mav;
     }
-    
+
+    /**
+     * 게시판 - 신규 게시글 추가
+     * 
+     * @param dashboardSaveDTO
+     * @throws IOException
+     * @throws ServletException
+     * @throws ParseException 
+     */
+    @ResponseBody
+    @RequestMapping(value = "/save", method=RequestMethod.GET) 
+    public void dashboardSave (@ModelAttribute DashboardSaveDTO dashboardSaveDTO, HttpServletRequest request) throws IOException, ServletException, ParseException {
+        
+        HttpSession session = request.getSession(false);
+        int userNo = (int) session.getAttribute("no");
+
+        dashboardService.dashboardSave(dashboardSaveDTO, userNo);
+    }
 
     /**
      * 게시판 - 게시글 상세보기 페이지
@@ -79,7 +103,7 @@ public class DashBoardController {
      * @throws Exception
      */
     @RequestMapping(value="/details",  method=RequestMethod.GET)
-    public ModelAndView details (ModelAndView mav, @RequestParam("boardCd") String boardCd) throws Exception {
+    public ModelAndView dashboardDetails (ModelAndView mav, @RequestParam("boardCd") String boardCd) throws Exception {
 
         dashboardService.detailCntUp(boardCd); // 조회수 1증가
         DashboardDTO detail = dashboardService.searchDetail(boardCd);

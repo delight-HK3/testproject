@@ -48,6 +48,9 @@ public class DashboardEntity {
     @Column(name="UPDT_DATE")
     private Date updtDate;          // 게시글 수정일
 
+    @Column(name="BOARD_CATG_CD")
+    private String catgCd;          // 게시글 카테고리 코드
+
     @JoinColumn(name="CATG_NM")
     private String catgNm;          // 게시글 카테고리 이름
 
