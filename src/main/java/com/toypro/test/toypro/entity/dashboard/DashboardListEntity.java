@@ -4,6 +4,7 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +21,9 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @Getter
-@Entity(name="t_bd_table")
-public class DashboardEntity {
+@Entity
+@Table(name="t_bd_table")
+public class DashboardListEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
