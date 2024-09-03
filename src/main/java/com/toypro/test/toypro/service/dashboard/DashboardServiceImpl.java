@@ -12,11 +12,12 @@ import com.toypro.test.toypro.dto.dashboard.DashboardCatgDTO;
 import com.toypro.test.toypro.dto.dashboard.DashboardDTO;
 import com.toypro.test.toypro.dto.dashboard.DashboardSaveDTO;
 import com.toypro.test.toypro.entity.dashboard.DashboardCatgEntity;
-import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
+import com.toypro.test.toypro.entity.dashboard.DashboardListEntity;
+import com.toypro.test.toypro.entity.dashboard.DashboardSaveEntity;
 import com.toypro.test.toypro.repository.dashboard.DashboardCatgRepository;
 import com.toypro.test.toypro.repository.dashboard.DashboardRepository;
+import com.toypro.test.toypro.repository.dashboard.DashboardSaveRepository;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,13 +25,14 @@ import lombok.RequiredArgsConstructor;
 public class DashboardServiceImpl implements DashboardService{
 
     private final DashboardRepository dashboardRepository;
+    private final DashboardSaveRepository dashboardSaveRepository;
     private final DashboardCatgRepository dashboardCatgRepository;
 
     // 게시판 리스트 출력
     @Override
     public List<DashboardDTO> searchList() {
         
-        List<DashboardEntity> boardlist = dashboardRepository.searchList();
+        List<DashboardListEntity> boardlist = dashboardRepository.searchList();
         List<DashboardDTO> dtoList = new ArrayList<>();
 
         for(int i = 0; i < boardlist.size(); i++){
@@ -45,7 +47,7 @@ public class DashboardServiceImpl implements DashboardService{
     // 게시판 상세정보 출력
     @Override
     public DashboardDTO searchDetail(String boardCd) {
-        DashboardEntity detail = dashboardRepository.searchdetail(boardCd);
+        DashboardListEntity detail = dashboardRepository.searchdetail(boardCd);
         DashboardDTO detailDTO = DashboardDTO.toDetailDTO(detail);
         
         return detailDTO;
@@ -74,10 +76,13 @@ public class DashboardServiceImpl implements DashboardService{
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = formatter.parse(regDate);
 
-        // 게시판코드 작성
-        String boardCd = regDate + "FK" + userNo + "QD";
+        int boardNum = dashboardRepository.boardNum(userNo);
 
-        DashboardEntity dashboardEntity = DashboardEntity.builder()
+        // 게시판코드 작성
+        String boardCd = regDate.replaceAll("-","") + "FK" + userNo + "QD" + boardNum;
+
+        // 저장 entity 제작
+        DashboardSaveEntity dashboardSaveEntity = DashboardSaveEntity.builder()
                                         .boardCd(boardCd)
                                         .boardTitle(dashboardSaveDTO.getBoardTitle())
                                         .boardUserNo(userNo)
@@ -88,7 +93,8 @@ public class DashboardServiceImpl implements DashboardService{
                                         .updtDate(null)
                                         .build();
 
-        //dashboardRepository.save(dashboardEntity);
+        // 게시글 저장
+        dashboardSaveRepository.save(dashboardSaveEntity);
     }
 
     // 게시글 카테고리 목록 확인

@@ -80,10 +80,18 @@
         </div>
 
         <script>
-
-            ClassicEditor.create( document.querySelector( '#boardSubject' ), {
-                language: "ko"
-            });
+            
+            ClassicEditor
+                .create( document.querySelector( '#editor' ))
+                .then( editor => {
+                    var editorData = editor.getData();
+                    document.getElementById('boardSubject').value = editorData;
+                } )
+                .catch( error => {
+                    console.error( error );
+                } ), {
+                    language: "ko"
+            };
 
        </script>
     </body>

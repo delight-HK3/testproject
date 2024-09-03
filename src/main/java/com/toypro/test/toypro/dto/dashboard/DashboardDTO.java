@@ -2,7 +2,7 @@ package com.toypro.test.toypro.dto.dashboard;
 
 import java.text.SimpleDateFormat;
 
-import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
+import com.toypro.test.toypro.entity.dashboard.DashboardListEntity;
 
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +24,7 @@ public class DashboardDTO {
     private String updtDate;      // 게시판 게시글 수정일
 
     // entity -> DTO (게시글 목록보기)
-    public static DashboardDTO toListDTO(DashboardEntity entity){
+    public static DashboardDTO toListDTO(DashboardListEntity entity){
         SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy-MM-dd");
         return DashboardDTO.builder()
                         .catgNm(entity.getCatgNm())
@@ -37,7 +37,7 @@ public class DashboardDTO {
     }
 
     // entity -> DTO (게시글 상세보기)
-    public static DashboardDTO toDetailDTO(DashboardEntity entity){
+    public static DashboardDTO toDetailDTO(DashboardListEntity entity){
         SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy-MM-dd");
         return DashboardDTO.builder()
                         .catgNm(entity.getCatgNm())

@@ -17,4 +17,6 @@ public interface AccountService {
     String searchUser(String userid); // 회원가입 - 중복 아이디 체크
 
     String searchNickName(String nickName); // 회원가입 - 중복 닉네임 체크
+
+    int searchUserNo(String userId); // 회원가입 - 유저번호 찾기
 }

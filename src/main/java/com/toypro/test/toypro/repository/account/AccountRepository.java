@@ -19,5 +19,8 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Integer>
                  " IF( NICK_NAME = :nickName , 'T', 'F' ) from t_toy_user where NICK_NAME = :nickName" , nativeQuery = true)
     String searchNickName(String nickName);
 
-    
+    // 회원가입 - 유저번호 찾기
+    @Query(value="select "+
+                 " NO from t_toy_user where USER_ID = :userId", nativeQuery = true)
+    int searchUserNo(String userId);
 } 
