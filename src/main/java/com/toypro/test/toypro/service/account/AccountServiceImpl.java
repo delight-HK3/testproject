@@ -136,8 +136,8 @@ public class AccountServiceImpl implements AccountService{
 
     // 회원가입 - 중복 아이디 체크
     @Override
-    public String searchUser(String userid) {
-        return accountRepository.searchUser(userid);
+    public String searchUser(String userId) {
+        return accountRepository.searchUser(userId);
     }
 
     // 회원가입 - 중복 닉네임 체크
@@ -145,5 +145,10 @@ public class AccountServiceImpl implements AccountService{
     public String searchNickName(String nickName) {
         return accountRepository.searchNickName(nickName);
     }   
-        
+    
+    // 회원가입 - 유저번호 찾기
+    @Override
+    public int searchUserNo(String userId) {
+        return accountRepository.searchUserNo(userId);
+    }
 }

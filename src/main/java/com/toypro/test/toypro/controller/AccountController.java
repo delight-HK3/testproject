@@ -118,7 +118,7 @@ public class AccountController {
             
             session.setAttribute("accessToken", socialUserResponse.getAccessToken());
             session.setAttribute("id", socialUserResponse.getId());
-            session.setAttribute("no", socialUserResponse.getNo());
+            session.setAttribute("no", accountService.searchUserNo(socialUserResponse.getId()));
             session.setAttribute("userType", socialUserResponse.getSnsType());
             session.setAttribute("name", socialUserResponse.getName());
         }

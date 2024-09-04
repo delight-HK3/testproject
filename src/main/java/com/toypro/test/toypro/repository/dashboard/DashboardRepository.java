@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.toypro.test.toypro.entity.dashboard.DashboardEntity;
+import com.toypro.test.toypro.entity.dashboard.DashboardListEntity;
 
 @Repository
-public interface DashboardRepository extends JpaRepository<DashboardEntity, Integer>{
+public interface DashboardRepository extends JpaRepository<DashboardListEntity, Integer>{
 
     // 게시글 리스트 조회
     @Query(value="SELECT "+
@@ -32,7 +32,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "and a.BOARD_USER_NO = b.NO " +
                 "and a.BOARD_CATG_CD = c.CATG_CD " +
                 "ORDER BY a.BOARD_CATG_CD asc" , nativeQuery = true)
-    List<DashboardEntity> searchList();
+    List<DashboardListEntity> searchList();
     
     // 게시글 상세내용 조회
     @Query(value="SELECT "+
@@ -55,7 +55,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
                 "and a.BOARD_USER_NO = b.NO " +
                 "and a.BOARD_CATG_CD = c.CATG_CD " +
                 "and a.BOARD_CD = :boardCd" , nativeQuery = true)
-    DashboardEntity searchdetail(String boardCd);
+    DashboardListEntity searchdetail(String boardCd);
 
     // 게시글 조회수 조회
     @Query(value="SELECT "+
@@ -68,6 +68,7 @@ public interface DashboardRepository extends JpaRepository<DashboardEntity, Inte
     void detailCntUp(String boardCd);
     
     // 접속한 사용자가 현재 몇개의 게시글을 작성했는지 조회
-    
-    
+    @Query(value="select "+
+                 "(count(BOARD_USER_NO) + 1) as num from t_bd_table where BOARD_USER_NO = :userNo",nativeQuery = true)
+    int boardNum(int userNo);
 } 
