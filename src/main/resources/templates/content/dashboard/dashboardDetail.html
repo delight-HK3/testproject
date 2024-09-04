@@ -29,9 +29,9 @@
                 </div>
                 <hr style="margin-top: 3px;">
                 <div style="height: 600px;">
-                    <br>
-                    [[${detail.boardSubject}]]
-                    <br>
+                    <pre th:utext="${detail.boardSubject}">
+
+                    </pre>
                 </div>
                 <div class="col-12" style="text-align: right;">
                     <a th:href="@{/dashboard/List}" id="list" name="list" class="btn btn-outline-primary">목록</a>

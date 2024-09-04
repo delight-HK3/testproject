@@ -86,12 +86,14 @@ public class DashBoardController {
      */
     @ResponseBody
     @RequestMapping(value = "/save", method=RequestMethod.GET) 
-    public void dashboardSave (@ModelAttribute DashboardSaveDTO dashboardSaveDTO, HttpServletRequest request) throws IOException, ServletException, ParseException {
+    public String dashboardSave (@ModelAttribute DashboardSaveDTO dashboardSaveDTO, HttpServletRequest request) throws IOException, ServletException, ParseException {
         
         HttpSession session = request.getSession(false);
         int userNo = (int) session.getAttribute("no");
 
         dashboardService.dashboardSave(dashboardSaveDTO, userNo);
+
+        return "SUCCESS";
     }
 
     /**
