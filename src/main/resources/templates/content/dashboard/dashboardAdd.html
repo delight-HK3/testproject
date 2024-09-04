@@ -65,11 +65,12 @@
                 <textarea id="boardSubject">
                     
                 </textarea>
+                <input type="hidden" id="boardSubjectValue">
                 <!-- // 게시글 작성 부분 -->
                 <br>
                 <div class="row">
                     <div class="col-12" style="text-align: right;">
-                        <input type="button" class="btn btn-outline-primary" id="btnSave" name="btnSave" onclick="btnSave()" value="등록하기">
+                        <input type="button" class="btn btn-outline-primary" id="btnSave" name="btnSave" value="등록하기">
                     </div> 
                 </div>
                 
@@ -80,18 +81,29 @@
         </div>
 
         <script>
-            
+            let editor;
+
             ClassicEditor
-                .create( document.querySelector( '#editor' ))
-                .then( editor => {
-                    var editorData = editor.getData();
-                    document.getElementById('boardSubject').value = editorData;
-                } )
+                .create( document.querySelector( '#boardSubject' ), {
+                    language: 'ko'
+                })
+                .then( newEditor => {
+                    editor = newEditor;
+                    editor.editing.view.document.on('enter', (evt, data) => {
+                        editor.execute('shiftEnter');
+                        data.preventDefault();
+                        evt.stop();
+                        editor.editing.view.scrollToTheSelection();
+                    });
+                })
                 .catch( error => {
                     console.error( error );
-                } ), {
-                    language: "ko"
-            };
+                });
+            
+            document.querySelector( '#btnSave' ).addEventListener( 'click', () => {
+                const editorData = editor.getData();
+                btnSave(editorData);
+            } );    
 
        </script>
     </body>
