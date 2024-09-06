@@ -115,4 +115,26 @@ public class DashBoardController {
 
         return mav;
     }
+    
+    /**
+     * 게시판 - 기존 게시글 수정 페이지
+     * 
+     * @param mav
+     * @return
+     */
+    @RequestMapping(value="/Edit", method=RequestMethod.GET)
+    public ModelAndView dashBoardEdit (ModelAndView mav, @RequestParam("boardCd") String boardCd, HttpServletRequest request) {
+        
+        HttpSession session = request.getSession(false);
+        String snsType = String.valueOf(session.getAttribute("userType"));
+        List<DashboardCatgDTO> catgList = dashboardService.userCatg(snsType);
+
+        DashboardDTO detail = dashboardService.searchDetail(boardCd);
+
+        mav.addObject("catgList", catgList);
+        mav.addObject("detail", detail);
+        mav.setViewName("content/dashboard/dashboardEdit");
+
+        return mav;
+    }
 }

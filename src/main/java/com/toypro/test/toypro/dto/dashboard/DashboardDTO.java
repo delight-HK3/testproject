@@ -41,6 +41,7 @@ public class DashboardDTO {
         SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy-MM-dd");
         return DashboardDTO.builder()
                         .catgNm(entity.getCatgNm())
+                        .catgCd(entity.getCatgCd())
                         .boardCd(entity.getBoardCd())
                         .boardSubject(entity.getBoardSubject())
                         .boardUserNo(entity.getBoardUserNo())
