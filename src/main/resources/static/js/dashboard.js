@@ -1,15 +1,14 @@
 // 게시글 등록
-function btnSave(){
+function btnSave(editorData){
     
     var data = {
         boardTitle: $("#boardTitle").val()
         , regDate: $("#regDate").val()
         , catgCd: $("#catgCd").val()
-        , boardSubject: $('#boardSubject').val()
+        , boardSubject: editorData
     }
 
-    console.log(data);
-    /*$.ajax({
+    $.ajax({
         url: "./save"
         , type: 'GET'
         , data: data
@@ -20,5 +19,5 @@ function btnSave(){
                 location.href="/dashboard/List";
             }
         }
-    });*/
+    });
 }
