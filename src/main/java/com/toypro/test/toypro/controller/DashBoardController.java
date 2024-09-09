@@ -120,6 +120,8 @@ public class DashBoardController {
      * 게시판 - 기존 게시글 수정 페이지
      * 
      * @param mav
+     * @param boardCd
+     * @param request
      * @return
      */
     @RequestMapping(value="/Edit", method=RequestMethod.GET)
@@ -136,5 +138,23 @@ public class DashBoardController {
         mav.setViewName("content/dashboard/dashboardEdit");
 
         return mav;
+    }
+
+    /**
+     * 게시판 - 게시글 수정
+     * 
+     * @param dashboardSaveDTO
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     * @throws ParseException
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updt", method=RequestMethod.GET) 
+    public String dashboardUpdt (@ModelAttribute DashboardSaveDTO dashboardSaveDTO) throws IOException, ServletException, ParseException {
+
+        dashboardService.dashboardEdit(dashboardSaveDTO);
+
+        return "SUCCESS";
     }
 }

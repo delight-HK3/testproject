@@ -22,5 +22,7 @@ public interface DashboardService {
 
     void dashboardSave(DashboardSaveDTO dashboardSaveDTO, int userNo) throws ParseException; // 게시글 저장
 
+    void dashboardEdit(DashboardSaveDTO dashboardSaveDTO) throws ParseException; // 게시글 수정
+
     List<DashboardCatgDTO> userCatg(String snsType); // 게시글 목록
 }

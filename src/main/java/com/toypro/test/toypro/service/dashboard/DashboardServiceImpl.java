@@ -96,6 +96,27 @@ public class DashboardServiceImpl implements DashboardService{
         // 게시글 저장
         dashboardSaveRepository.save(dashboardSaveEntity);
     }
+    
+    // 게시글 수정
+    @Override
+    public void dashboardEdit(DashboardSaveDTO dashboardSaveDTO) throws ParseException {
+        
+        DashboardSaveEntity dashboardSaveEntity = dashboardSaveRepository.findById(dashboardSaveDTO.getSeq()).orElseThrow(() -> {
+            // IllegalArgumentException 예외 처리
+            throw new IllegalArgumentException("해당하는 게시글이 없습니다");
+        });
+
+        // 문자열 날짜 형변환
+        Date updtDate = new SimpleDateFormat("yyyy-MM-dd").parse(dashboardSaveDTO.getUpdtDate());
+
+        dashboardSaveEntity.setBoardTitle(dashboardSaveDTO.getBoardTitle());
+        dashboardSaveEntity.setCatgCd(dashboardSaveDTO.getCatgCd());
+        dashboardSaveEntity.setUpdtDate(updtDate);
+        dashboardSaveEntity.setBoardSubject(dashboardSaveDTO.getBoardSubject());
+
+        // 게시글 수정
+        dashboardSaveRepository.save(dashboardSaveEntity);
+    }
 
     // 게시글 카테고리 목록 확인
     @Override
@@ -117,6 +138,8 @@ public class DashboardServiceImpl implements DashboardService{
 
         return dtoList;
     }
+
+    
 
     
 }
