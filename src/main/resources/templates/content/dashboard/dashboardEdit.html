@@ -33,7 +33,9 @@
         <div class="container">
             <th:block th:replace="~{content/common/header :: headerFragment}"></th:block>
 
-             <!-- ================================ 게시판 신규작성 영역 ================================ -->
+             <!-- ================================ 게시판 수정 영역 ================================ -->
+             <input type="hidden" id="seq" name="seq" th:value="${detail.seq}">
+             
              <div class="container">
                 <div class="row">
                     <!-- 제목입력 -->
@@ -77,7 +79,7 @@
                 </div>
                 
             </div>
-            <!-- ================================ 게시판 신규작성 영역 ================================ -->
+            <!-- ================================ 게시판 수정 영역 ================================ -->
             
             <th:block th:replace="~{content/common/footer :: footerFragment}"></th:block>
         </div>
@@ -104,7 +106,7 @@
             
             document.querySelector( '#btnEdit' ).addEventListener( 'click', () => {
                 const editorData = editor.getData();
-                //btnSave(editorData);
+                btnEdit(editorData);
             } );    
        </script>
     </body>

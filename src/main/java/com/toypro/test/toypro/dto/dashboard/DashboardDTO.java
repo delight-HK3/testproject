@@ -40,6 +40,7 @@ public class DashboardDTO {
     public static DashboardDTO toDetailDTO(DashboardListEntity entity){
         SimpleDateFormat newDtFormat = new SimpleDateFormat("yyyy-MM-dd");
         return DashboardDTO.builder()
+                        .seq(entity.getSeq())
                         .catgNm(entity.getCatgNm())
                         .catgCd(entity.getCatgCd())
                         .boardCd(entity.getBoardCd())
