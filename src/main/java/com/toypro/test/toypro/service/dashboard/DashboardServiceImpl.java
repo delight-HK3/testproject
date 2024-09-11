@@ -118,6 +118,14 @@ public class DashboardServiceImpl implements DashboardService{
         dashboardSaveRepository.save(dashboardSaveEntity);
     }
 
+    // 게시글 삭제
+    @Override
+    public void dashboardDelete(DashboardDTO dashboardDTO) {
+
+        dashboardRepository.deleteById(dashboardDTO.getSeq());
+        
+    }
+
     // 게시글 카테고리 목록 확인
     @Override
     public List<DashboardCatgDTO> userCatg(String snsType) {
@@ -138,8 +146,5 @@ public class DashboardServiceImpl implements DashboardService{
 
         return dtoList;
     }
-
-    
-
     
 }
