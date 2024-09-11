@@ -1,6 +1,7 @@
 package com.toypro.test.toypro.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 
 /**
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.toypro.test.toypro.service.dashboard.DashboardService;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -156,5 +158,28 @@ public class DashBoardController {
         dashboardService.dashboardEdit(dashboardSaveDTO);
 
         return "SUCCESS";
+    }
+
+    /**
+     * 게시판 - 게시글 삭제
+     * 
+     * @param boardCd
+     * @param response
+     * @throws IOException
+     */
+    @ResponseBody
+    @RequestMapping(value = "/Delete", method=RequestMethod.GET) 
+    public void dashboardDelete (@RequestParam("boardCd") String boardCd, ServletResponse response) throws IOException {
+        
+        DashboardDTO deleteDTO = dashboardService.searchDetail(boardCd);
+        dashboardService.dashboardDelete(deleteDTO);
+
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter w = response.getWriter();
+        w.write("<script>location.href='/dashboard/List';</script>");
+        w.flush();
+        w.close();
+
+        return;
     }
 }
