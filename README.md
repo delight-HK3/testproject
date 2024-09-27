@@ -3,7 +3,7 @@
 ```
 프로젝트 구성
 
-Framework : Spring boot 3.1.5
+Framework : Spring boot 3.1.5, bootstrap 5.0
 Language : Java 17
 Database : MariaDB 10.9.2
 Server : http://localhost:8099/
