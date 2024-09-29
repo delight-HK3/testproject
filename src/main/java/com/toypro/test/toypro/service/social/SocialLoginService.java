@@ -12,7 +12,7 @@ public interface SocialLoginService {
     SocialAuthResponse getAccessToken(String authorizationCode);
     SocialUserResponse getUserInfo(String accessToken);
     String getOauthRedirectURL();
-
+    
     default UserType type(){
         if(this instanceof GoogleLoginServiceImpl){ // 구글 로그인
             return UserType.GOOGLE;

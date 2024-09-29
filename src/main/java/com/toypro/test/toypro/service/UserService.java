@@ -52,8 +52,10 @@ public class UserService {
     }
 
     public void request(UserType userType) {
+        
         SocialLoginService socialLoginService = this.findSocialOauthByType(userType);
         String redirectURL = socialLoginService.getOauthRedirectURL();
+        
         try{
             response.sendRedirect(redirectURL);
         } catch (IOException e) {

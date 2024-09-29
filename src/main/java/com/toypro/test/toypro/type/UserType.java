@@ -5,7 +5,37 @@ package com.toypro.test.toypro.type;
  * 설명 : 소셜 로그인 타입을 구별하는 클래스
  */
 
+ import java.util.Arrays;
+ import java.util.List;
+
+import com.toypro.test.toypro.service.social.GoogleLoginServiceImpl;
+import com.toypro.test.toypro.service.social.KakaoLoginServiceImpl;
+import com.toypro.test.toypro.service.social.NaverLoginServiceImpl;
+import com.toypro.test.toypro.service.social.SocialLoginService;
+
 public enum UserType {
-    NORMAL, GOOGLE, KAKAO, NAVER
+    NORMAL("normal"), 
+    GOOGLE("google"), 
+    KAKAO("kakao"), 
+    NAVER("naver");
+
+    private String name;
+
+    UserType(String name){
+        this.name = name;
+    }
+    
+    public static UserType findSocialOauthType(String userType){
+        return Arrays.stream(UserType.values())
+                .filter(x -> x.name.equals(userType))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("알 수 없는 SocialLoginType 입니다."));
+    }
+
+    public static String getOauthType (String userType) {
+        return findSocialOauthType(userType).getName();
+    }
+
+    public String getName() { return name; }
 }
 
