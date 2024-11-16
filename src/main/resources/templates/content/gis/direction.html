@@ -33,20 +33,41 @@
                     , contentType : 'application/charset=utf-8'
                     , success: function (data) {
 
-                        var route = data.route.trafast[0].path;
-                        const path = route.map(([lng, lat]) => new naver.maps.LatLng(lat, lng));
+                        console.log(data);
+
+                        var items = data.route.trafast[0].path;
+
+                        var waypoints = data.route.trafast[0].summary.waypoints[0].location;
+                        var waypoints2 = data.route.trafast[0].summary.waypoints[1].location;
+
+                        console.log(waypoints[0]);
+                        console.log(waypoints[1]);
                         
+
+                        var marker = new naver.maps.Marker({
+                            position: new naver.maps.LatLng(waypoints[1], waypoints[0]),
+                            map: map
+                        });
+
+                        var marker2 = new naver.maps.Marker({
+                            position: new naver.maps.LatLng(waypoints2[1], waypoints2[0]),
+                            map: map
+                        });
+
+                        const path = items.map(([lng, lat]) => new naver.maps.LatLng(lat, lng));
+                        
+                        console.log(waypoints);
+
                         const polyline = new naver.maps.Polyline({
                             map: map,
                             path: path,
-                            strokeColor: "#FF0000", // Route color
-                            strokeWeight: 5,       // Route width
+                            strokeColor: "#33b4ff", // Route color
+                            strokeWeight: 4,       // Route width
+                            strokeLineCap: "round",
+                            startIcon: 3,
+                            endIcon: 3
+                            //strokeStyle: "miter"
                         });
-
-                        // Adjust the map view to fit the route
-                        const bounds = new naver.maps.LatLngBounds();
-                        path.forEach((point) => bounds.extend(point));
-                        map.fitBounds(bounds);
                     }
                 });
 
