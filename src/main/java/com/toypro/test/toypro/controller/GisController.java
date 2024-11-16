@@ -157,10 +157,13 @@ public class GisController {
         String API_URL = "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving";
 
         String start = "126.9780,37.5665"; // Example: Seoul City Hall
-        String goal = "127.0573,37.5077";
+        String goal = "127.057427,37.511453";
 
-        String url = API_URL + "?start=" + start + "&goal=" + goal + "&option=trafast";
+        String url = API_URL + "?start=" + start + "&goal=" + goal + "&option=trafast&waypoints=127.007542,37.492015|127.033690,37.484784";
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+
+        
+
         connection.setRequestMethod("GET");
         connection.setRequestProperty("X-NCP-APIGW-API-KEY-ID", CLIENT_ID);
         connection.setRequestProperty("X-NCP-APIGW-API-KEY", CLIENT_SECRET);
