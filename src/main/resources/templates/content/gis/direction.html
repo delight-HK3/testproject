@@ -15,6 +15,7 @@
     <body>
         <div class="container">
             <br>
+            <input class="form-control" type="text" id="coordinates" name="coordinates" value="">
             <br>
             <div id="naverMap" style="width:100%;height:800px;"></div>
 
@@ -33,16 +34,14 @@
                     , contentType : 'application/charset=utf-8'
                     , success: function (data) {
 
-                        console.log(data);
+                        var markeritem = [];
+                        var cnt = 0;
 
                         var items = data.route.trafast[0].path;
 
                         var waypoints = data.route.trafast[0].summary.waypoints[0].location;
                         var waypoints2 = data.route.trafast[0].summary.waypoints[1].location;
-
-                        console.log(waypoints[0]);
-                        console.log(waypoints[1]);
-                        
+                    
 
                         var marker = new naver.maps.Marker({
                             position: new naver.maps.LatLng(waypoints[1], waypoints[0]),
@@ -55,8 +54,6 @@
                         });
 
                         const path = items.map(([lng, lat]) => new naver.maps.LatLng(lat, lng));
-                        
-                        console.log(waypoints);
 
                         const polyline = new naver.maps.Polyline({
                             map: map,
@@ -66,18 +63,45 @@
                             strokeLineCap: "round",
                             startIcon: 3,
                             endIcon: 3
-                            //strokeStyle: "miter"
                         });
                     
-                        /*
-                         naver.maps.Event.addListener(map, 'click', function(e) {
+                        naver.maps.Event.addListener(map, 'click', function(e) {
+
+                            if(markeritem.length == 7){
+                                return;
+                            }
+
                             var lat = e.coord.lat(); // Latitude
                             var lng = e.coord.lng(); // Longitude
 
-                            // Display the coordinates
-                            document.getElementById('coordinates').innerText = `Latitude: ${lat}, Longitude: ${lng}`;
+                            var marker = new naver.maps.Marker({
+                                position: new naver.maps.LatLng(lat, lng),
+                                map: map
+                            });
+                            
+                            marker.customData = {
+                                id: cnt
+                            };
+
+                            markeritem.push(`${lng}, ${lat}`);
+
+                            naver.maps.Event.addListener(marker, 'click', function(e) {
+                                cnt--;
+                                markeritem.splice(marker.customData.id,1);
+                                marker.setMap(null);
+                                
+                                //cnt--;
+                                console.log(cnt);
+                                console.log(markeritem);
+                                return;
+                            });
+
+                            cnt++;
+                            console.log(cnt);
+                            console.log(markeritem);
+                            //document.getElementById('coordinates').value = `${lat}, ${lng}`;
                         });
-                        */
+
                     }
                 });
 
