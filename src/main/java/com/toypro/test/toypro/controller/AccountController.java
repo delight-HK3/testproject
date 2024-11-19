@@ -45,6 +45,14 @@ public class AccountController {
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
 
+    /* 생성자 주입 part
+    public AccountController(UserService userService, AccountService accountService, PasswordEncoder passwordEncoder){
+        this.accountService = accountService;
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
+    */
+
     private String checkKey = ""; // 인증키 비교
 
     /**

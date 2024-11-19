@@ -83,6 +83,23 @@ public class GisController {
     }
     
     /**
+     * direction 5 구현
+     * 
+     * @param mav
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/direction", method=RequestMethod.GET)
+    public ModelAndView direction (ModelAndView mav) throws Exception{
+
+        mav.addObject("naverMap", apikey.naverMap());   // 네이버 맵 
+
+        mav.setViewName("content/gis/direction");
+
+        return mav;
+    }
+
+    /**
      * 데이터 클러스터링 - 공공데이터를 활용한 전국 초,중,고 정보 가져오기
      * 
      * @param searchDto
@@ -130,6 +147,41 @@ public class GisController {
         String jsonPrettyPrintString = xmlJSONObj.toString();
 
         return jsonPrettyPrintString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/directionGps", method=RequestMethod.GET)
+    public String directionGps() throws Exception {
+        String CLIENT_ID = "vg485bk4yf"; // Replace with your Client ID
+        String CLIENT_SECRET = "nCQUgvN69HnQwdFyOnMMfaNurmCmMtymqaRGluHv"; // Replace with your Client Secret
+        String API_URL = "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving";
+
+        String start = "126.9780,37.5665"; // Example: Seoul City Hall
+        String goal = "127.057427,37.511453";
+
+        String url = API_URL + "?start=" + start + "&goal=" + goal + "&option=trafast&waypoints=127.007542,37.492015|127.033690,37.484784";
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+
+        
+
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("X-NCP-APIGW-API-KEY-ID", CLIENT_ID);
+        connection.setRequestProperty("X-NCP-APIGW-API-KEY", CLIENT_SECRET);
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) { // 200 OK
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            
+            return response.toString();
+        } else {
+            throw new Exception("HTTP error code: " + responseCode + ", " + connection.getResponseMessage());
+        }
     }
 
 }
