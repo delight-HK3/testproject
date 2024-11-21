@@ -19,6 +19,7 @@ Tool : Visual Studio Code
 6. 공공데이터를 활용한 초,중,고 학교 위치 및 학교 정보 확인 기능
 7. 이메일 인증기능
 8. CKEditor 5 를 포함한 게시판 기능
+9. 네이버지도 direction 5 기능
 
 ### 참고자료
 * 로그인 화면 구현 : <https://antdev.tistory.com/70?category=919963>
