@@ -54,8 +54,10 @@
                     <div class="col-4">
                         <label for="catgCd" class="form-label">카테고리</label>
                         <select class="form-select" id="catgCd">
-                            <option th:each="List : ${catgList}" th:value="${List?.catgCd}" 
-                                    th:utext="${List?.catgNm}"></option>
+                            <th:block th:each="List : ${catgList}">
+                                <option th:value="${List.catgCd}" th:text="${List.catgNm}">
+                                </option>
+                            </th:block>
                         </select>
                     </div>
                     <!-- //카테고리 선택 -->
@@ -65,7 +67,6 @@
                 <textarea id="boardSubject">
                     
                 </textarea>
-                <input type="hidden" id="boardSubjectValue">
                 <!-- // 게시글 작성 부분 -->
                 <br>
                 <div class="row">
@@ -104,7 +105,6 @@
                 const editorData = editor.getData();
                 btnSave(editorData);
             } );    
-
        </script>
     </body>
 

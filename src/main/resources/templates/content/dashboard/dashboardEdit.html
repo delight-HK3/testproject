@@ -6,15 +6,109 @@
 
     <head>
         <th:block th:replace="~{content/common/headScript :: headerScriptFragment}"></th:block>
+    
+        <!-- ckeditor 5 -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/translations/ko.js"></script>
+        <script th:src="@{/js/dashboard.js}"></script>
+
+        <style>
+            .ck-editor__editable { height: 400px; }
+            .ck-content { font-size: 12px; }
+        </style>
+
+        <script>
+            $( document ).ready(function() {
+                var today = new Date();
+
+                var year = today.getFullYear();
+                var month = ('0' + (today.getMonth() + 1)).slice(-2);
+                var day = ('0' + today.getDate()).slice(-2);
+
+                $("#updtDate").val(year + '-' + month + '-' + day);
+            });
+        </script>
     </head>
     <body>
         <div class="container">
             <th:block th:replace="~{content/common/header :: headerFragment}"></th:block>
 
-
+             <!-- ================================ 게시판 수정 영역 ================================ -->
+             <input type="hidden" id="seq" name="seq" th:value="${detail.seq}">
+             
+             <div class="container">
+                <div class="row">
+                    <!-- 제목입력 -->
+                    <div class="col-4">
+                        <label for="boardTitle" class="form-label">제목</label>
+                        <input type="text" class="form-control" id="boardTitle" th:value="${detail.boardTitle}"/>
+                    </div>
+                    <!-- //제목입력 -->
+                    
+                    <!-- 날짜 -->
+                    <div class="col-4">
+                        <label for="updtDate" class="form-label">수정일</label>
+                        <input type="text" class="form-control" id="updtDate" value="20" readonly/>
+                    </div>
+                    <!-- //날짜 -->
+                    
+                    <!-- 카테고리 선택 -->
+                    <div class="col-4">
+                        <label for="catgCd" class="form-label">카테고리</label>
+                        <select class="form-select" id="catgCd">
+                            <th:block th:each="List : ${catgList}">
+                                <option th:value="${List.catgCd}" th:text="${List.catgNm}" th:selected="${List.catgCd} == ${detail.catgCd}">
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <!-- //카테고리 선택 -->
+                </div>
+                <br>
+                <!-- 게시글 작성 부분 -->
+                <textarea id="boardSubject">
+                    [[${detail.boardSubject}]]
+                </textarea>
+                <!-- // 게시글 작성 부분 -->
+                <br>
+                <div class="row">
+                    <div class="col-12" style="text-align: right;">
+                        <a th:href="@{/dashboard/List}" id="list" name="list" class="btn btn-outline-primary">목록</a>
+                        <input type="button" class="btn btn-outline-primary" id="btnEdit" name="btnEdit" value="수정하기">
+                    </div> 
+                </div>
+                
+            </div>
+            <!-- ================================ 게시판 수정 영역 ================================ -->
             
             <th:block th:replace="~{content/common/footer :: footerFragment}"></th:block>
         </div>
+
+        <script>
+            let editor;
+
+            ClassicEditor
+                .create( document.querySelector( '#boardSubject' ), {
+                    language: 'ko'
+                })
+                .then( newEditor => {
+                    editor = newEditor;
+                    editor.editing.view.document.on('enter', (evt, data) => {
+                        editor.execute('shiftEnter');
+                        data.preventDefault();
+                        evt.stop();
+                        editor.editing.view.scrollToTheSelection();
+                    });
+                })
+                .catch( error => {
+                    console.error( error );
+                });
+            
+            document.querySelector( '#btnEdit' ).addEventListener( 'click', () => {
+                const editorData = editor.getData();
+                btnEdit(editorData);
+            } );    
+       </script>
     </body>
 
 </html>

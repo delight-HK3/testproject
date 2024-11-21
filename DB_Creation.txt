@@ -19,9 +19,8 @@ CREATE TABLE `t_bd_comm` (
   `BOARD_CD` varchar(10) DEFAULT NULL COMMENT '게시판 글코드',
   `COMM_SUBJECT` varchar(500) DEFAULT NULL COMMENT '댓글 내용',
   `REG_DATE` date DEFAULT NULL COMMENT '등록일',
-  `UPDT_DATE` date DEFAULT NULL COMMENT '수정일',
   PRIMARY KEY (`SEQ`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- toypro.t_bd_table definition
 

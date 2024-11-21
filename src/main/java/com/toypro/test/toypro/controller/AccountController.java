@@ -72,16 +72,16 @@ public class AccountController {
      * 일반 로그인
      * 
      * @param formInput
+     * @param request
+     * @param mav
      * @return
      */
     @PostMapping(value = "/normal")
-    public ModelAndView normalLogin(LoginRequest formInput, HttpServletRequest request) {
+    public ModelAndView normalLogin(LoginRequest formInput, HttpServletRequest request, ModelAndView mav) {
         String inputId = formInput.getInputId();
         String inputPass = formInput.getInputPass();
 
         HttpSession session = request.getSession(true); 
-        ModelAndView mav = new ModelAndView();
-
         SocialUserResponse userInfo = userService.doSocialLogin(UserType.NORMAL,inputId);
 
         if(passwordEncoder.matches(inputPass, userInfo.getPwd())){
@@ -104,19 +104,19 @@ public class AccountController {
     /**
      * SNS 로그인 - 유저 소셜 로그인으로 리다이렉트 해주는 url
      * 
-     * @param SocialLoginPath
-     * @throws IOException
-     * @return void
+     * @param userType
+     * @param code
+     * @param request
+     * @param mav
+     * @return
      */
     @GetMapping(value = "/auth/{socialLoginType}/callback")
     public ModelAndView socialLogin(
             @PathVariable(name = "socialLoginType") UserType userType,
             @RequestParam(name = "code") String code,
-            HttpServletRequest request) {
+            HttpServletRequest request,ModelAndView mav) {
         
         HttpSession session = request.getSession(true); 
-        ModelAndView mav = new ModelAndView();
-        
         SocialUserResponse socialUserResponse = userService.doSocialLogin(userType, code);
 
         if(String.valueOf(socialUserResponse.getId()) != null){
@@ -175,12 +175,9 @@ public class AccountController {
     public String nickNameCheck(@ModelAttribute AccountRequestDto accountRequestDto) throws IOException, ServletException {
         
         String check = accountService.searchNickName(accountRequestDto.getUserNickName());
-
-        if("T".equals(check)){
-            return "ALREADY_NICK";
-        } else {
-            return "SUCCESS";
-        }
+        String request = ("T".equals(check)) ? "SUCCESS" : "ALREADY_NICK";
+        
+        return request;
     }
 
     /**
@@ -197,13 +194,9 @@ public class AccountController {
 
         // 중복 아이디가 없으면 F, 있으면 T
         String check = accountService.searchUser(accountRequestDto.getUserId());
-
-        if("T".equals(check)){
-            return "ALREADY_USER";
-        } else {
-            return "SUCCESS";
-        }
-
+        String request = ("T".equals(check)) ? "SUCCESS" : "ALREADY_USER";
+        
+        return request;
     }
     
     /**

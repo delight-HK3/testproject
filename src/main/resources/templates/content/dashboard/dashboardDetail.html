@@ -6,7 +6,16 @@
 
     <head>
         <th:block th:replace="~{content/common/headScript :: headerScriptFragment}"></th:block>
+    
+        <!-- ckeditor 5 -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/translations/ko.js"></script>
+        <script th:src="@{/js/dashboard.js}"></script>
 
+        <style>
+            .ck-editor__editable { height: 100px; }
+            .ck-content { font-size: 12px; }
+        </style>
     </head>
     <body>
         <div class="container">
@@ -41,11 +50,49 @@
                         <a th:href="@{/dashboard/Delete(boardCd=${detail.boardCd})}" id="delete" name="delete" class="btn btn-outline-danger">삭제</a>
                     </th:block>
                 </div>
-            </div>
+                <br><hr><br>
+                
+                <!-- 댓글 작성 부분 -->
+                <textarea id="boardComment">
+                    
+                </textarea>
+                <!-- // 댓글 작성 부분 -->
+                <div class="row">
+                    <div class="col-12" style="text-align: right; margin-top: 5px;">
+                        <input type="button" class="btn btn-outline-primary" id="btnCommentSave" name="btnCommentSave" value="등록하기">
+                    </div> 
+                </div>
 
+            </div>
             <!-- ================================ 게시판 상세페이지 영역 ================================ -->
 
             <th:block th:replace="~{content/common/footer :: footerFragment}"></th:block>
         </div>
+
+        <script>
+            let editor;
+
+            ClassicEditor
+                .create( document.querySelector( '#boardComment' ), {
+                    language: 'ko'
+                })
+                .then( newEditor => {
+                    editor = newEditor;
+                    editor.editing.view.document.on('enter', (evt, data) => {
+                        editor.execute('shiftEnter');
+                        data.preventDefault();
+                        evt.stop();
+                        editor.editing.view.scrollToTheSelection();
+                    });
+                })
+                .catch( error => {
+                    console.error( error );
+                });
+            
+            document.querySelector( '#btnCommentSave' ).addEventListener( 'click', () => {
+                const editorData = editor.getData();
+                //btnCommentSave(editorData);
+            } );    
+       </script>
     </body>
 </html>
