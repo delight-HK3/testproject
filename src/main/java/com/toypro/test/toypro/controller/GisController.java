@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -151,18 +152,25 @@ public class GisController {
 
     @ResponseBody
     @RequestMapping(value="/directionGps", method=RequestMethod.GET)
-    public String directionGps() throws Exception {
-        String CLIENT_ID = "vg485bk4yf"; // Replace with your Client ID
-        String CLIENT_SECRET = "nCQUgvN69HnQwdFyOnMMfaNurmCmMtymqaRGluHv"; // Replace with your Client Secret
+    public String directionGps(@RequestParam(value="startgoal[]") String[] startgoalarr, @RequestParam(value="waypoint[]") String[] waypointarr ) throws Exception {
+
+        String CLIENT_ID = ""; // Replace with your Client ID
+        String CLIENT_SECRET = ""; // Replace with your Client Secret
         String API_URL = "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving";
+        //@RequestParam(value="arr[]") int[] array
+        String start = startgoalarr[0].replaceAll("\\s+", ""); // Example: Seoul City Hall
+        String goal = startgoalarr[1].replaceAll("\\s+", "");
+        String waypoint = "";
 
-        String start = "126.9780,37.5665"; // Example: Seoul City Hall
-        String goal = "127.057427,37.511453";
+        for(int i = 0; i < waypointarr.length; i++){
+            waypoint += waypointarr[i].replaceAll("\\s+", "");
+            if(waypointarr.length - 1 != i){
+                waypoint += "|";
+            }
+        }
 
-        String url = API_URL + "?start=" + start + "&goal=" + goal + "&option=trafast&waypoints=127.007542,37.492015|127.033690,37.484784";
+        String url = API_URL + "?start=" + start + "&goal=" + goal + "&option=trafast&waypoints=" + waypoint;
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-
-        
 
         connection.setRequestMethod("GET");
         connection.setRequestProperty("X-NCP-APIGW-API-KEY-ID", CLIENT_ID);
