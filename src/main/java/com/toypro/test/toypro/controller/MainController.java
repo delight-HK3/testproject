@@ -17,4 +17,12 @@ public class MainController {
         
         return mav;
     }
+
+    @RequestMapping(value="/apitest",  method = RequestMethod.GET)
+    public ModelAndView apitest (ModelAndView mav, HttpServletRequest request) throws Exception{
+
+        mav.setViewName("content/main/michelinAPIdev");
+        
+        return mav;
+    }
 }

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+
+    <head>  
+        <th:block th:replace="~{content/common/headScript :: headerScriptFragment}"></th:block>
+
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+   
+    <script>
+        var onstar = 0;
+        var twostar = 0;
+        var threestar = 0;
+        var bep = 0;
+        var chart1;
+
+        var chartData = [0, 0, 0, 0];
+
+        $( document ).ready(function(){
+            var options = {
+                series: [{
+                    name: '레스토랑 수',
+                    data: chartData
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 400,
+                    stacked: true,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 10,
+                        horizontal: false,
+                        columnWidth: '55%',
+                        dataLabels: {
+                            position: 'top', // top, center, bottom
+                        },
+                        endingShape: 'rounded'
+                    },
+                },
+                colors: ['#c02231'],
+                dataLabels: {
+                    enabled: true,
+                    formatter: function (val) {
+                        return val;
+                    },
+                    offsetY: -22,
+                    style: {
+                        fontSize: '12px',
+                        colors: ["#304758"]
+                    }
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                },
+                xaxis: {
+                    categories: ['3 스타', '2 스타', '1 스타', '빕 구르망'],
+                },
+                title: {
+                    text: '미쉐린 분포도',
+                    floating: true,
+                    offsetY: 0,
+                    align: 'center'
+                }
+            };
+
+            chart1 = new ApexCharts(document.querySelector("#chart1"), options);
+            chart1.render();
+        });
+
+        function datainsert(){
+            $.ajax({
+                url: 'https://url.mlistapi.link/kr/michelin-list',
+                method: 'get',
+                data : {
+                    row : 100
+                },
+                dataType : 'json',
+                success : function(data){
+                    for(i = 0; i < data.length; i++){
+                        if(data[i].starCnt == 3){
+                            chartData[0] += 1;
+                        } else if (data[i].starCnt == 2){
+                            chartData[1] += 1;
+                        } else if (data[i].starCnt == 1){
+                            chartData[2] += 1;
+                        } else {
+                            chartData[3] += 1;
+                        }
+                    }
+                    chart1.updateSeries([{
+                        data: chartData,
+                    }]);
+                    chartData = [0,0,0,0];
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <th:block th:replace="~{content/common/header :: headerFragment}"></th:block>
+        <br><br>
+        <div class="row">
+            <div class="col-sm-6">
+                <div id="chart1"></div>
+            </div>
+        </div>
+        <input type="button" class="btn btn-primary" value="search" onclick="datainsert()">
+
+        <th:block th:replace="~{content/common/footer :: footerFragment}"></th:block>
+    </div>
+</body>
+</html>
