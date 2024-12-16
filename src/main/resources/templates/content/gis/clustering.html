@@ -46,6 +46,8 @@
                     , contentType : 'application/charset=utf-8'
                     , success: function (data) {
 
+                        console.log(data);
+
                         var myItem = data.response.body.items.item;
 
                         if(sns == 'kakao'){
