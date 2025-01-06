@@ -10,6 +10,6 @@ import com.toypro.test.toypro.dto.google.GoogleRequestAccessTokenDto;
 
 @FeignClient(value = "googleAuth", url="https://oauth2.googleapis.com", configuration = {FeignConfiguration.class})
 public interface GoogleAuthApi {
-    @PostMapping("/token")
+    @PostMapping("/token") // authrization 서버로 부터 토큰 요청
     ResponseEntity<String> getAccessToken(@RequestBody GoogleRequestAccessTokenDto requestDto);
 }

@@ -11,6 +11,6 @@ import com.toypro.test.toypro.config.FeignConfiguration;
 
 @FeignClient(value = "kakaoUser", url="https://kapi.kakao.com", configuration = {FeignConfiguration.class})
 public interface KakaoUserApi {
-    @GetMapping("/v2/user/me")
+    @GetMapping("/v2/user/me") // Resource 서버로부터 accessToken에 맞는 유저정보 호출
     ResponseEntity<String> getUserInfo(@RequestHeader Map<String, String> header);
 }

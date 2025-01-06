@@ -24,9 +24,10 @@ public class UserService {
     private final HttpServletResponse response;
     
     public SocialUserResponse doSocialLogin(UserType userType, String code) {
-        SocialUserResponse socialUserResponse;
+        SocialUserResponse socialUserResponse; // sns로그인 결과값
         SocialLoginService loginService;
 
+        // 일반사용자와 SNS로그인 사용자 구분
         if(userType.NORMAL.equals(userType)){
             loginService = this.getLoginService(userType);
             socialUserResponse = loginService.getUserInfo(code);
@@ -51,18 +52,22 @@ public class UserService {
         return new NormalLoginServiceImpl(null);
     }
 
-    public void request(UserType userType) {
+    // sns로그인 시도시 Authorization서버에서 제공하는 페이지 호출
+    public void LoginFormrequest(UserType userType) {
         
         SocialLoginService socialLoginService = this.findSocialOauthByType(userType);
+        
         String redirectURL = socialLoginService.getOauthRedirectURL();
         
-        try{
-            response.sendRedirect(redirectURL);
+        try{    
+            // 각 sns로그인 관련 SNS service에서 생성한 호출 URL 호출
+            response.sendRedirect(redirectURL); 
         } catch (IOException e) {
             e.printStackTrace();
         }
         
     }
+
 
     private SocialLoginService findSocialOauthByType(UserType userType){
         return loginServices.stream()

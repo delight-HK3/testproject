@@ -1,10 +1,12 @@
 package com.toypro.test.toypro.dto.google;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Builder
-@Data
+@Getter
+@Setter
 public class GoogleRequestAccessTokenDto {
     private String code;
     private String client_id;

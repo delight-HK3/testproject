@@ -69,9 +69,12 @@ public class KakaoLoginServiceImpl implements SocialLoginService {
     }
     @Override
     public SocialUserResponse getUserInfo(String accessToken) {
-        Map<String ,String> headerMap = new HashMap<>();
-        headerMap.put("authorization", "Bearer " + accessToken);
+        HashMap<String ,String> headerMap = new HashMap<>();
 
+        // authorization 서버에 accesstoken 소유자 권한으로 
+        headerMap.put("authorization", "Bearer " + accessToken);
+        
+        // 카카오로부터 유저정보 호출
         ResponseEntity<?> response = kakaoUserApi.getUserInfo(headerMap);
 
         String jsonString = String.valueOf(response.getBody());
@@ -82,20 +85,16 @@ public class KakaoLoginServiceImpl implements SocialLoginService {
         .create();
 
         KaKaoLoginResponse kaKaoLoginResponse = gson.fromJson(jsonString, KaKaoLoginResponse.class);
-        KaKaoLoginResponse.KakaoLoginData kakaoLoginData = Optional.ofNullable(kaKaoLoginResponse.getKakao_account())
-            .orElse(KaKaoLoginResponse.KakaoLoginData.builder().build());
-
-        String name = Optional.ofNullable(kakaoLoginData.getProfile())
-                .orElse(KaKaoLoginResponse.KakaoLoginData.KakaoProfile.builder().build())
-                .getNickname();
         
+        System.out.println(kaKaoLoginResponse.toString());
+
         return SocialUserResponse.builder()
                 .snsType("kakao")
                 .accessToken(accessToken)
                 .id(kaKaoLoginResponse.getId())
-                .gender(kakaoLoginData.getGender())
-                .name(name)
-                .email(kakaoLoginData.getEmail())
+                //.gender(kakaoLoginData.getGender())
+                //.name(name)
+                //.email(kakaoLoginData.getEmail())
                 .build();
     }   
 

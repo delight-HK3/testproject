@@ -2,15 +2,11 @@ package com.toypro.test.toypro.dto.social;
 
 import com.toypro.test.toypro.entity.account.AccountEntity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @ToString
 public class SocialUserResponse {
@@ -33,7 +29,7 @@ public class SocialUserResponse {
 
     // entity -> DTO (유저정보 가져오기)
     public static SocialUserResponse toLoginDTO(AccountEntity entity){
-
+        
         return SocialUserResponse.builder()
                             .no(entity.getNo())
                             .id(entity.getUserId())

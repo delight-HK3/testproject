@@ -45,14 +45,6 @@ public class AccountController {
     private final AccountService accountService;
     private final PasswordEncoder passwordEncoder;
 
-    /* 생성자 주입 part
-    public AccountController(UserService userService, AccountService accountService, PasswordEncoder passwordEncoder){
-        this.accountService = accountService;
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-    }
-    */
-
     private String checkKey = ""; // 인증키 비교
 
     /**
@@ -65,7 +57,7 @@ public class AccountController {
     public void socialLoginType(@PathVariable(name="socialLoginType") UserType userType) throws IOException {
         
         log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", userType);
-        userService.request(userType);
+        userService.LoginFormrequest(userType); // 소셜로그인 페이지 요청
     }
     
     /**
@@ -84,7 +76,7 @@ public class AccountController {
         HttpSession session = request.getSession(true); 
         SocialUserResponse userInfo = userService.doSocialLogin(UserType.NORMAL,inputId);
 
-        if(passwordEncoder.matches(inputPass, userInfo.getPwd())){
+        if(passwordEncoder.matches(inputPass, userInfo.getPwd())){ // 세션 생성
             session.setAttribute("accessToken", userInfo.getAccessToken());
             session.setAttribute("no", userInfo.getNo());
             session.setAttribute("id", userInfo.getId());
@@ -112,8 +104,8 @@ public class AccountController {
      */
     @GetMapping(value = "/auth/{socialLoginType}/callback")
     public ModelAndView socialLogin(
-            @PathVariable(name = "socialLoginType") UserType userType,
-            @RequestParam(name = "code") String code,
+            @PathVariable(name = "socialLoginType") UserType userType, // sns 타입
+            @RequestParam(name = "code") String code, // Authorization code
             HttpServletRequest request,ModelAndView mav) {
         
         HttpSession session = request.getSession(true); 

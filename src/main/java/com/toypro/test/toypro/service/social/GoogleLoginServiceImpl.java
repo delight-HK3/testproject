@@ -83,7 +83,8 @@ public class GoogleLoginServiceImpl implements SocialLoginService{
         log.info("google auth info");
         log.info(response.toString());
 
-        return new Gson()
+        // 가져온 accesstoken을 SocialAuthResponse타입으로 변경
+        return new Gson() 
             .fromJson(
                 String.valueOf(response.getBody())
                 ,SocialAuthResponse.class
@@ -92,11 +93,14 @@ public class GoogleLoginServiceImpl implements SocialLoginService{
 
     @Override
     public SocialUserResponse getUserInfo(String accessToken) {
+
+        // Authorization서버에서 발급받은 accessToken으로 Resource서버에 정보 요청
         ResponseEntity<?> response = googleUserApi.getUserInfo(accessToken);
 
         log.info("google user response");
         log.info(response.toString());
 
+        // 가져온 유저정보 String 타입으로 저장
         String jsonString = String.valueOf(response.getBody());
 
         Gson gson = new GsonBuilder()
@@ -104,8 +108,9 @@ public class GoogleLoginServiceImpl implements SocialLoginService{
         .registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTimeAdapter())
         .create();
 
+        // String 타입의 jsonString을 GoogleLoginResponse 타입으로 변경
         GoogleLoginResponse googleLoginResponse = gson.fromJson(jsonString, GoogleLoginResponse.class);
-
+        
         return SocialUserResponse.builder()
             .snsType("google")
             .accessToken(accessToken)
@@ -118,7 +123,7 @@ public class GoogleLoginServiceImpl implements SocialLoginService{
     @Override
     public String getOauthRedirectURL() {
 
-        Map<String,Object> params = new HashMap<>();
+        HashMap<String,Object> params = new HashMap<>();
 
         params.put("scope",GOOGLE_DATA_ACCESS_SCOPE);
         params.put("response_type","code");

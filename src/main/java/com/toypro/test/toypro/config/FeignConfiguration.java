@@ -9,6 +9,7 @@ import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 public class FeignConfiguration {
     @Bean
     public FeignFormatterRegistrar localDateFormatter () {
+        // OAuth에서 resource 서버 및 a
         return registry -> {
             DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
             registrar.setUseIsoFormat(true);

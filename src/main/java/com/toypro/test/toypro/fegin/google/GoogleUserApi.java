@@ -9,6 +9,6 @@ import com.toypro.test.toypro.config.FeignConfiguration;
 
 @FeignClient(value = "googleUser", url="https://www.googleapis.com", configuration = {FeignConfiguration.class})
 public interface GoogleUserApi {
-    @GetMapping("/userinfo/v2/me")
+    @GetMapping("/userinfo/v2/me") // Resource 서버로부터 사용자정보 요청
     ResponseEntity<String> getUserInfo(@RequestParam("access_token") String accessToken);
 }

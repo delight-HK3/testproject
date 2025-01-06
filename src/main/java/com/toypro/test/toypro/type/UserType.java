@@ -5,13 +5,7 @@ package com.toypro.test.toypro.type;
  * 설명 : 소셜 로그인 타입을 구별하는 클래스
  */
 
- import java.util.Arrays;
- import java.util.List;
-
-import com.toypro.test.toypro.service.social.GoogleLoginServiceImpl;
-import com.toypro.test.toypro.service.social.KakaoLoginServiceImpl;
-import com.toypro.test.toypro.service.social.NaverLoginServiceImpl;
-import com.toypro.test.toypro.service.social.SocialLoginService;
+import java.util.Arrays;
 
 public enum UserType {
     NORMAL("normal"), 

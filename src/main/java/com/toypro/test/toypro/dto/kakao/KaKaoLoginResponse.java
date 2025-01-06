@@ -2,6 +2,7 @@ package com.toypro.test.toypro.dto.kakao;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 @Builder
 @Data
@@ -24,13 +25,13 @@ public class KaKaoLoginResponse {
         private KakaoPropery properties = KakaoPropery.builder().build();
         
         @Builder
-        @Data
+        @Getter
         public static class KakaoProfile {
             private String nickname;
         }
 
         @Builder
-        @Data
+        @Getter
         public static class KakaoPropery {
             private String nickname;
         }

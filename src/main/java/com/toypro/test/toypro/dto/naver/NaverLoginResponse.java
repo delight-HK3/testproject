@@ -2,10 +2,10 @@ package com.toypro.test.toypro.dto.naver;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 @Builder
 @Data
-
 public class NaverLoginResponse {
     @Builder.Default
     private Response response = Response.builder().build();
@@ -14,7 +14,7 @@ public class NaverLoginResponse {
     private String message; // 메세지
 
     @Builder
-    @Data
+    @Getter
     public static class Response {
         private String id;
         private String email;
