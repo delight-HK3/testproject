@@ -6,7 +6,7 @@
 Framework : Spring boot 3.1.5, bootstrap 5.0
 Language : Java 17
 Database : MariaDB 10.9.2
-Server : http://localhost:8099/
+Server : localhost
 Tool : Visual Studio Code
 ```
 
@@ -18,7 +18,9 @@ Tool : Visual Studio Code
 5. 네이버 및 카카오지도를 활용한 데이터 클러스터링 기능 
 6. 공공데이터를 활용한 초,중,고 학교 위치 및 학교 정보 확인 기능
 7. 이메일 인증기능
+- 회원가입시 이메일 인증을 하는데 이메일로 온 인증코드를 입력하면 회원가입이 완료 됩니다.
 8. CKEditor 5 를 포함한 게시판 기능
+- 게시판 CRUD기능에는 Spring Data JPA를 사용했습니다.
 9. 네이버지도 direction 5 기능
 
 ### 참고자료
