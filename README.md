@@ -36,7 +36,10 @@ https://github.com/delight-HK3/sns-login-Refactoring.git
 #### 2025.01.06
 sns로그인 기능은 리펙토링이 필요하다고 판단해 리펙토링 작업중 입니다.
 
-#### 2024.12.
+---
+#### 2024.12.16
+네이버지도 direction 5 기능추가
+
 
 ### 참고자료
 * 로그인 화면 구현 : <https://antdev.tistory.com/70?category=919963>
