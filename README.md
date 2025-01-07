@@ -40,6 +40,7 @@ sns로그인 기능은 리펙토링이 필요하다고 판단해 리펙토링 �
 #### 2024.12.16
 네이버지도 direction 5 기능추가
 
+<br>
 
 ### 참고자료
 * 로그인 화면 구현 : <https://antdev.tistory.com/70?category=919963>
