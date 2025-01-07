@@ -23,7 +23,20 @@ Tool : Visual Studio Code
 - 게시판 CRUD기능에는 Spring Data JPA를 사용했습니다.
 9. 네이버지도 direction 5 기능
 
-(sns로그인 기능은 리펙토링이 필요하다고 판단해 리펙토링 작업중 입니다.)
+<br>
+
+### 업데이트 노트
+
+---
+#### 2025.01.08
+sns로그인 기능 리펙토링이 완료되었고 별도로 저장소를 만들었습니다.<br>
+https://github.com/delight-HK3/sns-login-Refactoring.git
+
+---
+#### 2025.01.06
+sns로그인 기능은 리펙토링이 필요하다고 판단해 리펙토링 작업중 입니다.
+
+#### 2024.12.
 
 ### 참고자료
 * 로그인 화면 구현 : <https://antdev.tistory.com/70?category=919963>
